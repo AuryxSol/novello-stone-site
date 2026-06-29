@@ -1,0 +1,45 @@
+<svg width="100%" height="100%" viewBox="0 0 680 510" xmlns="http://www.w3.org/2000/svg" role="img" preserveAspectRatio="xMidYMid slice">
+  <title>Bridge saw cutting a stone slab</title>
+  <desc>Line illustration of a bridge saw fabrication setup, gantry frame over a stone slab with a cutting blade, rendered in the Novello Stone brand palette.</desc>
+  <rect width="680" height="510" fill="#1C1B19"/>
+  <g stroke="#C9C2B4" stroke-width="0.5" opacity="0.12">
+      <line x1="0" y1="60" x2="680" y2="60"/>
+      <line x1="0" y1="120" x2="680" y2="120"/>
+      <line x1="0" y1="180" x2="680" y2="180"/>
+      <line x1="0" y1="240" x2="680" y2="240"/>
+      <line x1="0" y1="300" x2="680" y2="300"/>
+      <line x1="0" y1="360" x2="680" y2="360"/>
+      <line x1="0" y1="420" x2="680" y2="420"/>
+      <line x1="0" y1="480" x2="680" y2="480"/>
+  </g>
+  <rect x="60" y="400" width="560" height="18" fill="#2A2825" stroke="#C9C2B4" stroke-width="0.5"/>
+  <rect x="120" y="340" width="440" height="60" fill="#8A7A66" opacity="0.85"/>
+  <rect x="120" y="340" width="440" height="60" fill="none" stroke="#C9C2B4" stroke-width="0.5"/>
+  <g stroke="#C9C2B4" stroke-width="0.5" opacity="0.5">
+      <line x1="140" y1="340" x2="140" y2="400"/>
+      <line x1="180" y1="340" x2="180" y2="400"/>
+      <line x1="220" y1="340" x2="220" y2="400"/>
+      <line x1="260" y1="340" x2="260" y2="400"/>
+      <line x1="300" y1="340" x2="300" y2="400"/>
+      <line x1="340" y1="340" x2="340" y2="400"/>
+      <line x1="380" y1="340" x2="380" y2="400"/>
+      <line x1="420" y1="340" x2="420" y2="400"/>
+      <line x1="460" y1="340" x2="460" y2="400"/>
+      <line x1="500" y1="340" x2="500" y2="400"/>
+      <line x1="540" y1="340" x2="540" y2="400"/>
+  </g>
+  <rect x="100" y="80" width="14" height="320" fill="none" stroke="#C9C2B4" stroke-width="1"/>
+  <rect x="566" y="80" width="14" height="320" fill="none" stroke="#C9C2B4" stroke-width="1"/>
+  <rect x="90" y="80" width="500" height="20" fill="none" stroke="#C9C2B4" stroke-width="1"/>
+  <g>
+      <rect x="280" y="100" width="120" height="14" fill="none" stroke="#B5472B" stroke-width="1"/>
+      <line x1="340" y1="114" x2="340" y2="335" stroke="#B5472B" stroke-width="1.5"/>
+      <line x1="320" y1="114" x2="320" y2="335" stroke="#B5472B" stroke-width="0.5" opacity="0.4"/>
+      <line x1="360" y1="114" x2="360" y2="335" stroke="#B5472B" stroke-width="0.5" opacity="0.4"/>
+      <circle cx="340" cy="335" r="22" fill="none" stroke="#B5472B" stroke-width="1.5"/>
+      <circle cx="340" cy="335" r="22" fill="none" stroke="#B5472B" stroke-width="0.5" stroke-dasharray="2 3"/>
+  </g>
+  <line x1="340" y1="335" x2="340" y2="358" stroke="#B5472B" stroke-width="2" opacity="0.7"/>
+  <text x="60" y="450" class="ts" font-family="IBM Plex Mono, monospace" font-size="12" fill="#8A7A66" letter-spacing="1">BRIDGE SAW — GANTRY CUT</text>
+  <text x="60" y="468" class="ts" font-family="IBM Plex Mono, monospace" font-size="11" fill="#54635F" letter-spacing="0.5">FABRICATION / 50 GRIT</text>
+</svg>
