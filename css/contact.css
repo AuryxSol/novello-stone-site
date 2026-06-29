@@ -75,6 +75,38 @@
   margin-top: var(--space-2);
 }
 
+.vcard-box {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+  background: var(--limestone-dim);
+  border: 1px solid var(--hairline);
+  padding: var(--space-2);
+  margin-top: var(--space-3);
+}
+.vcard-qr {
+  width: 84px;
+  height: 84px;
+  flex-shrink: 0;
+  border: 1px solid var(--hairline);
+}
+.vcard-text p {
+  font-size: 0.88rem;
+  color: var(--travertine);
+  margin: 0.2em 0 0.5em;
+}
+.vcard-link {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  color: var(--oxide);
+}
+.vcard-link:hover { color: var(--oxide-dark); }
+
+@media (max-width: 480px) {
+  .vcard-box { flex-direction: column; align-items: flex-start; }
+}
+
 @media (max-width: 860px) {
   .contact-section .container { grid-template-columns: 1fr; }
 }
