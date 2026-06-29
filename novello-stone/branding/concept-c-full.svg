@@ -1,0 +1,47 @@
+<svg width="100%" height="100%" viewBox="0 0 760 380" xmlns="http://www.w3.org/2000/svg" role="img">
+<title>Vehicle branding concept C — full wrap</title>
+<desc>Side profile of a double-cab bakkie fully colour-wrapped in basalt black with an oxide diagonal accent band, large door wordmark, and full tailgate branding panel. No white bodywork visible except window glass.</desc>
+<rect width="760" height="380" fill="#F2EFE9"/>
+<text x="40" y="40" font-family="IBM Plex Mono, monospace" font-size="13" fill="#3D4A47" letter-spacing="1">CONCEPT C — FULL WRAP</text>
+<line x1="0" y1="300" x2="760" y2="300" stroke="#C9C2B4" stroke-width="1"/>
+
+<g transform="translate(140,90)">
+  <path d="M0 180
+           L0 120
+           L36 120
+           L60 58
+           Q66 44 84 44
+           L300 44
+           Q316 44 322 60
+           L342 120
+           L470 120
+           L470 180
+           Z"
+        fill="#1C1B19" stroke="#1C1B19" stroke-width="2"/>
+  <path d="M82 115 L100 60 Q104 50 116 50 L268 50 Q280 50 285 62 L300 115 Z"
+        fill="#2A2825" opacity="0.95"/>
+  <line x1="192" y1="51" x2="192" y2="115" stroke="#54635F" stroke-width="1" opacity="0.5"/>
+
+  <rect x="342" y="92" width="128" height="64" fill="#2A2825" stroke="#54635F" stroke-width="1"/>
+
+  <path d="M40 180 L120 44 L160 44 L80 180 Z" fill="#B5472B"/>
+
+  <g transform="translate(150,108)">
+    <text x="0" y="0" font-family="Oswald, sans-serif" font-size="22" font-weight="700" fill="#F2EFE9" letter-spacing="0.5">NOVELLO</text>
+    <text x="0" y="20" font-family="Oswald, sans-serif" font-size="22" font-weight="700" fill="#B5472B" letter-spacing="0.5">STONE</text>
+  </g>
+  <text x="150" y="148" font-family="IBM Plex Mono, monospace" font-size="8" fill="#8A7A66" letter-spacing="1">FABRICATION · TILING · RESTORATION</text>
+
+  <rect x="350" y="98" width="112" height="54" fill="#B5472B" opacity="0.95"/>
+  <text x="406" y="120" font-family="Oswald, sans-serif" font-size="12" font-weight="700" fill="#1C1B19" letter-spacing="0.5" text-anchor="middle">NOVELLO STONE</text>
+  <text x="406" y="138" font-family="IBM Plex Mono, monospace" font-size="7" fill="#1C1B19" text-anchor="middle">082 000 0000</text>
+
+  <circle cx="58" cy="184" r="28" fill="#1C1B19" stroke="#54635F" stroke-width="1.5"/>
+  <circle cx="58" cy="184" r="12" fill="#3D4A47"/>
+  <circle cx="412" cy="184" r="28" fill="#1C1B19" stroke="#54635F" stroke-width="1.5"/>
+  <circle cx="412" cy="184" r="12" fill="#3D4A47"/>
+</g>
+
+<text x="40" y="335" font-family="IBM Plex Mono, monospace" font-size="11" fill="#8A7A66" letter-spacing="0.5">Full body wrap + diagonal oxide band + large wordmark</text>
+<text x="40" y="352" font-family="IBM Plex Mono, monospace" font-size="11" fill="#54635F" letter-spacing="0.5">Maximum visibility · highest cost · resale needs unwrap first</text>
+</svg>

@@ -1,0 +1,35 @@
+<svg width="100%" height="100%" viewBox="0 0 760 380" xmlns="http://www.w3.org/2000/svg" role="img">
+<title>Vehicle branding concept B — partial wrap</title>
+<desc>Side profile of a white double-cab bakkie with a bold partial wrap: the lower half of the body wrapped in basalt black with an oxide accent wedge, door logo, a tailgate wordmark panel, and a QR code linking to the contact page.</desc>
+<rect width="760" height="380" fill="#F2EFE9"/>
+<text x="40" y="40" font-family="IBM Plex Mono, monospace" font-size="13" fill="#3D4A47" letter-spacing="1">CONCEPT B — PARTIAL WRAP</text>
+<line x1="0" y1="300" x2="760" y2="300" stroke="#C9C2B4" stroke-width="1"/>
+
+<g transform="translate(140,90)">
+  <path d="M0 180 L0 120 L36 120 L60 58 Q66 44 84 44 L300 44 Q316 44 322 60 L342 120 L470 120 L470 180 Z"
+        fill="#FFFFFF" stroke="#1C1B19" stroke-width="2"/>
+  <path d="M82 115 L100 60 Q104 50 116 50 L268 50 Q280 50 285 62 L300 115 Z"
+        fill="#1C1B19" opacity="0.88"/>
+  <line x1="192" y1="51" x2="192" y2="115" stroke="#1C1B19" stroke-width="1" opacity="0.4"/>
+
+  <rect x="360" y="48" width="92" height="68" fill="#FFFFFF" stroke="#1C1B19" stroke-width="1.5"/>
+  <text x="406" y="60" font-family="IBM Plex Mono, monospace" font-size="6.5" fill="#1C1B19" text-anchor="middle" letter-spacing="0.5">SCAN FOR A QUOTE</text>
+  <image href="data:image/png;base64,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" x="378" y="64" width="56" height="56"/>
+
+  <path d="M0 130 L470 130 L470 180 L0 180 Z" fill="#1C1B19"/>
+  <path d="M0 130 L160 130 L120 180 L0 180 Z" fill="#B5472B"/>
+
+  <g transform="translate(190,158)">
+    <text x="0" y="0" font-family="Oswald, sans-serif" font-size="17" font-weight="700" fill="#F2EFE9" letter-spacing="0.5">NOVELLO <tspan fill="#B5472B">STONE</tspan></text>
+    <text x="0" y="16" font-family="IBM Plex Mono, monospace" font-size="8" fill="#8A7A66" letter-spacing="1">FABRICATION · TILING · RESTORATION</text>
+  </g>
+
+  <circle cx="58" cy="184" r="28" fill="#1C1B19" stroke="#54635F" stroke-width="1.5"/>
+  <circle cx="58" cy="184" r="12" fill="#3D4A47"/>
+  <circle cx="412" cy="184" r="28" fill="#1C1B19" stroke="#54635F" stroke-width="1.5"/>
+  <circle cx="412" cy="184" r="12" fill="#3D4A47"/>
+</g>
+
+<text x="40" y="335" font-family="IBM Plex Mono, monospace" font-size="11" fill="#8A7A66" letter-spacing="0.5">Lower-body wrap block + oxide wedge + bold tailgate panel + QR code</text>
+<text x="40" y="352" font-family="IBM Plex Mono, monospace" font-size="11" fill="#54635F" letter-spacing="0.5">More visible from a distance · moderate cost · roof stays white</text>
+</svg>

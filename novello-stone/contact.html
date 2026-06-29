@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — Novello Stone</title>
+<meta name="description" content="Request a quote from Novello Stone for fabrication, tiling, or restoration work across the Garden Route.">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/contact.css">
+</head>
+<body data-page="contact">
+
+<div id="nav-mount"></div>
+
+<section class="contact-section">
+  <div class="container">
+    <div class="contact-info">
+      <span class="eyebrow">Get in touch</span>
+      <h1>Tell us what you're working with.</h1>
+      <p>Send a few details and, where possible, a photo or two of the surface. We'll come back with a straight answer &mdash; what it needs, roughly what it costs, and how soon we can look at it.</p>
+
+      <div class="contact-detail">
+        <span class="mono-label">Email</span>
+        <a href="mailto:studio@novello.co.za">studio@novello.co.za</a>
+      </div>
+      <div class="contact-detail">
+        <span class="mono-label">Phone / WhatsApp</span>
+        <a href="tel:+27834792643">+27 83 479 2643</a>
+      </div>
+      <div class="contact-detail">
+        <span class="mono-label">Coverage</span>
+        <span>Mossel Bay, Hartenbos, Dana Bay, Groot Brak, Klein Brak &amp; George</span>
+      </div>
+
+      <div class="vcard-box">
+        <img src="img/qr-vcard.png" alt="QR code to save Novello Stone contact details" class="vcard-qr">
+        <div class="vcard-text">
+          <span class="mono-label">Save our number</span>
+          <p>Scan to add Novello Stone straight to your contacts.</p>
+          <a href="novello-stone.vcf" download class="vcard-link">Or download the contact card &rarr;</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-card">
+      <form id="quote-form">
+        <div class="form-grid-2">
+          <div class="form-row">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" name="name" required>
+          </div>
+          <div class="form-row">
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" name="phone" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+
+        <div class="form-row">
+          <label for="service">Service Needed</label>
+          <select id="service" name="service">
+            <option value="Fabrication">Fabrication</option>
+            <option value="Tiling">Tiling</option>
+            <option value="Restoration">Restoration</option>
+            <option value="Not sure">Not sure / multiple</option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <label for="location">Property Location</label>
+          <input type="text" id="location" name="location" placeholder="e.g. Hartenbos">
+        </div>
+
+        <div class="form-row">
+          <label for="message">Tell us about the job</label>
+          <textarea id="message" name="message" required placeholder="Surface type, approximate size, what's needed..."></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Send Request</button>
+        <p class="form-note">This opens your email app with the details pre-filled, ready to send to studio@novello.co.za.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<div id="footer-mount"></div>
+
+<script src="js/layout.js"></script>
+<script>
+  document.getElementById('quote-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const name = document.getElementById('name').value;
+    const phone = document.getElementById('phone').value;
+    const email = document.getElementById('email').value;
+    const service = document.getElementById('service').value;
+    const location = document.getElementById('location').value;
+    const message = document.getElementById('message').value;
+
+    const subject = encodeURIComponent(`Quote Request — ${service} — ${name}`);
+    const body = encodeURIComponent(
+      `Name: ${name}\nPhone: ${phone}\nEmail: ${email}\nService: ${service}\nLocation: ${location}\n\nJob details:\n${message}`
+    );
+    window.location.href = `mailto:studio@novello.co.za?subject=${subject}&body=${body}`;
+  });
+</script>
+</body>
+</html>
