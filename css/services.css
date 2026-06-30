@@ -26,12 +26,22 @@
   top: 100px;
 }
 
-.service-grit {
-  font-family: var(--font-mono);
-  font-size: 0.85rem;
-  color: var(--oxide);
-  display: block;
+/* Material-type chips, replacing the old grit-number device */
+.material-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4em;
   margin-bottom: var(--space-2);
+}
+.material-chips .chip {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--travertine);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius);
+  padding: 0.3em 0.6em;
 }
 
 .service-text h2 { margin-bottom: var(--space-2); }
@@ -41,26 +51,24 @@
   margin-bottom: var(--space-3);
 }
 
-.spec-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: var(--space-3) 0;
+/* "Why the site visit matters" callout */
+.visit-callout {
+  background: var(--basalt-soft);
+  color: var(--limestone);
+  padding: var(--space-3);
+  border-radius: var(--radius);
   font-size: 0.92rem;
+  margin: var(--space-3) 0;
 }
-.spec-table th, .spec-table td {
-  text-align: left;
-  padding: 0.7em 0.4em;
-  border-bottom: 1px solid var(--hairline);
-}
-.spec-table th {
+.visit-callout strong {
+  color: var(--oxide);
+  display: block;
+  margin-bottom: 0.4em;
   font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--travertine);
 }
-.spec-table td.rate { font-family: var(--font-mono); }
-.spec-table td.note { color: var(--travertine); font-size: 0.85rem; }
 
 .service-list {
   list-style: none;
