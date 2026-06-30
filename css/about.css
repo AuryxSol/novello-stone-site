@@ -9,7 +9,8 @@
 }
 .about-intro h1 { margin: var(--space-2) 0 var(--space-3); }
 .about-intro .lead { font-size: 1.15rem; color: var(--travertine); margin-bottom: var(--space-2); }
-.about-visual { aspect-ratio: 4/5; }
+.about-visual { aspect-ratio: 4/3; }
+.about-visual img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
 @media (max-width: 860px) {
   .about-intro .container { grid-template-columns: 1fr; }
