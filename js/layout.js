@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <ul class="nav-links">
           <li><a href="index.html" class="${activePage === 'home' ? 'active' : ''}">Home</a></li>
           <li><a href="services.html" class="${activePage === 'services' ? 'active' : ''}">Services</a></li>
+          <li><a href="maintenance.html" class="${activePage === 'maintenance' ? 'active' : ''}">Maintenance</a></li>
           <li><a href="about.html" class="${activePage === 'about' ? 'active' : ''}">About</a></li>
           <li><a href="contact.html" class="${activePage === 'contact' ? 'active' : ''}">Contact</a></li>
         </ul>
@@ -23,6 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
     <div class="mobile-menu">
       <a href="index.html">Home</a>
       <a href="services.html">Services</a>
+      <a href="maintenance.html">Maintenance</a>
       <a href="about.html">About</a>
       <a href="contact.html">Contact</a>
       <a href="contact.html" style="color:#B5472B;">Request a Quote &rarr;</a>
@@ -46,6 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <div>
             <h4>Site</h4>
             <a href="services.html">Services</a>
+            <a href="maintenance.html">Maintenance</a>
             <a href="about.html">About</a>
             <a href="contact.html">Contact</a>
           </div>
