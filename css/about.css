@@ -43,8 +43,10 @@
   align-items: center;
 }
 .coverage-map {
-  aspect-ratio: 4/3;
+  aspect-ratio: 656 / 556;
+    overflow: hidden;
 }
+.coverage-map img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .coverage-towns {
   list-style: none;
   display: flex;
