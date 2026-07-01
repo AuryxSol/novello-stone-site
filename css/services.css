@@ -111,7 +111,7 @@
   width: 100%;
   height: 100%;
   overflow: hidden;
-  background: var(--basalt);
+    background: #ffffff;
 }
 .photo-rotator img {
   position: absolute;
