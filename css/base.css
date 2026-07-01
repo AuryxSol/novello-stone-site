@@ -174,7 +174,7 @@ section { padding: var(--space-6) 0; }
 }
 .brand span { color: var(--oxide); }
 .brand { display: inline-flex; align-items: center; gap: 0.65em; }
-.brand-mark { width: 34px; height: 34px; display: block; }
+.brand-mark { width: 52px; height: 52px; display: block; filter: drop-shadow(0 4px 10px rgba(0,0,0,0.45)); }
 
 .nav-links {
   display: flex;
