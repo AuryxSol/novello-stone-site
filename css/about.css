@@ -64,3 +64,34 @@
 @media (max-width: 800px) {
   .coverage-section .container { grid-template-columns: 1fr; }
 }
+
+
+.about-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    margin-top: var(--space-4);
+    padding-top: var(--space-3);
+    border-top: 1px solid var(--hairline);
+}
+.about-stat {
+    display: flex;
+    flex-direction: column;
+}
+.about-stat .stat-num {
+    font-family: var(--font-mono);
+    font-size: 2rem;
+    color: var(--oxide);
+}
+.about-stat .stat-label {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--travertine);
+    margin-top: 0.3em;
+}
+
+@media (max-width: 600px) {
+    .about-stats { gap: var(--space-3); }
+}
