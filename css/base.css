@@ -173,8 +173,8 @@ section { padding: var(--space-6) 0; }
   text-transform: uppercase;
 }
 .brand span { color: var(--oxide); }
-.brand { display: inline-flex; align-items: center; gap: 0.5em; }
-.brand-mark { width: 24px; height: 24px; display: block; }
+.brand { display: inline-flex; align-items: center; gap: 0.65em; }
+.brand-mark { width: 34px; height: 34px; display: block; }
 
 .nav-links {
   display: flex;
