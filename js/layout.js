@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="footer-grid">
           <div>
             <h4>Novello Stone</h4>
-            <p style="opacity:0.7; max-width: 320px;">Stone fabrication, tiling, and restoration across the Garden Route corridor &mdash; Mossel Bay to George.</p>
+            <p style="opacity:0.7; max-width: 320px;">Stone fabrication, tiling, and restoration across the Garden Route corridor &mdash; Mossel Bay to Plettenberg Bay.</p>
           </div>
           <div>
             <h4>Contact</h4>
@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
         <div class="footer-bottom">
           <span>&copy; 2026 Novello Stone (Pty) Ltd. Reg. No. 2026/586662/07. All rights reserved.</span>
-          <span>Garden Route &mdash; Hartenbos to George</span>
+          <span>Garden Route &mdash; Mossel Bay to Plettenberg Bay</span>
         </div>
       </div>
     </footer>
