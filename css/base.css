@@ -10,11 +10,11 @@
   /* --- Color tokens --- */
   --basalt:        #1C1B19;   /* primary dark — nav, headers */
   --basalt-soft:    #2A2825;  /* lifted dark surface */
-  --limestone:      #F2EFE9;  /* main background */
+    --limestone:      #F4EFE7;   /* main background */
   --limestone-dim:  #E9E4DB;  /* recessed panel */
   --travertine:     #8A7A66;  /* secondary text / warm neutral */
-  --oxide:          #B5472B;  /* single accent — diamond-blade wear */
-  --oxide-dark:     #8F3620;
+    --oxide:          #D3541E;   /* single accent — matches brand logo orange */
+    --oxide-dark:     #9E3F16;
   --slate:          #3D4A47;  /* restoration pillar tone */
   --slate-soft:     #54635F;
   --hairline:       #C9C2B4; /* borders / dividers */
