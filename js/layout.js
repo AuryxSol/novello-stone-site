@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
         </div>
         <div class="footer-bottom">
-          <span>&copy; 2026 Novello Stone (Pty) Ltd. All rights reserved.</span>
+          <span>&copy; 2026 Novello Stone (Pty) Ltd. Reg. No. 2026/586662/07. All rights reserved.</span>
           <span>Garden Route &mdash; Hartenbos to George</span>
         </div>
       </div>
