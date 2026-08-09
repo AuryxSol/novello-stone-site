@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="css/base.css">
 <link rel="icon" type="image/svg+xml" href="img/n-mark-favicon.svg">
 <link rel="stylesheet" href="css/maintenance.css">
+<link rel="stylesheet" href="css/motion.css">
 </head>
 <body data-page="maintenance">
 
@@ -16,22 +17,24 @@
 <header class="page-header">
 <div class="container">
 <span class="eyebrow">Maintenance Packages</span>
-<h1>Every property wears stone differently.</h1>
+<h1 data-cascade>Every property wears stone differently.</h1>
 <p>A poolside lappa and a hotel lobby don't need the same care plan. Tell us what you've got, and we'll build a maintenance schedule around it &mdash; not the other way around.</p>
 </div>
 </header>
 
 <section class="maintenance-intro">
-<div class="container">
+<div class="container" data-reveal>
 <p class="lead">Maintenance is different from restoration. Restoration is a one-off fix for stone that's already worn, etched, or damaged. Maintenance is the ongoing plan that keeps it from getting there again &mdash; scheduled cleaning, sealing, and inspection, tailored to how the space is actually used.</p>
 </div>
 </section>
 
 <section class="scenario-section">
 <div class="container">
+<div data-reveal>
 <span class="eyebrow">Built around how you use the space</span>
-<h2>Packages by property type.</h2>
-<div class="scenario-grid">
+<h2 data-cascade>Packages by property type.</h2>
+</div>
+<div class="scenario-grid" data-reveal-group>
 
 <div class="scenario-card">
 <span class="mono">01</span>
@@ -94,7 +97,7 @@
 </section>
 
 <section class="cta-band" style="background: var(--slate);">
-<div class="container maintenance-cta">
+<div class="container maintenance-cta" data-reveal>
 <h2>Not sure which package fits your property?</h2>
 <p>Tell us what you've got &mdash; residential, hospitality, poolside, or something in between &mdash; and we'll put together a plan around it. If it's not listed here, ask anyway; we'll help you find the right fit.</p>
 <a href="contact.html" class="btn btn-ghost-dark">Request a Quote</a>
@@ -104,5 +107,6 @@
 <div id="footer-mount"></div>
 
 <script src="js/layout.js"></script>
+<script src="js/motion.js"></script>
 </body>
 </html>

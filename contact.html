@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="css/base.css">
   <link rel="icon" type="image/svg+xml" href="img/n-mark-favicon.svg">
 <link rel="stylesheet" href="css/contact.css">
+<link rel="stylesheet" href="css/motion.css">
 </head>
 <body data-page="contact">
 
@@ -15,9 +16,9 @@
 
 <section class="contact-section">
   <div class="container">
-    <div class="contact-info">
+    <div class="contact-info" data-reveal>
       <span class="eyebrow">Get in touch</span>
-      <h1>Tell us what you're working with.</h1>
+      <h1 data-cascade>Tell us what you're working with.</h1>
       <p>Send a few details and, where possible, a photo or two of the surface. We'll come back with a straight answer &mdash; what it needs, roughly what it costs, and how soon we can look at it.</p>
 
       <div class="contact-detail">
@@ -43,7 +44,7 @@
       </div>
     </div>
 
-    <div class="form-card">
+    <div class="form-card" data-reveal="fade">
       <form id="quote-form">
         <div class="form-grid-2">
           <div class="form-row">
@@ -91,6 +92,7 @@
 <div id="footer-mount"></div>
 
 <script src="js/layout.js"></script>
+<script src="js/motion.js"></script>
 <script>
   document.getElementById('quote-form').addEventListener('submit', function (e) {
     e.preventDefault();

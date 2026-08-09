@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="css/base.css">
 <link rel="icon" type="image/svg+xml" href="img/n-mark-favicon.svg">
 <link rel="stylesheet" href="css/home.css">
+<link rel="stylesheet" href="css/motion.css">
 </head>
 <body data-page="home">
 
@@ -25,7 +26,7 @@
 <div class="container">
 <div class="hero-content">
 <span class="eyebrow">Garden Route &middot; Mossel Bay to Plettenberg Bay</span>
-<h1>Precision in<br><em>stone</em>, start to finish.</h1>
+<h1 data-cascade>Precision in<br><em>stone</em>, start to finish.</h1>
 <p class="hero-sub">Fabrication, tiling, and restoration under one owner-operated business. We measure twice, quote straight, and finish what we start.</p>
 <div class="hero-actions">
 <a href="contact.html" class="btn btn-primary">Request a Quote</a>
@@ -50,7 +51,7 @@
 </header>
 
 <section class="intro-strip">
-<div class="container">
+<div class="container" data-reveal>
 <span class="eyebrow">The business</span>
 <p>Novello Stone is an owner-operated stone and surface solutions business serving the Garden Route corridor, built on 15+ years of combined, tool-in-hand experience. We work across three connected pillars &mdash; fabrication, tiling, and restoration &mdash; so a client gets one accountable point of contact instead of three separate contractors.</p>
 </div>
@@ -58,11 +59,11 @@
 
 <section class="pillars-section">
 <div class="container">
-<div class="pillars-head">
+<div class="pillars-head" data-reveal>
 <span class="eyebrow">What we do</span>
-<h2>Three pillars, one standard of finish.</h2>
+<h2 data-cascade>Three pillars, one standard of finish.</h2>
 </div>
-<div class="pillars-grid">
+<div class="pillars-grid" data-reveal-group>
 
 <div class="pillar-card">
 <div class="material-chips">
@@ -118,9 +119,11 @@ Quoted after a site visit
 
 <section class="process-section">
 <div class="container">
+<div data-reveal>
 <span class="eyebrow">How a job runs</span>
-<h2>From first call to final seal.</h2>
-<div class="process-grid">
+<h2 data-cascade>From first call to final seal.</h2>
+</div>
+<div class="process-grid" data-reveal-group>
 <div class="process-step">
 <span class="step-mono mono">01</span>
 <h4>Site Visit &amp; Scope</h4>
@@ -147,10 +150,10 @@ Quoted after a site visit
 
 <section class="fleet-section">
 <div class="container">
-<div class="fleet-visual"><img src="img/fleet-photo.jpg" alt="Novello Stone crew vehicles outside the Mossel Bay workshop" loading="lazy"></div>
-<div class="fleet-text">
+<div class="fleet-visual" data-reveal="fade"><img src="img/fleet-photo.jpg" alt="Novello Stone crew vehicles outside the Mossel Bay workshop" loading="lazy"></div>
+<div class="fleet-text" data-reveal>
 <span class="eyebrow">On the road</span>
-<h2>A fleet built for the corridor.</h2>
+<h2 data-cascade>A fleet built for the corridor.</h2>
 <p>Every job is mobile-first. Our vehicles carry the tools, trailer, and crew needed to get on site and get it right &mdash; from Mossel Bay to Plettenberg Bay.</p>
 <ul class="fleet-list">
 <li><span>Crew Vehicle</span><span class="veh-status mono">Active</span></li>
@@ -163,9 +166,11 @@ Quoted after a site visit
 
 <section class="faq-section">
 <div class="container">
+<div data-reveal>
 <span class="eyebrow">What clients ask us</span>
-<h2>Straight answers before you call.</h2>
-<div class="faq-list">
+<h2 data-cascade>Straight answers before you call.</h2>
+</div>
+<div class="faq-list" data-reveal-group>
 <details class="faq-item">
 <summary>Do you quote from photos, or do you need a site visit?</summary>
 <p>For fabrication and larger tiling jobs, yes &mdash; we need to see the surface and measure it properly before we'll put a number on it. For smaller repairs or restoration work, photos and a phone call are often enough for a straight quote.</p>
@@ -195,7 +200,7 @@ Quoted after a site visit
 </section>
 
 <section class="cta-band">
-<div class="container">
+<div class="container" data-reveal>
 <h2>Have a surface that needs sorting?</h2>
 <p>Tell us what you're working with. We'll come back with a straight quote &mdash; no pressure, no inflated estimate.</p>
 <a href="contact.html" class="btn btn-ghost-dark">Request a Quote</a>
@@ -206,5 +211,6 @@ Quoted after a site visit
   <script src="js/rotator.js"></script>
 
 <script src="js/layout.js"></script>
+<script src="js/motion.js"></script>
 </body>
 </html>

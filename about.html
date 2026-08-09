@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="css/base.css">
 <link rel="icon" type="image/svg+xml" href="img/n-mark-favicon.svg">
 <link rel="stylesheet" href="css/about.css">
+<link rel="stylesheet" href="css/motion.css">
 </head>
 <body data-page="about">
 
@@ -17,41 +18,45 @@
 <div class="container">
 <div>
 <span class="eyebrow">About Novello Stone</span>
-<h1>Built on the tools, not just the spreadsheet.</h1>
+<h1 data-cascade>Built on the tools, not just the spreadsheet.</h1>
 <p class="lead">Novello Stone is an owner-operated stone and surface solutions business based in Mossel Bay, serving the Garden Route corridor from Mossel Bay to Plettenberg Bay.</p>
 <p>Novello is a new business — but it's not new to the work. The name is new. The experience behind it isn't. Years of hands-on fabrication, tiling, and restoration work sit behind every quote we write and every job we run.</p>
 <p>We run this like a family business, because that's what it is &mdash; no call centres, no account managers, just the people doing the work. Not sure whether something's a fabrication job, a tiling job, or a repair? Ask us anyway. We'd rather help you find the right fit than watch you guess.</p>
   <p style="opacity:0.65; font-size: 0.9rem;">Novello Stone (Pty) Ltd is a registered South African company, registration number 2026/586662/07.</p>
-<div class="about-stats">
+<div class="about-stats" data-reveal-group>
 <div class="about-stat">
-<span class="stat-num mono">15+</span>
+<span class="stat-num mono" data-counter="15" data-suffix="+">15+</span>
 <span class="stat-label mono">Years Combined Experience</span>
 </div>
 <div class="about-stat">
-  <span class="stat-num mono">3</span>
+  <span class="stat-num mono" data-counter="3">3</span>
 <span class="stat-label mono">Trades, One Business</span>
 </div>
 <div class="about-stat">
-  <span class="stat-num mono">1</span>
+  <span class="stat-num mono" data-counter="1">1</span>
 <span class="stat-label mono">Point Of Contact</span>
 </div>
 </div>
 </div>
-<div class="about-visual"><img src="img/services/6image.png" alt="Novello Stone bridge saw operator cutting a marble slab in the fabrication workshop" loading="lazy"></div>
+<div class="about-visual" data-reveal="fade"><img src="img/services/6image.png" alt="Novello Stone bridge saw operator cutting a marble slab in the fabrication workshop" loading="lazy"></div>
 </div>
 <section class="about-story">
   <div class="container">
+    <div data-reveal>
     <span class="eyebrow">The name</span>
-    <h2>Why "Novello"?</h2>
+    <h2 data-cascade>Why "Novello"?</h2>
     <p>Novello means "new" in Italian. It's a new company, built properly from scratch — its own name, its own standards, nothing inherited or renamed. But between the people doing the work, there's 15+ years of combined experience behind it. New business. Not a new trade.</p>
+    </div>
   </div>
 </section>
 
   <section class="values-section">
 <div class="container">
+<div data-reveal>
 <span class="eyebrow">How we work</span>
-<h2>A few things we don't compromise on.</h2>
-<div class="values-grid">
+<h2 data-cascade>A few things we don't compromise on.</h2>
+</div>
+<div class="values-grid" data-reveal-group>
 <div class="value-card">
 <span class="mono">01</span>
 <h3>Straight Quoting</h3>
@@ -99,9 +104,11 @@
 
 <section class="how-we-work-section">
 <div class="container">
+<div data-reveal>
 <span class="eyebrow">Working with us</span>
-<h2>What it's actually like to work with us.</h2>
-<div class="how-we-work-grid">
+<h2 data-cascade>What it's actually like to work with us.</h2>
+</div>
+<div class="how-we-work-grid" data-reveal-group>
 <div class="how-we-work-step">
 <span class="step-mono mono">01</span>
 <h4>Direct Line</h4>
@@ -127,7 +134,7 @@
 </section>
 
 <section class="cta-band">
-<div class="container">
+<div class="container" data-reveal>
 <h2>Want to talk through a project?</h2>
 <p>Get in touch and we'll arrange a site visit or talk you through what's possible on the phone first &mdash; even if you're not sure which trade it falls under.</p>
 <a href="contact.html" class="btn btn-ghost-dark">Get In Touch</a>
@@ -137,5 +144,6 @@
 <div id="footer-mount"></div>
 
 <script src="js/layout.js"></script>
+<script src="js/motion.js"></script>
 </body>
 </html>

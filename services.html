@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="css/base.css">
 <link rel="icon" type="image/svg+xml" href="img/n-mark-favicon.svg">
 <link rel="stylesheet" href="css/services.css">
+<link rel="stylesheet" href="css/motion.css">
 </head>
 <body data-page="services">
 
@@ -16,14 +17,14 @@
 <header class="page-header">
 <div class="container">
 <span class="eyebrow">Services</span>
-<h1>One business, three trades, no gaps between them.</h1>
+<h1 data-cascade>One business, three trades, no gaps between them.</h1>
 <p>Fabrication, tiling, and restoration are usually three separate quotes from three separate contractors. We run all three under one standard of measurement, costing, and finish.</p>
 </div>
 </header>
 
 <section class="service-block" id="fabrication">
 <div class="container">
-<div class="service-visual">
+<div class="service-visual" data-reveal="fade">
 <div class="photo-rotator" data-interval="4000">
 <img src="img/services/6image.png" alt="Bridge saw cutting a stone slab" class="is-active">
 <img src="img/services/7image.png" alt="Handling a large stone slab in the fabrication workshop">
@@ -31,7 +32,7 @@
 <img src="img/services/9image.png" alt="Completed white marble kitchen island">
 </div>
 </div>
-<div class="service-text">
+<div class="service-text" data-reveal>
 <div class="material-chips">
 <span class="chip">Marble</span>
 <span class="chip">Granite</span>
@@ -39,7 +40,7 @@
 <span class="chip">Quartzite</span>
 <span class="chip">Porcelain Slab</span>
 </div>
-<h2>Fabrication</h2>
+<h2 data-cascade>Fabrication</h2>
 <p class="lead">Bridge saw operations and slab work for countertops, vanities, and custom stone surfaces.</p>
 <p>Every fabrication job starts on-site, not on paper &mdash; we template the actual space, not an assumed one, so seams, cut-outs, and edge profiles are right the first time. Whether it's a full kitchen island in book-matched marble or a run of vanity tops in engineered stone, the slab is sourced, cut, and polished to the same standard: tight seams, clean edges, and a finish that holds up to daily use. Material is costed at confirmed supplier rates and billed separately from labour, so you always know exactly what you're paying for.</p>
 
@@ -63,7 +64,7 @@
 
 <section class="service-block" id="tiling">
 <div class="container">
-<div class="service-visual">
+<div class="service-visual" data-reveal="fade">
 <div class="photo-rotator" data-interval="4000">
 <img src="img/services/1image.png" alt="Floor tiling installation" class="is-active">
 <img src="img/services/2image.png" alt="Wall tiling in progress">
@@ -72,7 +73,7 @@
 <img src="img/services/5image.png" alt="Tiling work on an exterior surface">
 </div>
 </div>
-<div class="service-text">
+<div class="service-text" data-reveal>
 <div class="material-chips">
 <span class="chip">Porcelain</span>
 <span class="chip">Ceramic</span>
@@ -80,7 +81,7 @@
 <span class="chip">Large-Format</span>
 <span class="chip">Natural Stone Tile</span>
 </div>
-<h2>Tiling</h2>
+<h2 data-cascade>Tiling</h2>
 <p class="lead">Residential and commercial tiling across all formats, laid to fall and finished to last.</p>
 <p>From bathroom retiles to large-format commercial floors, the work is measured and set out properly before a single tile goes down &mdash; falls, pattern layout, and cuts planned before anything is fixed in place. We also take on contract tiling work through builders and retail partners across the corridor, holding the same standard whether it's one bathroom or a full commercial floor.</p>
 
@@ -120,14 +121,14 @@
 <img src="img/services/19image.png" alt="Staircase restoration, finished">
 </div>
 </div>
-<div class="service-text">
+<div class="service-text" data-reveal>
 <div class="material-chips">
 <span class="chip">Marble</span>
 <span class="chip">Granite</span>
 <span class="chip">Terrazzo</span>
 <span class="chip">Natural Stone</span>
 </div>
-<h2>Restoration</h2>
+<h2 data-cascade>Restoration</h2>
 <p class="lead">Grinding, honing, polishing, sealing, repairs, and ongoing maintenance &mdash; matched to how far gone the surface actually is.</p>
 <p>Natural stone loses its finish over time &mdash; traffic wear, etch marks, dulling, and chips. We don't run one generic fix for every job; the right process depends on the stone's condition, so every job starts with an honest assessment of what it actually needs.</p>
 
@@ -160,7 +161,7 @@
 </section>
 
 <section class="cta-band" style="background: var(--slate);">
-<div class="container">
+<div class="container" data-reveal>
 <h2>Not sure which pillar your job falls under?</h2>
 <p>Most surface problems aren't neatly one trade or another. Send us a few photos and we'll tell you straight what it needs.</p>
 <a href="contact.html" class="btn btn-ghost-dark">Request a Quote</a>
@@ -171,5 +172,6 @@
 
 <script src="js/layout.js"></script>
 <script src="js/rotator.js"></script>
+<script src="js/motion.js"></script>
 </body>
 </html>
