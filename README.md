@@ -5,7 +5,6 @@ Static multi-page site (no build step required) for Novello Stone, covering:
 - `services.html` — Fabrication / Tiling / Restoration
 - `about.html` — About / coverage area
 - `contact.html` — Quote request form (mailto-based, no backend yet)
-- `investor.html` — Private, unlinked overview page for investors (not in nav, `noindex`)
 
 ## Deploy via GitHub + Vercel
 
@@ -27,4 +26,3 @@ Static multi-page site (no build step required) for Novello Stone, covering:
 ## Notes
 - No real photography is used anywhere yet — all image areas are clearly marked placeholders, ready to swap once you have your own photos (fleet, workshop, job sites).
 - The contact form opens the visitor's email client pre-filled to `studio@novello.co.za` — there's no backend/database yet. If you want actual form submissions logged somewhere, that's a follow-up step (e.g. a simple serverless function or a form service).
-- `investor.html` is intentionally not linked from the nav and is marked `noindex` for search engines — share the direct URL with Stuart only.
