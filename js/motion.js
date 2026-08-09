@@ -8,7 +8,18 @@
 (function () {
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  // Every navigation — link click, back button, forward button — should land
+  // at the top of the new page. Set as early as possible, before the browser
+  // gets a chance to restore a remembered scroll position on back/forward.
+  if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+  }
+  window.addEventListener('pageshow', function () {
+    window.scrollTo(0, 0);
+  });
+
   document.addEventListener('DOMContentLoaded', function () {
+    window.scrollTo(0, 0);
     initScrollProgress();
     initNavScroll();
     initStaggerGroups();
@@ -35,22 +46,14 @@
     update();
   }
 
-  // --- Nav: darken/shadow on scroll, hide on scroll-down, show on scroll-up ---
+  // --- Nav: stays fixed and visible at all times (never hides on scroll);
+  // just darkens and gains a shadow once the page has scrolled a little,
+  // so it reads clearly against whatever content sits behind it. ---
   function initNavScroll() {
     var nav = document.querySelector('.site-nav');
     if (!nav) return;
-    var lastY = window.scrollY;
     function update() {
-      var y = window.scrollY;
-      nav.classList.toggle('nav-scrolled', y > 40);
-      if (!reduceMotion) {
-        if (y > lastY && y > 160) {
-          nav.classList.add('nav-hidden');
-        } else {
-          nav.classList.remove('nav-hidden');
-        }
-      }
-      lastY = y;
+      nav.classList.toggle('nav-scrolled', window.scrollY > 40);
     }
     window.addEventListener('scroll', throttleRAF(update), { passive: true });
     update();

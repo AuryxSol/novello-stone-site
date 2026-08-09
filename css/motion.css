@@ -35,16 +35,14 @@
   pointer-events: none;
 }
 
-/* --- Nav scroll state --- */
+/* --- Nav scroll state: always fixed and visible; only the background/shadow
+   respond to scroll position (see base.css for position: fixed). --- */
 .site-nav {
-  transition: transform 0.4s cubic-bezier(.16,.84,.44,1), box-shadow 0.3s ease, background 0.3s ease;
+  transition: box-shadow 0.3s ease, background 0.3s ease;
 }
 .site-nav.nav-scrolled {
   background: rgba(28, 27, 25, 0.97);
   box-shadow: 0 10px 30px rgba(0,0,0,0.28);
-}
-.site-nav.nav-hidden {
-  transform: translateY(-100%);
 }
 
 /* --- Generic scroll reveal --- */
