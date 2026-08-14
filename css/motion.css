@@ -110,7 +110,7 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at var(--spot-x, 50%) var(--spot-y, 50%), rgba(212,175,55,0.16), transparent 62%);
+  background: radial-gradient(circle at var(--spot-x, 50%) var(--spot-y, 50%), rgba(229,193,88,0.16), transparent 62%);
   opacity: 0;
   transition: opacity 0.3s ease;
   pointer-events: none;
