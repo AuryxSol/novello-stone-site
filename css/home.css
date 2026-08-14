@@ -82,8 +82,8 @@ color: var(--limestone);
 margin: var(--space-2) 0 var(--space-3);
 }
 .hero h1 em {
-font-style: normal;
-color: var(--oxide);
+font-style: italic;
+color: var(--gold);
 }
 
 .hero-sub {
@@ -112,7 +112,7 @@ width: fit-content;
 .hero-stats .stat-value {
 font-family: var(--font-mono);
 font-size: 1.6rem;
-color: var(--oxide);
+color: var(--gold);
 }
 .hero-stats .stat-label {
 font-family: var(--font-mono);
@@ -241,7 +241,7 @@ margin-top: var(--space-2);
 background: var(--basalt-soft);
 color: var(--limestone);
 }
-.process-section .eyebrow { color: var(--oxide); }
+.process-section .eyebrow { color: var(--gold); }
 .process-section h2 { color: var(--limestone); }
 
 .process-grid {
@@ -256,7 +256,7 @@ padding-left: var(--space-2);
 }
 .process-step .step-mono {
 font-family: var(--font-mono);
-color: var(--oxide);
+color: var(--gold);
 font-size: 0.8rem;
 display: block;
 margin-bottom: 0.6em;
@@ -312,7 +312,7 @@ justify-content: space-between;
 border-bottom: 1px solid var(--hairline);
 padding-bottom: 0.6em;
 }
-.fleet-list .veh-status { color: var(--oxide); text-transform: uppercase; font-size: 0.75rem; }
+.fleet-list .veh-status { color: var(--gold); text-transform: uppercase; font-size: 0.75rem; }
 
 @media (max-width: 800px) {
 .fleet-section .container { grid-template-columns: 1fr; }
@@ -320,7 +320,7 @@ padding-bottom: 0.6em;
 
 /* ===== AREA + CTA BAND ===== */
 .cta-band {
-background: var(--oxide);
+background: var(--gold);
 color: var(--limestone);
 text-align: center;
 }
@@ -328,7 +328,7 @@ text-align: center;
 .cta-band p { color: var(--limestone); opacity: 0.9; max-width: 520px; margin: 0 auto var(--space-3); }
 .cta-band .btn { border-color: var(--limestone); }
 .cta-band .btn-primary { background: var(--basalt); border-color: var(--basalt); }
-.cta-band .btn-ghost-dark:hover { background: var(--limestone); color: var(--oxide); }
+.cta-band .btn-ghost-dark:hover { background: var(--limestone); color: var(--gold); }
 
 /* ===== FAQ ("What clients ask us") ===== */
 .faq-section { background: var(--limestone-dim); }
@@ -356,7 +356,7 @@ text-align: center;
 .faq-item summary::after {
   content: '\002B';
   font-family: var(--font-mono);
-  color: var(--oxide);
+  color: var(--gold);
   font-size: 1.3rem;
   line-height: 1;
   flex-shrink: 0;

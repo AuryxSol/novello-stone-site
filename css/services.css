@@ -61,7 +61,7 @@
   margin: var(--space-3) 0;
 }
 .visit-callout strong {
-  color: var(--oxide);
+  color: var(--gold);
   display: block;
   margin-bottom: 0.4em;
   font-family: var(--font-mono);
@@ -84,12 +84,12 @@
   content: '\2014';
   position: absolute;
   left: 0;
-  color: var(--oxide);
+  color: var(--gold);
 }
 
 .note-box {
   background: var(--limestone-dim);
-  border-left: 3px solid var(--oxide);
+  border-left: 3px solid var(--gold);
   padding: var(--space-2) var(--space-3);
   font-size: 0.9rem;
   color: var(--travertine);

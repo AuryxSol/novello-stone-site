@@ -4,7 +4,7 @@
    "luxury marble" cliches.
    =========================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Source+Sans+3:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
 
 :root {
   /* --- Color tokens --- */
@@ -13,8 +13,8 @@
     --limestone:      #F4EFE7;   /* main background */
   --limestone-dim:  #E9E4DB;  /* recessed panel */
   --travertine:     #8A7A66;  /* secondary text / warm neutral */
-    --oxide:          #D3541E;   /* single accent — matches brand logo orange */
-    --oxide-dark:     #9E3F16;
+    --gold:          #C9A961;   /* single accent — elegant gold, replaces prior oxide-orange */
+    --gold-dark:     #A8863F;
   --slate:          #3D4A47;  /* restoration pillar tone */
   --slate-soft:     #54635F;
   --hairline:       #C9C2B4; /* borders / dividers */
@@ -22,6 +22,8 @@
 
   /* --- Type tokens --- */
   --font-display: 'Oswald', sans-serif;
+  --font-wordmark: 'Cinzel', serif;
+  --font-headline: 'Cormorant Garamond', serif;
   --font-body: 'Source Sans 3', sans-serif;
   --font-mono: 'IBM Plex Mono', monospace;
 
@@ -69,7 +71,14 @@ h1, h2, h3, h4 {
   line-height: 1.08;
 }
 
-h1 { font-size: clamp(2.6rem, 6vw, 5rem); font-weight: 700; letter-spacing: 0; }
+h1 {
+  font-family: var(--font-headline);
+  font-style: italic;
+  text-transform: none;
+  font-weight: 500;
+  font-size: clamp(2.6rem, 6vw, 5rem);
+  letter-spacing: 0;
+}
 h2 { font-size: clamp(1.9rem, 3.6vw, 2.8rem); }
 h3 { font-size: 1.3rem; letter-spacing: 0.04em; }
 
@@ -87,7 +96,7 @@ a { color: inherit; text-decoration: none; }
   font-size: 0.78rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--oxide);
+  color: var(--gold);
   display: inline-flex;
   align-items: center;
   gap: 0.5em;
@@ -97,7 +106,7 @@ a { color: inherit; text-decoration: none; }
   content: '';
   width: 18px;
   height: 1px;
-  background: var(--oxide);
+  background: var(--gold);
   display: inline-block;
 }
 
@@ -133,11 +142,11 @@ section { padding: var(--space-6) 0; }
 }
 
 .btn-primary {
-  background: var(--oxide);
-  border-color: var(--oxide);
+  background: var(--gold);
+  border-color: var(--gold);
   color: var(--limestone);
 }
-.btn-primary:hover { background: var(--oxide-dark); border-color: var(--oxide-dark); }
+.btn-primary:hover { background: var(--gold-dark); border-color: var(--gold-dark); }
 
 .btn-ghost-dark {
   border-color: var(--limestone);
@@ -165,16 +174,16 @@ section { padding: var(--space-6) 0; }
 }
 
 .brand {
-  font-family: var(--font-display);
-  font-size: 1.25rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
+  font-family: var(--font-wordmark);
+  font-size: 1.2rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
   color: var(--limestone);
   text-transform: uppercase;
 }
-.brand span { color: var(--oxide); }
-.brand { display: inline-flex; align-items: center; gap: 0.65em; }
-.brand-mark { width: 52px; height: 52px; display: block; filter: drop-shadow(0 4px 10px rgba(0,0,0,0.45)); }
+.brand span { color: var(--gold); }
+.brand { display: inline-flex; align-items: center; gap: 0.75em; }
+.brand-mark { width: 46px; height: 46px; display: block; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.35)); }
 
 .nav-links {
   display: flex;
@@ -198,7 +207,7 @@ section { padding: var(--space-6) 0; }
   position: absolute;
   left: 0; bottom: 0;
   width: 100%; height: 2px;
-  background: var(--oxide);
+  background: var(--gold);
 }
 
 .nav-cta {
@@ -212,7 +221,7 @@ section { padding: var(--space-6) 0; }
   border-radius: var(--radius);
   transition: background 0.2s;
 }
-.nav-cta:hover { background: var(--oxide); color: var(--limestone); }
+.nav-cta:hover { background: var(--gold); color: var(--limestone); }
 
 .nav-toggle {
   display: none;
@@ -279,7 +288,7 @@ footer {
   display: block;
   margin-bottom: 0.5em;
 }
-.footer-grid a:hover { opacity: 1; color: var(--oxide); }
+.footer-grid a:hover { opacity: 1; color: var(--gold); }
 .footer-bottom {
   display: flex;
   justify-content: space-between;
@@ -330,7 +339,7 @@ footer {
 }
 .placeholder-label .tag {
   display: block;
-  color: var(--oxide);
+  color: var(--gold);
   font-size: 0.7rem;
   margin-top: 0.5em;
 }

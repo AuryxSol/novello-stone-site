@@ -35,7 +35,7 @@
   flex-direction: column;
   gap: 0.4em;
 }
-.scenario-card .mono { color: var(--oxide); font-size: 0.78rem; }
+.scenario-card .mono { color: var(--gold); font-size: 0.78rem; }
 .scenario-card h3 { margin: var(--space-1) 0 0.2em; font-size: 1.05rem; }
 .scenario-card p { color: var(--travertine); font-size: 0.88rem; margin-bottom: var(--space-1); flex-grow: 1; }
 

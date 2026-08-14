@@ -18,7 +18,7 @@
   font-size: 0.72rem;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: var(--oxide);
+  color: var(--gold);
   display: block;
   margin-bottom: 0.4em;
 }
@@ -26,7 +26,7 @@
   font-size: 1.05rem;
   display: block;
 }
-.contact-detail a:hover { color: var(--oxide); }
+.contact-detail a:hover { color: var(--gold); }
 
 .form-card {
   background: var(--white);
@@ -55,7 +55,7 @@
   color: var(--basalt);
 }
 .form-row input:focus, .form-row select:focus, .form-row textarea:focus {
-  outline: 2px solid var(--oxide);
+  outline: 2px solid var(--gold);
   outline-offset: 1px;
 }
 .form-row textarea { resize: vertical; min-height: 120px; }
@@ -99,9 +99,9 @@
   font-family: var(--font-mono);
   font-size: 0.78rem;
   letter-spacing: 0.04em;
-  color: var(--oxide);
+  color: var(--gold);
 }
-.vcard-link:hover { color: var(--oxide-dark); }
+.vcard-link:hover { color: var(--gold-dark); }
 
 @media (max-width: 480px) {
   .vcard-box { flex-direction: column; align-items: flex-start; }

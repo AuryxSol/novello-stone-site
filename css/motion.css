@@ -30,7 +30,7 @@
   top: 0; left: 0;
   height: 3px;
   width: 0%;
-  background: linear-gradient(90deg, var(--oxide), var(--oxide-dark));
+  background: linear-gradient(90deg, var(--gold), var(--gold-dark));
   z-index: 300;
   pointer-events: none;
 }
@@ -110,7 +110,7 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at var(--spot-x, 50%) var(--spot-y, 50%), rgba(211,84,30,0.12), transparent 62%);
+  background: radial-gradient(circle at var(--spot-x, 50%) var(--spot-y, 50%), rgba(201,169,97,0.16), transparent 62%);
   opacity: 0;
   transition: opacity 0.3s ease;
   pointer-events: none;
