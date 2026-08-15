@@ -316,13 +316,15 @@ footer .container {
   font-size: 0.82rem;
   color: var(--travertine);
   margin-bottom: var(--space-2);
+  text-shadow: 0 1px 4px rgba(0,0,0,0.6);
 }
 .footer-grid p, .footer-grid a {
   font-size: 0.92rem;
   color: var(--limestone);
-  opacity: 0.85;
+  opacity: 0.88;
   display: block;
   margin-bottom: 0.5em;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.6);
 }
 .footer-grid a:hover { opacity: 1; color: var(--gold); }
 .footer-bottom {
@@ -331,9 +333,10 @@ footer .container {
   padding-top: var(--space-3);
   font-family: var(--font-mono);
   font-size: 0.75rem;
-  opacity: 0.55;
+  opacity: 0.65;
   flex-wrap: wrap;
   gap: var(--space-1);
+  text-shadow: 0 1px 4px rgba(0,0,0,0.6);
 }
 
 @media (max-width: 720px) {
