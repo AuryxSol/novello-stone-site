@@ -268,6 +268,29 @@ footer {
   background: var(--basalt);
   color: var(--limestone);
   padding: var(--space-5) 0 var(--space-3);
+  position: relative;
+  overflow: hidden;
+}
+footer::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image: url('../img/backdrops/backdrop-footer.jpg');
+  background-size: cover;
+  background-position: center;
+  opacity: 0.55;
+}
+footer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(180deg, rgba(28,27,25,0.55) 0%, rgba(28,27,25,0.8) 100%);
+}
+footer .container {
+  position: relative;
+  z-index: 2;
 }
 .footer-grid {
   display: grid;
