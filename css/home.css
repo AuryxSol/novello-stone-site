@@ -58,7 +58,7 @@ position: absolute;
   z-index: 3;
 top: 0; bottom: 0;
 width: 40%;
-background: linear-gradient(100deg, transparent, rgba(181,71,43,0.10), transparent);
+background: linear-gradient(100deg, transparent, rgba(165,139,63,0.16), transparent);
 animation: sweep 9s ease-in-out infinite;
 pointer-events: none;
 }
