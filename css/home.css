@@ -164,11 +164,7 @@ line-height: 1.5;
 }
 
 /* ===== SERVICE PILLARS ===== */
-.pillars-section {
-  background:
-    radial-gradient(circle at 50% 0%, rgba(210,179,140,0.07), transparent 35%),
-    var(--basalt);
-}
+/* Background photo + light handled by .stone-section (see index.html) */
 
 .pillars-head {
 margin-bottom: var(--space-5);
@@ -253,32 +249,9 @@ margin-top: var(--space-2);
 }
 
 /* ===== PROCESS STRIP ===== */
+/* Background photo + light handled by .stone-section (see index.html) */
 .process-section {
-background: var(--basalt-soft);
 color: var(--limestone);
-position: relative;
-overflow: hidden;
-}
-.process-section::before {
-content: '';
-position: absolute;
-inset: 0;
-z-index: 0;
-background-image: url('../img/backdrops/backdrop-spare-bottom-left.jpg');
-background-size: cover;
-background-position: center;
-opacity: 0.4;
-}
-.process-section::after {
-content: '';
-position: absolute;
-inset: 0;
-z-index: 1;
-background: linear-gradient(180deg, rgba(8,8,7,0.62) 0%, rgba(8,8,7,0.85) 100%);
-}
-.process-section .container {
-position: relative;
-z-index: 2;
 }
 .process-section .eyebrow { color: var(--gold); text-shadow: 0 1px 4px rgba(0,0,0,0.7); }
 .process-section h2 { color: var(--limestone); text-shadow: 0 2px 8px rgba(0,0,0,0.55); }
@@ -368,33 +341,10 @@ color: var(--limestone) !important;
 }
 
 /* ===== AREA + CTA BAND ===== */
+/* Background photo + light handled by .stone-section (see index.html) */
 .cta-band {
-background: var(--basalt);
 color: var(--limestone);
 text-align: center;
-position: relative;
-overflow: hidden;
-}
-.cta-band::before {
-content: '';
-position: absolute;
-inset: 0;
-z-index: 0;
-background-image: url('../img/backdrops/backdrop-page-header.jpg');
-background-size: cover;
-background-position: center;
-opacity: 0.85;
-}
-.cta-band::after {
-content: '';
-position: absolute;
-inset: 0;
-z-index: 1;
-background: linear-gradient(180deg, rgba(8,8,7,0.5) 0%, rgba(8,8,7,0.75) 100%);
-}
-.cta-band .container {
-position: relative;
-z-index: 2;
 }
 .cta-band h2 { color: var(--limestone); margin-bottom: var(--space-2); text-shadow: 0 2px 8px rgba(0,0,0,0.55); }
 .cta-band p { color: var(--limestone); opacity: 0.92; max-width: 520px; margin: 0 auto var(--space-3); text-shadow: 0 1px 4px rgba(0,0,0,0.6); }

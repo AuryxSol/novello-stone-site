@@ -105,8 +105,8 @@
 }
 
 /* ===== HOW WE WORK WITH YOU ===== */
+/* Background photo + light handled by .stone-section (see about.html) */
 .how-we-work-section {
-  background: var(--basalt-soft);
   color: var(--limestone);
 }
 .how-we-work-section .eyebrow { color: var(--gold); }
