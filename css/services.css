@@ -21,7 +21,7 @@
   position: absolute;
   inset: 0;
   z-index: 1;
-  background: linear-gradient(180deg, rgba(28,27,25,0.4) 0%, rgba(28,27,25,0.68) 100%);
+  background: linear-gradient(180deg, rgba(8,8,7,0.5) 0%, rgba(8,8,7,0.75) 100%);
 }
 .page-header .container {
   position: relative;
@@ -101,7 +101,7 @@
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: linear-gradient(135deg, rgba(28,27,25,0.5) 0%, rgba(28,27,25,0.72) 100%);
+  background: linear-gradient(135deg, rgba(8,8,7,0.6) 0%, rgba(8,8,7,0.8) 100%);
 }
 .visit-callout, .visit-callout * {
   text-shadow: 0 1px 4px rgba(0,0,0,0.6);
@@ -125,7 +125,7 @@
   padding-left: 1.4em;
   position: relative;
   margin-bottom: 0.6em;
-  color: var(--basalt);
+  color: var(--text-body);
 }
 .service-list li::before {
   content: '\2014';
@@ -142,7 +142,7 @@
   color: var(--travertine);
   margin-top: var(--space-3);
 }
-.note-box strong { color: var(--basalt); }
+.note-box strong { color: var(--limestone); }
 
 @media (max-width: 860px) {
   .service-block .container,
@@ -158,7 +158,7 @@
   width: 100%;
   height: 100%;
   overflow: hidden;
-      background: var(--limestone);
+      background: var(--basalt);
 }
 .photo-rotator img {
   position: absolute;

@@ -7,18 +7,23 @@
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Source+Sans+3:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
 
 :root {
-  /* --- Color tokens --- */
-  --basalt:        #1C1B19;   /* primary dark — nav, headers */
-  --basalt-soft:    #2A2825;  /* lifted dark surface */
-    --limestone:      #F4EFE7;   /* main background */
-  --limestone-dim:  #E9E4DB;  /* recessed panel */
-  --travertine:     #8A7A66;  /* secondary text / warm neutral */
-    --gold:          #A58B3F;   /* single accent — antique gold, replaces prior oxide-orange */
-    --gold-dark:     #846F32;
-  --slate:          #3D4A47;  /* restoration pillar tone */
-  --slate-soft:     #54635F;
-  --hairline:       #C9C2B4; /* borders / dividers */
-  --white:          #FFFFFF;
+  /* --- Color tokens: charcoal natural stone + brushed gold --- */
+  --basalt:         #080807;   /* darkest — nav, footer, deepest sections */
+  --basalt-soft:    #171513;   /* lifted charcoal surface */
+  --basalt-warm:    #221D17;   /* warm charcoal panel */
+  --panel:          #11100F;   /* card / recessed panel */
+  --limestone:      #F4F1EB;   /* primary light text (headings, wordmark) */
+  --limestone-dim:  #171513;   /* recessed dark panel surface */
+  --text-body:      #DDD7CD;   /* body copy text */
+    --gold:          #A58B3F;   /* single accent — brushed architectural gold */
+    --gold-dark:     #8C6437;   /* bronze — darken on hover (text/links) */
+  --gold-soft:      #C6A478;   /* lighten on hover (filled buttons) */
+  --gold-light:     #DDC6A1;   /* metallic highlight */
+  --travertine:     #A9A197;  /* secondary / muted text */
+  --slate:          #685B4C;  /* muted bronze — alt CTA band tone */
+  --slate-soft:     #8C6437;
+  --hairline:       rgba(165, 139, 63, 0.22); /* fine architectural gold line */
+  --white:          #F4F1EB;
 
   /* --- Type tokens --- */
   --font-display: 'Oswald', sans-serif;
@@ -55,8 +60,10 @@ html { scroll-behavior: smooth; }
 
 body {
   font-family: var(--font-body);
-  background: var(--limestone);
-  color: var(--basalt);
+  background:
+    radial-gradient(circle at 30% 0%, rgba(198, 164, 120, 0.10), transparent 32%),
+    linear-gradient(135deg, var(--basalt-soft) 0%, var(--basalt) 58%, var(--panel) 100%);
+  color: var(--text-body);
   line-height: 1.55;
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
@@ -67,7 +74,7 @@ h1, h2, h3, h4 {
   text-transform: uppercase;
   letter-spacing: 0.02em;
   font-weight: 600;
-  color: var(--basalt);
+  color: var(--limestone);
   line-height: 1.08;
 }
 
@@ -82,7 +89,7 @@ h1 {
 h2 { font-size: clamp(1.9rem, 3.6vw, 2.8rem); }
 h3 { font-size: 1.3rem; letter-spacing: 0.04em; }
 
-p { color: var(--basalt); }
+p { color: var(--text-body); }
 
 a { color: inherit; text-decoration: none; }
 
@@ -92,9 +99,10 @@ a { color: inherit; text-decoration: none; }
 }
 
 .eyebrow {
-  font-family: var(--font-mono);
+  font-family: var(--font-display);
   font-size: 0.78rem;
-  letter-spacing: 0.14em;
+  font-weight: 500;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--gold);
   display: inline-flex;
@@ -133,37 +141,38 @@ section { padding: var(--space-6) 0; }
   letter-spacing: 0.08em;
   text-transform: uppercase;
   padding: 0.95em 1.8em;
-  border: 1px solid var(--basalt);
+  border: 1px solid rgba(165, 139, 63, 0.45);
   border-radius: var(--radius);
   cursor: pointer;
   transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
   background: transparent;
-  color: var(--basalt);
+  color: var(--limestone);
 }
 
 .btn-primary {
   background: var(--gold);
   border-color: var(--gold);
-  color: var(--limestone);
+  color: var(--basalt);
 }
-.btn-primary:hover { background: var(--gold-dark); border-color: var(--gold-dark); }
+.btn-primary:hover { background: var(--gold-soft); border-color: var(--gold-soft); }
 
 .btn-ghost-dark {
   border-color: var(--limestone);
   color: var(--limestone);
 }
-.btn-ghost-dark:hover { background: var(--limestone); color: var(--basalt); }
+.btn-ghost-dark:hover { background: transparent; border-color: var(--gold); color: var(--gold); }
 
-.btn-ghost:hover { background: var(--basalt); color: var(--limestone); }
+.btn-ghost:hover { background: var(--gold); border-color: var(--gold); color: var(--basalt); }
 
 /* --- Nav --- */
 .site-nav {
   position: fixed;
   top: 0; left: 0; right: 0;
   z-index: 100;
-  background: rgba(28, 27, 25, 0.92);
-  backdrop-filter: blur(6px);
-  border-bottom: 1px solid rgba(201, 194, 180, 0.18);
+  background: rgba(8, 8, 7, 0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(165, 139, 63, 0.16);
   overflow: hidden;
 }
 .site-nav::before {
@@ -174,7 +183,7 @@ section { padding: var(--space-6) 0; }
   background-image: url('../img/backdrops/backdrop-spare-bottom-middle.jpg');
   background-size: cover;
   background-position: center 25%;
-  opacity: 0.55;
+  opacity: 0.22;
 }
 
 .site-nav .container {
@@ -204,17 +213,19 @@ section { padding: var(--space-6) 0; }
   list-style: none;
 }
 .nav-links a {
-  font-family: var(--font-mono);
+  font-family: var(--font-body);
+  font-weight: 500;
   font-size: 0.82rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--limestone);
   opacity: 0.78;
-  transition: opacity 0.2s;
+  transition: opacity 0.2s, color 0.2s;
   position: relative;
   padding-bottom: 4px;
 }
-.nav-links a:hover, .nav-links a.active { opacity: 1; }
+.nav-links a:hover { opacity: 1; color: var(--gold); }
+.nav-links a.active { opacity: 1; }
 .nav-links a.active::after {
   content: '';
   position: absolute;
@@ -229,12 +240,12 @@ section { padding: var(--space-6) 0; }
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--basalt);
-  background: var(--limestone);
+  background: var(--gold);
   padding: 0.6em 1.3em;
   border-radius: var(--radius);
   transition: background 0.2s;
 }
-.nav-cta:hover { background: var(--gold); color: var(--limestone); }
+.nav-cta:hover { background: var(--gold-soft); }
 
 .nav-toggle {
   display: none;
@@ -271,7 +282,7 @@ section { padding: var(--space-6) 0; }
     font-size: 1.1rem;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    border-bottom: 1px solid rgba(201,194,180,0.15);
+    border-bottom: 1px solid rgba(165,139,63,0.18);
     padding-bottom: var(--space-2);
   }
 }
@@ -279,10 +290,11 @@ section { padding: var(--space-6) 0; }
 /* --- Footer --- */
 footer {
   background: var(--basalt);
-  color: var(--limestone);
+  color: var(--text-body);
   padding: var(--space-5) 0 var(--space-3);
   position: relative;
   overflow: hidden;
+  border-top: 1px solid rgba(165, 139, 63, 0.22);
 }
 footer::before {
   content: '';
@@ -292,14 +304,14 @@ footer::before {
   background-image: url('../img/backdrops/backdrop-footer.jpg');
   background-size: cover;
   background-position: center;
-  opacity: 0.85;
+  opacity: 0.5;
 }
 footer::after {
   content: '';
   position: absolute;
   inset: 0;
   z-index: 1;
-  background: linear-gradient(180deg, rgba(28,27,25,0.35) 0%, rgba(28,27,25,0.65) 100%);
+  background: linear-gradient(180deg, rgba(8,8,7,0.55) 0%, rgba(8,8,7,0.85) 100%);
 }
 footer .container {
   position: relative;
@@ -310,7 +322,7 @@ footer .container {
   grid-template-columns: 1.4fr 1fr 1fr;
   gap: var(--space-4);
   padding-bottom: var(--space-4);
-  border-bottom: 1px solid rgba(201,194,180,0.18);
+  border-bottom: 1px solid rgba(165,139,63,0.18);
 }
 .footer-grid h4 {
   font-size: 0.82rem;
@@ -374,7 +386,7 @@ footer .container {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid rgba(201,194,180,0.2);
+  border: 1px solid rgba(165,139,63,0.2);
 }
 .placeholder-visual::before {
   content: '';
@@ -382,8 +394,8 @@ footer .container {
   inset: 0;
   background-image: repeating-linear-gradient(
     135deg,
-    rgba(201,194,180,0.06) 0px,
-    rgba(201,194,180,0.06) 1px,
+    rgba(165,139,63,0.05) 0px,
+    rgba(165,139,63,0.05) 1px,
     transparent 1px,
     transparent 14px
   );
@@ -411,8 +423,17 @@ footer .container {
   height: 100%;
   display: block;
   object-fit: cover;
-  border: 1px solid rgba(201,194,180,0.2);
-  background: #1C1B19;
+  border: 1px solid rgba(165,139,63,0.2);
+  background: var(--basalt);
+}
+
+/* --- Photography: subtle grading, no gold filter over real photos --- */
+.hero-photo-rotator img,
+.photo-rotator img,
+.about-visual img,
+.fleet-visual img,
+.coverage-map img {
+  filter: saturate(0.92) contrast(1.04) brightness(0.94);
 }
 
 .caption-note {

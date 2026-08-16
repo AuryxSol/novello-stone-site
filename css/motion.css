@@ -41,8 +41,8 @@
   transition: box-shadow 0.3s ease, background 0.3s ease;
 }
 .site-nav.nav-scrolled {
-  background: rgba(28, 27, 25, 0.97);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.28);
+  background: rgba(8, 8, 7, 0.94);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.35);
 }
 
 /* --- Generic scroll reveal --- */
@@ -118,7 +118,7 @@
 .tilt-card:hover::before,
 .tilt-card:focus-within::before { opacity: 1; }
 .tilt-card:hover {
-  box-shadow: 0 18px 40px rgba(28,27,25,0.14);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.35);
 }
 
 /* --- Image hover treatment (single, non-rotator visuals) --- */
@@ -127,20 +127,6 @@
   transition: transform 0.7s cubic-bezier(.16,.84,.44,1);
 }
 .fleet-visual:hover img, .about-visual:hover img { transform: scale(1.06); }
-
-/* --- Magnetic-feel buttons: soft shine sweep on hover --- */
-.btn { position: relative; overflow: hidden; }
-.btn::after {
-  content: '';
-  position: absolute;
-  top: 0; left: -60%;
-  width: 40%; height: 100%;
-  background: linear-gradient(115deg, transparent, rgba(255,255,255,0.22), transparent);
-  transform: skewX(-18deg);
-  transition: left 0.55s ease;
-  pointer-events: none;
-}
-.btn:hover::after { left: 130%; }
 
 /* --- Animated stat counters --- */
 [data-counter] { font-variant-numeric: tabular-nums; }
@@ -155,5 +141,4 @@
   }
   .hero-photo-rotator img.is-active { animation: none !important; }
   .tilt-card { transform: none !important; }
-  .btn::after { display: none; }
 }
