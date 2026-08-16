@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
       <a href="maintenance.html">Maintenance</a>
       <a href="about.html">About</a>
       <a href="contact.html">Contact</a>
-      <a href="contact.html" style="color:#A58B3F;">Request a Quote &rarr;</a>
+      <a href="contact.html" style="color:#B4946E;">Request a Quote &rarr;</a>
     </div>
   `;
 

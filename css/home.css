@@ -61,7 +61,7 @@ position: absolute;
   z-index: 3;
 top: 0; bottom: 0;
 width: 40%;
-background: linear-gradient(100deg, transparent, rgba(165,139,63,0.16), transparent);
+background: linear-gradient(100deg, transparent, rgba(180, 148, 110,0.16), transparent);
 animation: sweep 9s ease-in-out infinite;
 pointer-events: none;
 }
@@ -86,7 +86,11 @@ margin: var(--space-2) 0 var(--space-3);
 }
 .hero h1 em {
 font-style: italic;
-color: var(--gold);
+background: linear-gradient(180deg, #D3B388 0%, #C3A37B 30%, #B4946E 54%, #947656 100%);
+-webkit-background-clip: text;
+background-clip: text;
+-webkit-text-fill-color: transparent;
+color: transparent;
 }
 
 .hero-sub {
@@ -107,7 +111,7 @@ margin-bottom: var(--space-5);
 display: grid;
 grid-template-columns: repeat(3, auto);
 gap: var(--space-4);
-border-top: 1px solid rgba(165,139,63,0.2);
+border-top: 1px solid rgba(180, 148, 110,0.2);
 padding-top: var(--space-3);
 width: fit-content;
 }
@@ -185,12 +189,14 @@ padding: var(--space-4);
 display: flex;
 flex-direction: column;
 gap: var(--space-2);
-transition: background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+border: 1px solid rgba(180, 148, 110, 0.16);
+transition: background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
 }
 .pillar-card:hover {
   background: linear-gradient(145deg, rgba(34,29,23,0.96), rgba(8,8,7,1));
   transform: translateY(-3px);
-  box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+  border-color: rgba(180, 148, 110, 0.46);
+  box-shadow: 0 18px 50px rgba(0,0,0,0.34), 0 0 26px var(--gold-glow);
 }
 
 /* Material-type chips, replacing the old grit-number device */
@@ -284,7 +290,7 @@ gap: var(--space-3);
 margin-top: var(--space-4);
 }
 .process-step {
-border-left: 1px solid rgba(165,139,63,0.25);
+border-left: 1px solid rgba(180, 148, 110,0.25);
 padding-left: var(--space-2);
 }
 .process-step .step-mono {
