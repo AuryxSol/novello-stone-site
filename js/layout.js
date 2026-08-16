@@ -37,6 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="footer-grid">
           <div>
             <h4>Novello Stone</h4>
+            <div class="brand-divider"><span class="diamond"></span></div>
             <p style="opacity:0.7; max-width: 320px;">Stone fabrication, tiling, and restoration across the Garden Route corridor &mdash; Mossel Bay to Plettenberg Bay.</p>
           </div>
           <div>
