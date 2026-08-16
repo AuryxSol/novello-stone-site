@@ -301,16 +301,25 @@ flex-direction: column;
 gap: var(--space-4);
 }
 .fleet-showcase-frame {
-background: #0B0A09;
-border: 1px solid rgba(180, 148, 110, 0.20);
-box-shadow: 0 20px 55px rgba(0,0,0,0.30);
+width: min(100%, 1120px);
+margin-inline: auto;
+background: transparent;
+border-radius: 16px;
 overflow: hidden;
+box-shadow: 0 20px 50px rgba(0,0,0,0.22);
 }
 .fleet-showcase-image {
 display: block;
 width: 100%;
 height: auto;
 object-fit: contain;
+border-radius: inherit;
+}
+@media (max-width: 768px) {
+.fleet-showcase-frame {
+  width: 94%;
+  border-radius: 10px;
+}
 }
 .fleet-text { max-width: 720px; }
 .fleet-text .eyebrow { margin-bottom: var(--space-2); }
