@@ -205,7 +205,13 @@ section { padding: var(--space-6) 0; }
 }
 .brand span { color: var(--gold); }
 .brand { display: inline-flex; align-items: center; gap: 0.75em; }
-.brand-mark { width: 46px; height: 46px; display: block; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.35)); }
+.brand-mark {
+  width: 46px;
+  height: 46px;
+  display: block;
+  object-fit: contain;
+  filter: drop-shadow(0 5px 7px rgba(0,0,0,0.42)) drop-shadow(0 0 12px rgba(165,139,63,0.10));
+}
 
 .nav-links {
   display: flex;
