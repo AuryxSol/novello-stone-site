@@ -510,7 +510,6 @@ footer {
 .hero-photo-rotator img,
 .photo-rotator img,
 .about-visual img,
-.fleet-visual img,
 .coverage-map img {
   filter: saturate(0.92) contrast(1.04) brightness(0.94);
 }

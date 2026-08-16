@@ -122,11 +122,11 @@
 }
 
 /* --- Image hover treatment (single, non-rotator visuals) --- */
-.fleet-visual, .about-visual { overflow: hidden; }
-.fleet-visual img, .about-visual img {
+.about-visual { overflow: hidden; }
+.about-visual img {
   transition: transform 0.7s cubic-bezier(.16,.84,.44,1);
 }
-.fleet-visual:hover img, .about-visual:hover img { transform: scale(1.06); }
+.about-visual:hover img { transform: scale(1.06); }
 
 /* --- Animated stat counters --- */
 [data-counter] { font-variant-numeric: tabular-nums; }

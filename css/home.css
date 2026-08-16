@@ -296,34 +296,23 @@ text-shadow: 0 1px 4px rgba(0,0,0,0.6);
 
 /* ===== FLEET TEASER ===== */
 .fleet-section .container {
-display: grid;
-grid-template-columns: 1fr 1fr;
+display: flex;
+flex-direction: column;
 gap: var(--space-4);
-align-items: center;
 }
-.fleet-visual {
-aspect-ratio: 16/10;
-position: relative;
+.fleet-showcase-frame {
+background: #0B0A09;
+border: 1px solid rgba(180, 148, 110, 0.20);
+box-shadow: 0 20px 55px rgba(0,0,0,0.30);
 overflow: hidden;
 }
-.fleet-visual img {
-position: absolute;
-inset: 0;
-width: 100%;
-height: 100%;
-object-fit: cover;
+.fleet-showcase-image {
 display: block;
-opacity: 0;
-transition: opacity 1.2s ease;
+width: 100%;
+height: auto;
+object-fit: contain;
 }
-.fleet-visual img.is-active {
-opacity: 1;
-}
-@media (prefers-reduced-motion: reduce) {
-.fleet-visual img {
-transition: none;
-}
-}
+.fleet-text { max-width: 720px; }
 .fleet-text .eyebrow { margin-bottom: var(--space-2); }
 .fleet-text p { color: var(--travertine); margin: var(--space-2) 0 var(--space-3); }
 
@@ -336,9 +325,6 @@ padding-left: var(--space-2);
 color: var(--limestone) !important;
 }
 
-@media (max-width: 800px) {
-.fleet-section .container { grid-template-columns: 1fr; }
-}
 
 /* ===== AREA + CTA BAND ===== */
 /* Background photo + light handled by .stone-section (see index.html) */
