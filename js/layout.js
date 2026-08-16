@@ -45,6 +45,8 @@ document.addEventListener('DOMContentLoaded', () => {
             <a href="mailto:studio@novello.co.za">studio@novello.co.za</a>
             <a href="tel:+27834792643">+27 83 479 2643</a>
             <p style="opacity:0.7;">Mossel Bay, Western Cape</p>
+            <a href="https://www.facebook.com/profile.php?id=61593128592987" target="_blank" rel="noopener">Facebook</a>
+            <a href="https://www.linkedin.com/company/novello-stone/" target="_blank" rel="noopener">LinkedIn</a>
           </div>
           <div>
             <h4>Site</h4>
