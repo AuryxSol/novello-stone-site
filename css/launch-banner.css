@@ -1,0 +1,102 @@
+/* ===========================================================
+   NOVELLO STONE — Pre-launch announcement card
+   TEMPORARY: safe to delete this file, launch-banner.js, and the
+   two <link>/<script> tags referencing them from every page once
+   the business is trading and the announcement is no longer needed.
+   Self-contained — does not touch .site-nav or page layout.
+   =========================================================== */
+
+.launch-card {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 250;
+  max-width: 340px;
+  background: linear-gradient(155deg, rgba(23,21,19,0.97), rgba(8,8,7,0.98));
+  border: 1px solid rgba(180, 148, 110, 0.35);
+  border-radius: 10px;
+  padding: 1.1rem 1.2rem 1.1rem 1.3rem;
+  box-shadow: 0 16px 40px rgba(0,0,0,0.45);
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.5s cubic-bezier(.16,.84,.44,1), transform 0.5s cubic-bezier(.16,.84,.44,1);
+  pointer-events: none;
+}
+.launch-card.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.launch-card::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 10px; bottom: 10px;
+  width: 3px;
+  background: linear-gradient(180deg, var(--gold-highlight, #D3B388), var(--gold-shadow, #7D6347));
+  border-radius: 2px;
+}
+
+.launch-card-close {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  background: none;
+  border: none;
+  color: var(--travertine, #A69D92);
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 4px;
+  transition: color 0.2s ease;
+}
+.launch-card-close:hover { color: var(--limestone, #F3F0EA); }
+
+.launch-card-eyebrow {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold-base, #A5855F);
+  display: block;
+  margin-bottom: 0.5em;
+}
+
+.launch-card p {
+  font-family: var(--font-body, sans-serif);
+  font-size: 0.9rem;
+  color: var(--limestone, #F3F0EA);
+  line-height: 1.5;
+  margin: 0 0 0.8em;
+  padding-right: 0.6em;
+}
+.launch-card p strong { color: var(--gold-mid, #B4946E); font-weight: 600; }
+
+.launch-card a.launch-card-cta {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gold-base, #A5855F);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  transition: color 0.2s ease;
+}
+.launch-card a.launch-card-cta:hover { color: var(--gold-highlight, #D3B388); }
+.launch-card a.launch-card-cta::after { content: '\2192'; transition: transform 0.2s; }
+.launch-card a.launch-card-cta:hover::after { transform: translateX(3px); }
+
+@media (max-width: 560px) {
+  .launch-card {
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+    max-width: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .launch-card { transition: opacity 0.2s ease; transform: none; }
+}
