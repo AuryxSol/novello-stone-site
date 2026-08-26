@@ -378,6 +378,29 @@ footer {
   text-shadow: 0 1px 4px rgba(0,0,0,0.6);
 }
 .footer-grid a:hover { opacity: 1; color: var(--gold-mid); }
+.footer-social {
+  display: flex;
+  gap: 0.9em;
+  margin-top: 0.6em;
+}
+.footer-social a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  color: var(--limestone);
+  opacity: 0.85;
+  border: 1px solid rgba(180, 148, 110, 0.25);
+  border-radius: 50%;
+  transition: opacity 0.2s, color 0.2s, border-color 0.2s;
+}
+.footer-social a:hover {
+  opacity: 1;
+  color: var(--gold-mid);
+  border-color: var(--gold-mid);
+}
+.footer-social svg { width: 16px; height: 16px; display: block; }
 .footer-bottom {
   display: flex;
   justify-content: space-between;

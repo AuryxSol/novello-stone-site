@@ -146,6 +146,16 @@
   opacity: 0.75;
   font-size: 0.9rem;
 }
+.inline-link {
+  text-decoration: underline;
+  text-decoration-color: rgba(180, 148, 110, 0.45);
+  text-underline-offset: 2px;
+  transition: color 0.2s, text-decoration-color 0.2s;
+}
+.inline-link:hover {
+  color: var(--gold-mid);
+  text-decoration-color: var(--gold-mid);
+}
 
 @media (max-width: 860px) {
   .how-we-work-grid { grid-template-columns: 1fr 1fr; }
