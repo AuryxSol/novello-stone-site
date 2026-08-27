@@ -519,9 +519,17 @@ footer {
   position: absolute;
   inset: 0;
   z-index: -1;
-  background:
+  /* Same fixed-to-viewport trick as ::before, and for the same reason:
+     without it this gradient restarts at 0% opacity at the top of every
+     section, so a section's darker bottom edge (66%) butts against the
+     next section's lighter top edge (28%) and reads as a bright seam
+     right at the boundary — visible even after the photo itself became
+     continuous. Pinning it to the viewport turns it into one static
+     vignette over the window instead of a per-section reset. */
+  background-image:
     radial-gradient(ellipse at var(--light-x, 40%) var(--light-y, 0%), rgba(211,179,136,0.10) 0%, rgba(180,148,110,0.045) 26%, transparent 52%),
     linear-gradient(180deg, rgba(8,8,7,0.28) 0%, rgba(8,8,7,0.46) 50%, rgba(8,8,7,0.66) 100%);
+  background-attachment: fixed;
 }
 .stone-section > .container { position: relative; z-index: 1; }
 
@@ -536,12 +544,15 @@ footer {
 }
 
 @media (max-width: 768px) {
-  .stone-section::before {
+  .stone-section::before,
+  .stone-section::after {
     /* iOS Safari mishandles fixed backgrounds (jank/repaint bugs), and a
        phone viewport is too narrow for the "one continuous image behind
        everything" effect to read anyway — fall back to a normal
        per-section scrolling photo, softened as before. */
     background-attachment: scroll;
+  }
+  .stone-section::before {
     opacity: calc(var(--section-bg-opacity, 0.58) * 0.6);
     background-position: center;
   }
