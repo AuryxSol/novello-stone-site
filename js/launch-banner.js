@@ -19,8 +19,8 @@
       '<button type="button" class="launch-card-close" aria-label="Dismiss">&times;</button>' +
       '<span class="launch-card-eyebrow">Coming soon</span>' +
       '<p>Novello Stone opens for trading <strong>January 2027</strong>. ' +
-      'Early enquiries for fabrication, tiling &amp; restoration across the Garden Route are welcome now.</p>' +
-      '<a href="contact.html" class="launch-card-cta">Get in touch early</a>';
+      'If you&rsquo;re planning ahead &mdash; pre-construction, build timelines, or tenders &mdash; we&rsquo;d welcome a conversation any time. Bookings open from late January/February 2027.</p>' +
+      '<a href="contact.html" class="launch-card-cta">Get in touch</a>';
 
     document.body.appendChild(card);
 
