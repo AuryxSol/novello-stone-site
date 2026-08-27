@@ -56,13 +56,27 @@ photography, not AI art.
 
 9. **Historic stonework** — "Wide shot of ancient hand-cut stone
    architecture (columns or a quarried stone wall), weathered texture,
-   warm low-angle light emphasising centuries of tool marks."
+   warm low-angle light emphasising centuries of tool marks." — used.
+
+11. **Classical quarry / stone extraction** (added 2026-08-27, second
+    panel on this page — no image was generated for it in the first
+    batch) — "Wide shot of an ancient stone quarry mid-extraction: massive
+    rectangular blocks cut and partially freed from the rock face, chisel
+    and wedge marks visible in the stone, ropes or simple wooden scaffolding
+    implying manual labour and scale, dramatic sense of ambition against
+    the size of the blocks, warm late-afternoon light raking across the
+    cut stone faces." Keep this visually distinct from #9 (finished
+    architecture) — this one should read as stone still being taken out
+    of the ground, to sit next to the page's "Moving mountains, one block
+    at a time" section about Roman-scale quarrying.
 
 ## Optional — lifestyle shot (any material page)
 
 10. **In the home** — "Close-up of a dark stone kitchen countertop
     corner in a warmly lit home at dusk, a single glass or utensil
-    resting on it, soft warm ambient light, no people."
+    resting on it, soft warm ambient light, no people." — generated,
+    not yet placed anywhere on the site (uploaded to
+    img/materials/lifestyle-dark-stone-countertop).
 
 ---
 
