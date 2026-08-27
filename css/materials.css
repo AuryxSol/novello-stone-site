@@ -1,0 +1,154 @@
+/* ===========================================================
+   MATERIALS — shared template for the material-education pages
+   (Marble / Engineered Stone / Large-Format Porcelain / Quartzite /
+   History of Stone). PILOT: built once here, reused by content swap
+   on every future material page — keep additions here generic,
+   not marble-specific.
+   =========================================================== */
+
+.material-hero {
+  padding-top: calc(76px + var(--space-5));
+  padding-bottom: var(--space-5);
+}
+.material-hero .eyebrow { color: var(--gold); }
+.material-hero h1 { margin: var(--space-2) 0 var(--space-3); max-width: 800px; }
+.material-hero .lead { font-size: 1.15rem; color: var(--travertine); max-width: 640px; }
+
+.material-section { padding: var(--space-6) 0; }
+.material-section--alt { background: var(--basalt-soft); }
+
+.material-split {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: var(--space-5);
+  align-items: center;
+}
+.material-split--reverse { grid-template-columns: 1fr 1.1fr; }
+.material-split--reverse > .material-photo { order: 1; }
+.material-split--reverse > div:not(.material-photo) { order: 2; }
+
+.material-section h2 { margin: var(--space-2) 0 var(--space-2); }
+.material-section p { color: var(--travertine); margin-bottom: var(--space-2); }
+.material-section p:last-child { margin-bottom: 0; }
+
+@media (max-width: 860px) {
+  .material-split,
+  .material-split--reverse { grid-template-columns: 1fr; }
+  .material-split--reverse > .material-photo { order: 0; }
+}
+
+/* Labelled placeholder for real photography — intentionally not a real
+   photo. Uses the site's own approved stone texture so it still reads
+   as "part of the page" rather than a broken image icon. Swap the
+   whole element for a normal <img> once real photography is ready. */
+.material-photo {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px dashed rgba(180, 148, 110, 0.35);
+  box-shadow: 0 18px 45px rgba(0,0,0,0.22);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--novello-charcoal);
+}
+.material-photo::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url('/img/backgrounds/novello-bg-03.jpg');
+  background-size: cover;
+  background-position: center;
+  opacity: 0.4;
+}
+.material-photo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(8,8,7,0.35) 0%, rgba(8,8,7,0.6) 100%);
+}
+.material-photo span {
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--travertine);
+  text-align: center;
+  padding: 0 2em;
+  line-height: 1.6;
+}
+
+/* ===== "What it's like to live with" (no image, just a wide read) ===== */
+.material-section--feel { background: var(--basalt-soft); }
+.material-feel-intro { max-width: 720px; margin: 0 auto; text-align: left; }
+.material-feel-intro h2 { max-width: 100%; }
+
+/* ===== CARE: etch vs stain pair ===== */
+.material-care-lead { max-width: 700px; }
+.material-etch-stain {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-3);
+  margin: var(--space-4) 0 var(--space-5);
+}
+.material-es-card {
+  background: linear-gradient(145deg, rgba(34,29,23,0.88), rgba(8,8,7,0.96));
+  padding: var(--space-3);
+  border: 1px solid var(--hairline);
+}
+.material-es-card .mono {
+  color: var(--gold);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  display: block;
+  margin-bottom: var(--space-1);
+}
+.material-es-card p { color: var(--travertine); font-size: 0.94rem; margin: 0; }
+
+@media (max-width: 700px) {
+  .material-etch-stain { grid-template-columns: 1fr; }
+}
+
+/* ===== CARE: do's grid (reuses the process-step look) ===== */
+.material-care-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-3);
+}
+.material-care-item {
+  border-left: 1px solid rgba(180, 148, 110, 0.25);
+  padding-left: var(--space-2);
+}
+.material-care-item .step-mono {
+  font-family: var(--font-mono);
+  color: var(--gold);
+  font-size: 0.8rem;
+  display: block;
+  margin-bottom: 0.6em;
+}
+.material-care-item h4 { font-size: 1rem; margin-bottom: 0.4em; }
+.material-care-item p { color: var(--travertine); font-size: 0.9rem; margin: 0; }
+
+@media (max-width: 860px) {
+  .material-care-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 540px) {
+  .material-care-grid { grid-template-columns: 1fr; }
+}
+
+/* ===== "What to do when..." Q&A ===== */
+.material-section--qa { background: var(--basalt-soft); }
+.material-qa-list {
+  max-width: 780px;
+  margin-top: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+.material-qa-item { border-bottom: 1px solid var(--hairline); padding-bottom: var(--space-3); }
+.material-qa-item:last-child { border-bottom: none; padding-bottom: 0; }
+.material-qa-item h4 { font-family: var(--font-headline); font-style: italic; font-size: 1.15rem; margin-bottom: 0.4em; color: var(--gold-light); }
+.material-qa-item p { color: var(--travertine); margin: 0; }
