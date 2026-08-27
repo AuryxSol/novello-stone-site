@@ -232,29 +232,11 @@ section { padding: var(--space-6) 0; }
 }
 .brand,
 .brand span {
-  background-image:
-    linear-gradient(100deg, transparent 42%, rgba(255,255,255,0.9) 50%, transparent 58%),
-    linear-gradient(180deg, #D3B388 0%, #C3A37B 25%, #B4946E 48%, #A5855F 68%, #947656 84%, #7D6347 100%);
-  background-size: 260% 100%, 100% 100%;
-  background-repeat: no-repeat, no-repeat;
-  background-position: 160% 0, 0 0;
+  background-image: linear-gradient(180deg, #D3B388 0%, #C3A37B 25%, #B4946E 48%, #A5855F 68%, #947656 84%, #7D6347 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
   color: transparent;
-  animation: gold-text-shimmer 6s ease-in-out infinite;
-  animation-delay: 0.6s;
-}
-
-/* --- Shared shimmer sweep for bronze-gold gradient text. Runs right to
-   left (like a torch panning from the right side of the screen toward
-   the left) to match the button sweep below and .btn-primary/.nav-cta's
-   animation-delay ordering — see the comment there for the full
-   left-to-right position -> delay logic. --- */
-@keyframes gold-text-shimmer {
-  0%   { background-position: 160% 0, 0 0; }
-  50%  { background-position: -60% 0, 0 0; }
-  100% { background-position: -60% 0, 0 0; }
 }
 .brand { display: inline-flex; align-items: center; gap: 0.75em; }
 .brand-mark {
@@ -265,40 +247,38 @@ section { padding: var(--space-6) 0; }
   filter: drop-shadow(0 5px 7px rgba(0,0,0,0.42)) drop-shadow(0 0 12px rgba(180, 148, 110,0.10));
 }
 
-/* --- Bronze-gold button shimmer: same moving-light idea as the wordmark
-   above, but for solid-background gold buttons (nav CTA, primary CTAs)
-   instead of gradient text. A soft diagonal band sweeps across the
-   button, right to left, on the same 6s clock as the wordmark's shimmer.
+/* --- Single site-wide shimmer. One soft band of light sweeps right to
+   left across the WHOLE screen — the nav wordmark, the gold buttons, and
+   the hero photo/video all catch it as it passes over their on-screen
+   position, because this is one fixed full-viewport overlay rather than
+   several separate per-element animations running out of sync. The
+   overlay is injected once by js/layout.js (so it's present on every
+   page alongside the shared nav) and sits above the nav but below the
+   launch banner / toasts.
 
-   Think of it as one torch beam panning from the right edge of the
-   screen to the left at a constant pace: the nav CTA (far right) is lit
-   first (delay 0s), then the mid-page primary buttons (0.3s), then the
-   hero heading (0.45s), then the wordmark (far left, 0.6s) last. Same
-   spacing as before, just mirrored — the element furthest right now
-   fires first instead of last. */
-.btn-primary,
-.nav-cta {
-  position: relative;
-  overflow: hidden;
-}
-.btn-primary::after,
-.nav-cta::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 130%;
-  width: 45%;
-  background: linear-gradient(100deg, transparent 0%, rgba(255,255,255,0.55) 50%, transparent 100%);
-  animation: gold-btn-shimmer 6s ease-in-out infinite;
-  animation-delay: 0.3s;
+   mix-blend-mode: screen means it only brightens what's underneath it
+   (never darkens), and brightens gold/light pixels far more than the
+   near-black background — so in practice it reads as picking out the
+   wordmark, buttons and photos rather than washing out the whole page. */
+.page-shimmer {
+  position: fixed;
+  inset: 0;
+  z-index: 150;
   pointer-events: none;
+  background-image: linear-gradient(100deg, transparent 44%, rgba(255,255,255,0.32) 50%, transparent 56%);
+  background-size: 260% 100%;
+  background-repeat: no-repeat;
+  background-position: 160% 0;
+  mix-blend-mode: screen;
+  animation: page-shimmer-sweep 6s ease-in-out infinite;
 }
-.nav-cta::after { animation-delay: 0s; }
-@keyframes gold-btn-shimmer {
-  0%   { left: 130%; }
-  50%  { left: -60%; }
-  100% { left: -60%; }
+@keyframes page-shimmer-sweep {
+  0%   { background-position: 160% 0; }
+  50%  { background-position: -60% 0; }
+  100% { background-position: -60% 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .page-shimmer { display: none; }
 }
 
 .nav-links {

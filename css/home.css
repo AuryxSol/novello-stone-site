@@ -65,23 +65,10 @@ transparent 60px
 pointer-events: none;
 }
 
-.hero-grain-sweep {
-position: absolute;
-  z-index: 3;
-top: 0; bottom: 0;
-width: 40%;
-background: linear-gradient(100deg, transparent, rgba(180, 148, 110,0.16), transparent);
-animation: sweep 9s ease-in-out infinite;
-pointer-events: none;
-}
-@keyframes sweep {
-0% { left: -45%; }
-50% { left: 105%; }
-100% { left: 105%; }
-}
-@media (prefers-reduced-motion: reduce) {
-.hero-grain-sweep { display: none; }
-}
+/* The hero used to have its own independent light sweep here
+   (.hero-grain-sweep, a 9s left-to-right band). That's now handled by
+   the single site-wide .page-shimmer overlay in base.css instead, so
+   the hero doesn't run a second, out-of-sync sweep on top of it. */
 
 .hero-content {
 position: relative;
@@ -96,26 +83,15 @@ margin: var(--space-2) 0 var(--space-3);
 .hero h1 em,
 .hero h1 em .cascade-word {
 font-style: italic;
-background-image:
-  linear-gradient(100deg, transparent 42%, rgba(255,255,255,0.9) 50%, transparent 58%),
-  linear-gradient(180deg, #D3B388 0%, #C3A37B 30%, #B4946E 54%, #947656 100%);
-background-size: 260% 100%, 100% 100%;
-background-repeat: no-repeat, no-repeat;
-background-position: 160% 0, 0 0;
+background-image: linear-gradient(180deg, #D3B388 0%, #C3A37B 30%, #B4946E 54%, #947656 100%);
 -webkit-background-clip: text;
 background-clip: text;
 -webkit-text-fill-color: transparent;
 color: transparent;
-/* The shimmer now sweeps right to left (like a torch panning from the
-   right side of the screen), so elements are lit in reverse screen
-   order: nav CTA (far right) first, then mid-page buttons, then this
-   heading, then the wordmark (far left) last. This heading sits roughly
-   in the same left-hand portion of the screen as the nav wordmark, so it
-   catches the light just before it. See the wordmark's .brand rule and
-   the .btn-primary/.nav-cta shimmer in base.css for the rest of this
-   sequence. */
-animation: gold-text-shimmer 6s ease-in-out infinite;
-animation-delay: 0.45s;
+/* No animation here — the shimmer is now the single site-wide
+   .page-shimmer overlay in base.css, which sweeps over this heading
+   along with the wordmark, buttons, and the hero photo/video as one
+   light passing over the whole screen. */
 }
 
 .hero-sub {
