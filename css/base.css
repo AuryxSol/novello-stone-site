@@ -7,44 +7,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Source+Sans+3:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
 
 :root {
-  /* --- Color tokens: charcoal natural stone + metallic bronze-gold --- */
-  --basalt:         #080807;   /* darkest — nav, footer, deepest sections */
-  --basalt-soft:    #171513;   /* lifted charcoal surface */
-  --basalt-warm:    #221D17;   /* warm charcoal panel */
-  --panel:          #11100F;   /* card / recessed panel */
-  --limestone:      #F3F0EA;   /* primary light text (headings, wordmark) */
-  --limestone-dim:  #171513;   /* recessed dark panel surface */
-  --text-body:      #D7D0C6;   /* body copy text */
-  --travertine:     #A69D92;  /* secondary / muted text */
-
-  /* Named aliases matching the approved brand spec exactly */
-  --novello-black:        var(--basalt);
-  --novello-charcoal:     var(--panel);
-  --novello-charcoal-warm: var(--basalt-soft);
-  --novello-warm-stone:   var(--basalt-warm);
-
-  /* --- Novello metallic bronze-gold system --- */
-  --gold-shadow:    #7D6347;   /* darkest bronze — hover-darken, deep shading */
-  --gold-deep:      #947656;
-  --gold-base:      #A5855F;   /* solid fallback — small UI, icons, borders */
-  --gold-mid:       #B4946E;   /* hover-lighten, active states */
-  --gold-light:     #C3A37B;
-  --gold-highlight: #D3B388;   /* satin metallic highlight */
-  --gold-border:    rgba(180, 148, 110, 0.32);
-  --gold-glow:      rgba(180, 148, 110, 0.14);
-  --novello-metallic-gold: linear-gradient(135deg,
-    #7D6347 0%, #947656 16%, #A5855F 32%, #C3A37B 48%,
-    #D3B388 58%, #B4946E 72%, #947656 88%, #7D6347 100%);
-
-  /* Legacy aliases — kept so existing component rules stay in sync */
-  --gold:           var(--gold-base);
-  --gold-dark:      var(--gold-shadow);
-  --gold-soft:      var(--gold-mid);
-
-  --slate:          #685B4C;  /* muted bronze — alt CTA band tone */
-  --slate-soft:     var(--gold-deep);
-  --hairline:       rgba(180, 148, 110, 0.22); /* fine architectural bronze-gold line */
-  --white:          #F3F0EA;
+  /* --- Color tokens --- */
+  --basalt:        #1C1B19;   /* primary dark — nav, headers */
+  --basalt-soft:    #2A2825;  /* lifted dark surface */
+    --limestone:      #F4EFE7;   /* main background */
+  --limestone-dim:  #E9E4DB;  /* recessed panel */
+  --travertine:     #8A7A66;  /* secondary text / warm neutral */
+    --gold:          #A58B3F;   /* single accent — antique gold, replaces prior oxide-orange */
+    --gold-dark:     #846F32;
+  --slate:          #3D4A47;  /* restoration pillar tone */
+  --slate-soft:     #54635F;
+  --hairline:       #C9C2B4; /* borders / dividers */
+  --white:          #FFFFFF;
 
   /* --- Type tokens --- */
   --font-display: 'Oswald', sans-serif;
@@ -81,10 +55,8 @@ html { scroll-behavior: smooth; }
 
 body {
   font-family: var(--font-body);
-  background:
-    radial-gradient(circle at 30% 0%, rgba(198, 164, 120, 0.10), transparent 32%),
-    var(--novello-charcoal);
-  color: var(--text-body);
+  background: var(--limestone);
+  color: var(--basalt);
   line-height: 1.55;
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
@@ -95,7 +67,7 @@ h1, h2, h3, h4 {
   text-transform: uppercase;
   letter-spacing: 0.02em;
   font-weight: 600;
-  color: var(--limestone);
+  color: var(--basalt);
   line-height: 1.08;
 }
 
@@ -110,7 +82,7 @@ h1 {
 h2 { font-size: clamp(1.9rem, 3.6vw, 2.8rem); }
 h3 { font-size: 1.3rem; letter-spacing: 0.04em; }
 
-p { color: var(--text-body); }
+p { color: var(--basalt); }
 
 a { color: inherit; text-decoration: none; }
 
@@ -120,10 +92,9 @@ a { color: inherit; text-decoration: none; }
 }
 
 .eyebrow {
-  font-family: var(--font-display);
+  font-family: var(--font-mono);
   font-size: 0.78rem;
-  font-weight: 500;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--gold);
   display: inline-flex;
@@ -162,53 +133,43 @@ section { padding: var(--space-6) 0; }
   letter-spacing: 0.08em;
   text-transform: uppercase;
   padding: 0.95em 1.8em;
-  border: 1px solid rgba(180, 148, 110, 0.45);
+  border: 1px solid var(--basalt);
   border-radius: var(--radius);
   cursor: pointer;
   transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
   background: transparent;
-  color: var(--limestone);
+  color: var(--basalt);
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #947656 0%, #A5855F 28%, #C3A37B 52%, #B4946E 70%, #947656 100%);
-  border: 1px solid #B4946E;
-  color: #0B0A09;
-  box-shadow: 0 8px 24px var(--gold-glow);
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--limestone);
 }
-.btn-primary:hover {
-  filter: brightness(1.08);
-  box-shadow: 0 10px 30px rgba(180, 148, 110, 0.20);
-}
+.btn-primary:hover { background: var(--gold-dark); border-color: var(--gold-dark); }
 
 .btn-ghost-dark {
   border-color: var(--limestone);
   color: var(--limestone);
 }
-.btn-ghost-dark:hover { background: transparent; border-color: var(--gold-mid); color: var(--gold-mid); }
+.btn-ghost-dark:hover { background: var(--limestone); color: var(--basalt); }
 
-.btn-ghost:hover { background: var(--gold-base); border-color: var(--gold-base); color: var(--basalt); }
+.btn-ghost:hover { background: var(--basalt); color: var(--limestone); }
 
-/* --- Nav --- */
+/* --- Nav ---
+   Translucent "glass" bar: no solid panel, whatever is behind (hero photo,
+   page content) shows through a soft blur. Unlike an all-dark reference
+   site, Novello has light (limestone) sections too, so the tint stays just
+   dark enough to keep the light nav text legible everywhere it can scroll
+   over, and a text-shadow backs that up as a safety net. */
 .site-nav {
   position: fixed;
   top: 0; left: 0; right: 0;
   z-index: 100;
-  background: rgba(8, 8, 7, 0.88);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border-bottom: 1px solid rgba(180, 148, 110, 0.16);
-  overflow: hidden;
-}
-.site-nav::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  background-image: url('../img/backdrops/backdrop-spare-bottom-middle.jpg');
-  background-size: cover;
-  background-position: center 25%;
-  opacity: 0.22;
+  background: rgba(20, 19, 17, 0.42);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .site-nav .container {
@@ -225,25 +186,13 @@ section { padding: var(--space-6) 0; }
   font-size: 1.2rem;
   font-weight: 500;
   letter-spacing: 0.22em;
-  color: var(--gold-base);
+  color: var(--limestone);
   text-transform: uppercase;
+  text-shadow: 0 1px 6px rgba(0,0,0,0.5);
 }
-.brand,
-.brand span {
-  background: linear-gradient(180deg, #D3B388 0%, #C3A37B 25%, #B4946E 48%, #A5855F 68%, #947656 84%, #7D6347 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
-}
+.brand span { color: var(--gold); }
 .brand { display: inline-flex; align-items: center; gap: 0.75em; }
-.brand-mark {
-  width: 46px;
-  height: 46px;
-  display: block;
-  object-fit: contain;
-  filter: drop-shadow(0 5px 7px rgba(0,0,0,0.42)) drop-shadow(0 0 12px rgba(180, 148, 110,0.10));
-}
+.brand-mark { width: 46px; height: 46px; display: block; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.45)); }
 
 .nav-links {
   display: flex;
@@ -251,25 +200,24 @@ section { padding: var(--space-6) 0; }
   list-style: none;
 }
 .nav-links a {
-  font-family: var(--font-body);
-  font-weight: 500;
+  font-family: var(--font-mono);
   font-size: 0.82rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--limestone);
-  opacity: 0.78;
-  transition: opacity 0.2s, color 0.2s;
+  opacity: 0.85;
+  transition: opacity 0.2s;
   position: relative;
   padding-bottom: 4px;
+  text-shadow: 0 1px 6px rgba(0,0,0,0.5);
 }
-.nav-links a:hover { opacity: 1; color: var(--gold-mid); }
-.nav-links a.active { opacity: 1; }
+.nav-links a:hover, .nav-links a.active { opacity: 1; }
 .nav-links a.active::after {
   content: '';
   position: absolute;
   left: 0; bottom: 0;
   width: 100%; height: 2px;
-  background: linear-gradient(90deg, #7D6347, #C3A37B, #7D6347);
+  background: var(--gold);
 }
 
 .nav-cta {
@@ -278,12 +226,12 @@ section { padding: var(--space-6) 0; }
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--basalt);
-  background: var(--gold);
+  background: var(--limestone);
   padding: 0.6em 1.3em;
   border-radius: var(--radius);
   transition: background 0.2s;
 }
-.nav-cta:hover { background: var(--gold-soft); }
+.nav-cta:hover { background: var(--gold); color: var(--limestone); }
 
 .nav-toggle {
   display: none;
@@ -297,7 +245,14 @@ section { padding: var(--space-6) 0; }
 .nav-toggle span {
   width: 22px; height: 2px;
   background: var(--limestone);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.5);
 }
+
+/* Hidden by default on all viewports; only shown via .open inside the
+   mobile media query below. Without this it renders in normal document
+   flow as unstyled text above the hero on desktop — previously masked
+   by the old opaque nav bar sitting on top of it. */
+.mobile-menu { display: none; }
 
 @media (max-width: 860px) {
   .nav-links, .nav-cta { display: none; }
@@ -320,54 +275,52 @@ section { padding: var(--space-6) 0; }
     font-size: 1.1rem;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    border-bottom: 1px solid rgba(180, 148, 110,0.18);
+    border-bottom: 1px solid rgba(201,194,180,0.15);
     padding-bottom: var(--space-2);
   }
 }
 
 /* --- Footer --- */
 footer {
-  background:
-    radial-gradient(ellipse at 50% 0%, rgba(180,148,110,0.05), transparent 45%),
-    var(--basalt);
-  color: var(--text-body);
+  background: var(--basalt);
+  color: var(--limestone);
   padding: var(--space-5) 0 var(--space-3);
-  border-top: 1px solid rgba(180, 148, 110, 0.22);
+  position: relative;
+  overflow: hidden;
+}
+footer::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image: url('../img/backdrops/backdrop-footer.jpg');
+  background-size: cover;
+  background-position: center;
+  opacity: 0.85;
+}
+footer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(180deg, rgba(28,27,25,0.35) 0%, rgba(28,27,25,0.65) 100%);
+}
+footer .container {
+  position: relative;
+  z-index: 2;
 }
 .footer-grid {
   display: grid;
   grid-template-columns: 1.4fr 1fr 1fr;
   gap: var(--space-4);
   padding-bottom: var(--space-4);
-  border-bottom: 1px solid rgba(180, 148, 110,0.18);
+  border-bottom: 1px solid rgba(201,194,180,0.18);
 }
 .footer-grid h4 {
   font-size: 0.82rem;
   color: var(--travertine);
   margin-bottom: var(--space-2);
   text-shadow: 0 1px 4px rgba(0,0,0,0.6);
-}
-
-.brand-divider {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  width: 100%;
-  max-width: 160px;
-  margin: 0.7em 0 1em;
-}
-.brand-divider::before, .brand-divider::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: rgba(180, 148, 110, 0.55);
-}
-.brand-divider .diamond {
-  width: 6px;
-  height: 6px;
-  background: var(--gold);
-  transform: rotate(45deg);
-  flex-shrink: 0;
 }
 .footer-grid p, .footer-grid a {
   font-size: 0.92rem;
@@ -377,30 +330,7 @@ footer {
   margin-bottom: 0.5em;
   text-shadow: 0 1px 4px rgba(0,0,0,0.6);
 }
-.footer-grid a:hover { opacity: 1; color: var(--gold-mid); }
-.footer-social {
-  display: flex;
-  gap: 0.9em;
-  margin-top: 0.6em;
-}
-.footer-social a {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  color: var(--limestone);
-  opacity: 0.85;
-  border: 1px solid rgba(180, 148, 110, 0.25);
-  border-radius: 50%;
-  transition: opacity 0.2s, color 0.2s, border-color 0.2s;
-}
-.footer-social a:hover {
-  opacity: 1;
-  color: var(--gold-mid);
-  border-color: var(--gold-mid);
-}
-.footer-social svg { width: 16px; height: 16px; display: block; }
+.footer-grid a:hover { opacity: 1; color: var(--gold); }
 .footer-bottom {
   display: flex;
   justify-content: space-between;
@@ -426,7 +356,7 @@ footer {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid rgba(180, 148, 110,0.2);
+  border: 1px solid rgba(201,194,180,0.2);
 }
 .placeholder-visual::before {
   content: '';
@@ -434,8 +364,8 @@ footer {
   inset: 0;
   background-image: repeating-linear-gradient(
     135deg,
-    rgba(180, 148, 110,0.05) 0px,
-    rgba(180, 148, 110,0.05) 1px,
+    rgba(201,194,180,0.06) 0px,
+    rgba(201,194,180,0.06) 1px,
     transparent 1px,
     transparent 14px
   );
@@ -463,78 +393,8 @@ footer {
   height: 100%;
   display: block;
   object-fit: cover;
-  border: 1px solid rgba(180, 148, 110,0.2);
-  background: var(--basalt);
-}
-
-/* ===========================================================
-   Reusable stone-photograph backdrop system.
-   Apply `.stone-section` plus inline custom properties:
-     --section-bg          url(...) — required
-     --section-position    default center
-     --section-bg-opacity  default .58
-     --light-x / --light-y default 40% / 0%
-   ::before paints the photograph, ::after paints the overhead
-   light + depth gradient. Both sit behind the section's own
-   content (z-index -2/-1) so no markup restructuring is needed.
-   =========================================================== */
-.stone-section {
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-  background-color: var(--novello-charcoal);
-}
-.stone-section::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: -2;
-  background-image: var(--section-bg);
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: var(--section-position, center);
-  opacity: var(--section-bg-opacity, 0.58);
-  transform: scale(1.015);
-}
-.stone-section::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background:
-    radial-gradient(ellipse at var(--light-x, 40%) var(--light-y, 0%), rgba(211,179,136,0.10) 0%, rgba(180,148,110,0.045) 26%, transparent 52%),
-    linear-gradient(180deg, rgba(8,8,7,0.28) 0%, rgba(8,8,7,0.46) 50%, rgba(8,8,7,0.66) 100%);
-}
-.stone-section {
-  box-shadow:
-    inset 0 90px 100px -95px rgba(0,0,0,0.85),
-    inset 0 -90px 100px -95px rgba(0,0,0,0.85);
-}
-.stone-section > .container { position: relative; z-index: 1; }
-
-/* Localized text protection — use instead of darkening a whole section */
-.text-legibility-zone { position: relative; }
-.text-legibility-zone::before {
-  content: '';
-  position: absolute;
-  inset: -25% -18%;
-  z-index: -1;
-  background: radial-gradient(ellipse at center, rgba(8,8,7,0.68), rgba(8,8,7,0.28) 58%, transparent 80%);
-}
-
-@media (max-width: 768px) {
-  .stone-section::before {
-    opacity: calc(var(--section-bg-opacity, 0.58) * 0.6);
-    background-position: center;
-  }
-}
-
-/* --- Photography: subtle grading, no gold filter over real photos --- */
-.hero-photo-rotator img,
-.photo-rotator img,
-.about-visual img,
-.coverage-map img {
-  filter: saturate(0.92) contrast(1.04) brightness(0.94);
+  border: 1px solid rgba(201,194,180,0.2);
+  background: #1C1B19;
 }
 
 .caption-note {
@@ -548,11 +408,4 @@ footer {
   background: var(--hairline);
   border: none;
   width: 100%;
-}
-
-/* Premium shimmer divider — dark bronze / mid-gold / satin highlight, restrained use only */
-.gold-divider {
-  height: 1px;
-  border: none;
-  background: linear-gradient(90deg, transparent, #7D6347, #B4946E, #D3B388, #B4946E, #7D6347, transparent);
 }
