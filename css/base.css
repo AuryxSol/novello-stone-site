@@ -307,6 +307,18 @@ section { padding: var(--space-6) 0; }
   transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
   z-index: 10;
 }
+/* Invisible bridge over the margin-top gap above: without it, the mouse
+   crosses dead space (no element) moving from the "Materials" link down
+   into the menu, which drops :hover on .nav-dropdown and closes the menu
+   before the cursor arrives. This keeps the hover chain unbroken. */
+.nav-dropdown-menu::before {
+  content: '';
+  position: absolute;
+  top: -14px;
+  left: 0;
+  right: 0;
+  height: 14px;
+}
 .nav-dropdown:hover .nav-dropdown-menu,
 .nav-dropdown:focus-within .nav-dropdown-menu {
   opacity: 1;
