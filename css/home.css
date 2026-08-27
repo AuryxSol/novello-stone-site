@@ -101,19 +101,21 @@ background-image:
   linear-gradient(180deg, #D3B388 0%, #C3A37B 30%, #B4946E 54%, #947656 100%);
 background-size: 260% 100%, 100% 100%;
 background-repeat: no-repeat, no-repeat;
-background-position: -60% 0, 0 0;
+background-position: 160% 0, 0 0;
 -webkit-background-clip: text;
 background-clip: text;
 -webkit-text-fill-color: transparent;
 color: transparent;
-/* Small delay (not the old arbitrary 1.2s) — this heading sits roughly
+/* The shimmer now sweeps right to left (like a torch panning from the
+   right side of the screen), so elements are lit in reverse screen
+   order: nav CTA (far right) first, then mid-page buttons, then this
+   heading, then the wordmark (far left) last. This heading sits roughly
    in the same left-hand portion of the screen as the nav wordmark, so it
-   should catch the light just after it, keeping the sweep reading as one
-   continuous pass rather than two disconnected shimmers. See the
-   wordmark's .brand rule and the .btn-primary/.nav-cta shimmer further
-   down base.css for the rest of this left-to-right sequence. */
+   catches the light just before it. See the wordmark's .brand rule and
+   the .btn-primary/.nav-cta shimmer in base.css for the rest of this
+   sequence. */
 animation: gold-text-shimmer 6s ease-in-out infinite;
-animation-delay: 0.15s;
+animation-delay: 0.45s;
 }
 
 .hero-sub {

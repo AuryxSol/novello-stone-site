@@ -237,19 +237,24 @@ section { padding: var(--space-6) 0; }
     linear-gradient(180deg, #D3B388 0%, #C3A37B 25%, #B4946E 48%, #A5855F 68%, #947656 84%, #7D6347 100%);
   background-size: 260% 100%, 100% 100%;
   background-repeat: no-repeat, no-repeat;
-  background-position: -60% 0, 0 0;
+  background-position: 160% 0, 0 0;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
   color: transparent;
   animation: gold-text-shimmer 6s ease-in-out infinite;
+  animation-delay: 0.6s;
 }
 
-/* --- Shared shimmer sweep for bronze-gold gradient text --- */
+/* --- Shared shimmer sweep for bronze-gold gradient text. Runs right to
+   left (like a torch panning from the right side of the screen toward
+   the left) to match the button sweep below and .btn-primary/.nav-cta's
+   animation-delay ordering — see the comment there for the full
+   left-to-right position -> delay logic. --- */
 @keyframes gold-text-shimmer {
-  0%   { background-position: -60% 0, 0 0; }
-  50%  { background-position: 160% 0, 0 0; }
-  100% { background-position: 160% 0, 0 0; }
+  0%   { background-position: 160% 0, 0 0; }
+  50%  { background-position: -60% 0, 0 0; }
+  100% { background-position: -60% 0, 0 0; }
 }
 .brand { display: inline-flex; align-items: center; gap: 0.75em; }
 .brand-mark {
@@ -263,12 +268,14 @@ section { padding: var(--space-6) 0; }
 /* --- Bronze-gold button shimmer: same moving-light idea as the wordmark
    above, but for solid-background gold buttons (nav CTA, primary CTAs)
    instead of gradient text. A soft diagonal band sweeps across the
-   button on the same 6s clock as the wordmark's shimmer. Delays are
-   staggered by on-screen position (small for buttons that sit further
-   left, larger for the nav CTA on the far right) so the wordmark, the
-   hero heading, and these buttons read as one light passing over the
-   page left to right rather than several independent shimmers firing
-   out of sync. */
+   button, right to left, on the same 6s clock as the wordmark's shimmer.
+
+   Think of it as one torch beam panning from the right edge of the
+   screen to the left at a constant pace: the nav CTA (far right) is lit
+   first (delay 0s), then the mid-page primary buttons (0.3s), then the
+   hero heading (0.45s), then the wordmark (far left, 0.6s) last. Same
+   spacing as before, just mirrored — the element furthest right now
+   fires first instead of last. */
 .btn-primary,
 .nav-cta {
   position: relative;
@@ -280,18 +287,18 @@ section { padding: var(--space-6) 0; }
   position: absolute;
   top: 0;
   bottom: 0;
-  left: -60%;
+  left: 130%;
   width: 45%;
   background: linear-gradient(100deg, transparent 0%, rgba(255,255,255,0.55) 50%, transparent 100%);
   animation: gold-btn-shimmer 6s ease-in-out infinite;
   animation-delay: 0.3s;
   pointer-events: none;
 }
-.nav-cta::after { animation-delay: 0.6s; }
+.nav-cta::after { animation-delay: 0s; }
 @keyframes gold-btn-shimmer {
-  0%   { left: -60%; }
-  50%  { left: 130%; }
-  100% { left: 130%; }
+  0%   { left: 130%; }
+  50%  { left: -60%; }
+  100% { left: -60%; }
 }
 
 .nav-links {
