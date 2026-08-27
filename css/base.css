@@ -201,7 +201,6 @@ section { padding: var(--space-6) 0; }
   backdrop-filter: blur(18px) saturate(140%);
   -webkit-backdrop-filter: blur(18px) saturate(140%);
   border-bottom: 1px solid rgba(180, 148, 110, 0.16);
-  overflow: hidden;
 }
 .site-nav::before {
   content: '';
@@ -233,11 +232,24 @@ section { padding: var(--space-6) 0; }
 }
 .brand,
 .brand span {
-  background: linear-gradient(180deg, #D3B388 0%, #C3A37B 25%, #B4946E 48%, #A5855F 68%, #947656 84%, #7D6347 100%);
+  background-image:
+    linear-gradient(100deg, transparent 42%, rgba(255,255,255,0.9) 50%, transparent 58%),
+    linear-gradient(180deg, #D3B388 0%, #C3A37B 25%, #B4946E 48%, #A5855F 68%, #947656 84%, #7D6347 100%);
+  background-size: 260% 100%, 100% 100%;
+  background-repeat: no-repeat, no-repeat;
+  background-position: -60% 0, 0 0;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
   color: transparent;
+  animation: gold-text-shimmer 6s ease-in-out infinite;
+}
+
+/* --- Shared shimmer sweep for bronze-gold gradient text --- */
+@keyframes gold-text-shimmer {
+  0%   { background-position: -60% 0, 0 0; }
+  50%  { background-position: 160% 0, 0 0; }
+  100% { background-position: 160% 0, 0 0; }
 }
 .brand { display: inline-flex; align-items: center; gap: 0.75em; }
 .brand-mark {
@@ -274,6 +286,48 @@ section { padding: var(--space-6) 0; }
   width: 100%; height: 2px;
   background: linear-gradient(90deg, #7D6347, #C3A37B, #7D6347);
 }
+
+/* --- Materials dropdown (desktop) --- */
+.nav-dropdown { position: relative; }
+.nav-dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(6px);
+  background: rgba(8, 8, 7, 0.96);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  border: 1px solid rgba(180, 148, 110, 0.22);
+  min-width: 220px;
+  padding: 0.5em 0;
+  margin-top: 14px;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+  z-index: 10;
+}
+.nav-dropdown:hover .nav-dropdown-menu,
+.nav-dropdown:focus-within .nav-dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+.nav-dropdown-menu a {
+  display: block;
+  padding: 0.65em 1.3em;
+  font-size: 0.78rem;
+  opacity: 0.82;
+  white-space: nowrap;
+}
+.nav-dropdown-menu a:hover,
+.nav-dropdown-menu a.active {
+  opacity: 1;
+  color: var(--gold-mid);
+  background: rgba(180, 148, 110, 0.07);
+}
+.nav-dropdown-menu a.active::after { display: none; }
 
 .nav-cta {
   font-family: var(--font-mono);

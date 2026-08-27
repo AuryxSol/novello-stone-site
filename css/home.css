@@ -87,11 +87,18 @@ margin: var(--space-2) 0 var(--space-3);
 .hero h1 em,
 .hero h1 em .cascade-word {
 font-style: italic;
-background: linear-gradient(180deg, #D3B388 0%, #C3A37B 30%, #B4946E 54%, #947656 100%);
+background-image:
+  linear-gradient(100deg, transparent 42%, rgba(255,255,255,0.9) 50%, transparent 58%),
+  linear-gradient(180deg, #D3B388 0%, #C3A37B 30%, #B4946E 54%, #947656 100%);
+background-size: 260% 100%, 100% 100%;
+background-repeat: no-repeat, no-repeat;
+background-position: -60% 0, 0 0;
 -webkit-background-clip: text;
 background-clip: text;
 -webkit-text-fill-color: transparent;
 color: transparent;
+animation: gold-text-shimmer 6s ease-in-out infinite;
+animation-delay: 1.2s;
 }
 
 .hero-sub {

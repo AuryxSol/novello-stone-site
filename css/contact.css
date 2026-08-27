@@ -28,6 +28,39 @@
 }
 .contact-detail a:hover { color: var(--gold-mid); }
 
+.contact-team {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+  margin: var(--space-3) 0;
+  padding: var(--space-3) 0;
+  border-top: 1px solid var(--hairline);
+  border-bottom: 1px solid var(--hairline);
+}
+.contact-person {
+  border-left: 1px solid rgba(180, 148, 110, 0.25);
+  padding-left: var(--space-2);
+}
+.contact-person .mono-label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--gold);
+  display: block;
+  margin-bottom: 0.5em;
+}
+.contact-person a {
+  display: block;
+  font-size: 0.95rem;
+  margin-bottom: 0.3em;
+}
+.contact-person a:hover { color: var(--gold-mid); }
+
+@media (max-width: 480px) {
+  .contact-team { grid-template-columns: 1fr; }
+}
+
 .form-card {
   background: linear-gradient(145deg, rgba(34,29,23,0.88), rgba(8,8,7,0.96));
   border: 1px solid var(--hairline);
