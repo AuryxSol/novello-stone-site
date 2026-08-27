@@ -84,7 +84,8 @@ z-index: 4;
 color: var(--limestone);
 margin: var(--space-2) 0 var(--space-3);
 }
-.hero h1 em {
+.hero h1 em,
+.hero h1 em .cascade-word {
 font-style: italic;
 background: linear-gradient(180deg, #D3B388 0%, #C3A37B 30%, #B4946E 54%, #947656 100%);
 -webkit-background-clip: text;
