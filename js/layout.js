@@ -3,6 +3,8 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   const activePage = document.body.getAttribute('data-page') || '';
+  const materialPages = ['history-of-stone', 'marble', 'engineered-stone', 'porcelain', 'quartzite'];
+  const materialsActive = materialPages.includes(activePage);
 
   const navHTML = `
     <nav class="site-nav">
@@ -10,9 +12,17 @@ document.addEventListener('DOMContentLoaded', () => {
         <a href="index.html" class="brand"><img src="img/novello-n-monogram.png" alt="" class="brand-mark">NOVELLO <span>STONE</span></a>
         <ul class="nav-links">
           <li><a href="index.html" class="${activePage === 'home' ? 'active' : ''}">Home</a></li>
-          <li><a href="services.html" class="${activePage === 'services' ? 'active' : ''}">Services</a></li>
-          <li><a href="maintenance.html" class="${activePage === 'maintenance' ? 'active' : ''}">Maintenance</a></li>
-          <li><a href="about.html" class="${activePage === 'about' ? 'active' : ''}">About</a></li>
+          <li class="nav-dropdown">
+            <a href="history-of-stone.html" class="${materialsActive ? 'active' : ''}">Materials</a>
+            <div class="nav-dropdown-menu">
+              <a href="history-of-stone.html" class="${activePage === 'history-of-stone' ? 'active' : ''}">History of Stone</a>
+              <a href="marble.html" class="${activePage === 'marble' ? 'active' : ''}">Marble</a>
+              <a href="engineered-stone.html" class="${activePage === 'engineered-stone' ? 'active' : ''}">Engineered Stone</a>
+              <a href="porcelain.html" class="${activePage === 'porcelain' ? 'active' : ''}">Large-Format Porcelain</a>
+              <a href="quartzite.html" class="${activePage === 'quartzite' ? 'active' : ''}">Quartzite</a>
+            </div>
+          </li>
+          <li><a href="our-story.html" class="${activePage === 'our-story' ? 'active' : ''}">Our Story</a></li>
           <li><a href="contact.html" class="${activePage === 'contact' ? 'active' : ''}">Contact</a></li>
         </ul>
         <a href="contact.html" class="nav-cta">Request a Quote</a>
@@ -23,9 +33,12 @@ document.addEventListener('DOMContentLoaded', () => {
     </nav>
     <div class="mobile-menu">
       <a href="index.html">Home</a>
-      <a href="services.html">Services</a>
-      <a href="maintenance.html">Maintenance</a>
-      <a href="about.html">About</a>
+      <a href="history-of-stone.html">History of Stone</a>
+      <a href="marble.html">Marble</a>
+      <a href="engineered-stone.html">Engineered Stone</a>
+      <a href="porcelain.html">Large-Format Porcelain</a>
+      <a href="quartzite.html">Quartzite</a>
+      <a href="our-story.html">Our Story</a>
       <a href="contact.html">Contact</a>
       <a href="contact.html" style="color:#B4946E;">Request a Quote &rarr;</a>
     </div>
@@ -44,6 +57,8 @@ document.addEventListener('DOMContentLoaded', () => {
             <h4>Contact</h4>
             <a href="mailto:studio@novello.co.za">studio@novello.co.za</a>
             <a href="tel:+27834792643">+27 83 479 2643</a>
+            <a href="mailto:clynton@novello.co.za" style="font-size:0.85rem; opacity:0.75;">Clynton: clynton@novello.co.za</a>
+            <a href="mailto:yolande@novello.co.za" style="font-size:0.85rem; opacity:0.75;">Yolande: yolande@novello.co.za</a>
             <p style="opacity:0.7;">Mossel Bay, Western Cape</p>
             <div class="footer-social">
               <a href="https://www.facebook.com/profile.php?id=61593128592987" target="_blank" rel="noopener noreferrer" aria-label="Novello Stone on Facebook">
@@ -56,9 +71,12 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
           <div>
             <h4>Site</h4>
-            <a href="services.html">Services</a>
-            <a href="maintenance.html">Maintenance</a>
-            <a href="about.html">About</a>
+            <a href="history-of-stone.html">History of Stone</a>
+            <a href="marble.html">Marble</a>
+            <a href="engineered-stone.html">Engineered Stone</a>
+            <a href="porcelain.html">Large-Format Porcelain</a>
+            <a href="quartzite.html">Quartzite</a>
+            <a href="our-story.html">Our Story</a>
             <a href="contact.html">Contact</a>
           </div>
         </div>
