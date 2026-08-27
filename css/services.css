@@ -9,7 +9,6 @@
 
 .service-block {
   padding: var(--space-6) 0;
-  border-bottom: 1px solid var(--hairline);
 }
 .service-block .container {
   display: grid;

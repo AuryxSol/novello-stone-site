@@ -62,7 +62,10 @@
   --space-6: 6.5rem;
 
   /* --- Layout --- */
-  --max-width: 1180px;
+  /* Fluid on large screens: holds at 1180px up to laptop widths, then
+     grows gently toward 1400px on wide desktop/ultrawide monitors so the
+     page doesn't read as a narrow column stranded in empty space. */
+  --max-width: clamp(1180px, 74vw + 260px, 1400px);
   --radius: 2px; /* near-zero radius — precision, not softness */
 }
 

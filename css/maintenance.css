@@ -18,7 +18,9 @@
   max-width: 760px;
 }
 
-.scenario-section { background: var(--limestone-dim); }
+.scenario-section { color: var(--limestone); }
+.scenario-section .eyebrow { color: var(--gold); text-shadow: 0 1px 4px rgba(0,0,0,0.7); }
+.scenario-section h2 { color: var(--limestone); text-shadow: 0 2px 8px rgba(0,0,0,0.55); }
 
 .scenario-grid {
   display: grid;
