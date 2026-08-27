@@ -147,7 +147,6 @@ transition: opacity 0.2s ease;
 /* ===== INTRO STRIP ===== */
 .intro-strip {
 padding: var(--space-5) 0;
-border-bottom: 1px solid var(--hairline);
 }
 .intro-strip .container {
 display: grid;
@@ -371,7 +370,9 @@ text-align: center;
 .cta-band .btn-ghost-dark:hover { background: var(--limestone); color: var(--gold); }
 
 /* ===== FAQ ("What clients ask us") ===== */
-.faq-section { background: var(--basalt-soft); }
+/* Background photo + light handled by .stone-section (see index.html) —
+   no flat override here, so it shares the same charcoal base + backdrop
+   photo as the sections above it instead of stepping to a solid block. */
 .faq-list {
   max-width: 760px;
   margin-top: var(--space-4);

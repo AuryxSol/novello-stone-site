@@ -483,6 +483,18 @@ footer {
    ::before paints the photograph, ::after paints the overhead
    light + depth gradient. Both sit behind the section's own
    content (z-index -2/-1) so no markup restructuring is needed.
+
+   Sections that should read as one continuous backdrop (rather
+   than boxed, separate panels) share the SAME --section-bg /
+   --section-position / --section-bg-opacity values and rely on
+   background-attachment: fixed below — the photo is then pinned
+   to the viewport, not the section, so consecutive sections feel
+   like floating panels over one unbroken image instead of each
+   owning its own cropped, edge-darkened photo. No inset vignette
+   here on purpose: that's what used to draw a hard dark seam at
+   the top/bottom of every section. Per-section depth/contrast is
+   handled by the ::after gradient and heading/body text-shadow
+   instead, which don't create a visible line at the boundary.
    =========================================================== */
 .stone-section {
   position: relative;
@@ -499,8 +511,8 @@ footer {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: var(--section-position, center);
+  background-attachment: fixed;
   opacity: var(--section-bg-opacity, 0.58);
-  transform: scale(1.015);
 }
 .stone-section::after {
   content: '';
@@ -510,11 +522,6 @@ footer {
   background:
     radial-gradient(ellipse at var(--light-x, 40%) var(--light-y, 0%), rgba(211,179,136,0.10) 0%, rgba(180,148,110,0.045) 26%, transparent 52%),
     linear-gradient(180deg, rgba(8,8,7,0.28) 0%, rgba(8,8,7,0.46) 50%, rgba(8,8,7,0.66) 100%);
-}
-.stone-section {
-  box-shadow:
-    inset 0 90px 100px -95px rgba(0,0,0,0.85),
-    inset 0 -90px 100px -95px rgba(0,0,0,0.85);
 }
 .stone-section > .container { position: relative; z-index: 1; }
 
@@ -530,6 +537,11 @@ footer {
 
 @media (max-width: 768px) {
   .stone-section::before {
+    /* iOS Safari mishandles fixed backgrounds (jank/repaint bugs), and a
+       phone viewport is too narrow for the "one continuous image behind
+       everything" effect to read anyway — fall back to a normal
+       per-section scrolling photo, softened as before. */
+    background-attachment: scroll;
     opacity: calc(var(--section-bg-opacity, 0.58) * 0.6);
     background-position: center;
   }
