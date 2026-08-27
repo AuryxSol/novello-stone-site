@@ -37,23 +37,38 @@
   .material-split--reverse > .material-photo { order: 0; }
 }
 
-/* Labelled placeholder for real photography — intentionally not a real
-   photo. Uses the site's own approved stone texture so it still reads
-   as "part of the page" rather than a broken image icon. Swap the
-   whole element for a normal <img> once real photography is ready. */
+/* .material-photo is shared by two states:
+   1) A real photo — a <picture class="material-photo"> wrapping a
+      <source webp> + <img jpg fallback>. The img fills the box via
+      object-fit: cover and gets a plain finished border.
+   2) A still-empty slot (.material-photo--empty) — the original
+      labelled placeholder, using the site's own approved stone
+      texture so it still reads as "part of the page" rather than a
+      broken image icon, with a dashed border to signal "temporary". */
 .material-photo {
   position: relative;
   aspect-ratio: 4 / 3;
   border-radius: 16px;
   overflow: hidden;
-  border: 1px dashed rgba(180, 148, 110, 0.35);
   box-shadow: 0 18px 45px rgba(0,0,0,0.22);
+  background-color: var(--novello-charcoal);
+}
+.material-photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: 1px solid rgba(180, 148, 110, 0.18);
+  border-radius: inherit;
+  box-sizing: border-box;
+}
+.material-photo--empty {
+  border: 1px dashed rgba(180, 148, 110, 0.35);
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--novello-charcoal);
 }
-.material-photo::before {
+.material-photo--empty::before {
   content: '';
   position: absolute;
   inset: 0;
@@ -62,13 +77,13 @@
   background-position: center;
   opacity: 0.4;
 }
-.material-photo::after {
+.material-photo--empty::after {
   content: '';
   position: absolute;
   inset: 0;
   background: linear-gradient(180deg, rgba(8,8,7,0.35) 0%, rgba(8,8,7,0.6) 100%);
 }
-.material-photo span {
+.material-photo--empty span {
   position: relative;
   z-index: 1;
   font-family: var(--font-mono);
