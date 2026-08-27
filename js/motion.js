@@ -26,6 +26,7 @@
     initCascadeText();
     initScrollReveal();
     initHeroParallax();
+    initHeroVideo();
     initCounters();
     initTilt('.pillar-card, .value-card, .scenario-card');
     initFaqAnimations();
@@ -115,6 +116,16 @@
       });
     }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
     targets.forEach(function (el) { io.observe(el); });
+  }
+
+  // --- Hero background video: pause for reduced-motion visitors ---
+  function initHeroVideo() {
+    var video = document.querySelector('.hero-video');
+    if (!video) return;
+    if (reduceMotion) {
+      video.pause();
+      video.removeAttribute('autoplay');
+    }
   }
 
   // --- Subtle parallax drift on the hero photo layer only ---
