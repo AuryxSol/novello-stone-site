@@ -34,6 +34,15 @@ overflow: hidden;
   }
 }
 
+.hero-video-wrap .hero-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(0.98) contrast(1.05) brightness(1.08);
+}
+
 .hero-photo-overlay {
   position: absolute;
   inset: 0;
