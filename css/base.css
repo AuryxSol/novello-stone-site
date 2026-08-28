@@ -128,18 +128,34 @@ a { color: inherit; text-decoration: none; }
   font-weight: 500;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--gold);
   display: inline-flex;
   align-items: center;
   gap: 0.5em;
+  background-image: linear-gradient(var(--gold), var(--gold)), linear-gradient(100deg, transparent 44%, rgba(255,255,255,0.55) 50%, transparent 56%);
+  background-size: 100% 100%, 260% 100%;
+  background-repeat: no-repeat, no-repeat;
+  background-attachment: scroll, fixed;
+  background-position: 0 0, 160% 0;
+  background-blend-mode: normal, screen;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: gold-accent-shimmer 12s ease-in-out infinite;
 }
 
 .eyebrow::before {
   content: '';
   width: 18px;
   height: 1px;
-  background: var(--gold);
   display: inline-block;
+  background-image: linear-gradient(var(--gold), var(--gold)), linear-gradient(100deg, transparent 44%, rgba(255,255,255,0.55) 50%, transparent 56%);
+  background-size: 100% 100%, 260% 100%;
+  background-repeat: no-repeat, no-repeat;
+  background-attachment: scroll, fixed;
+  background-position: 0 0, 160% 0;
+  background-blend-mode: normal, screen;
+  animation: gold-accent-shimmer 12s ease-in-out infinite;
 }
 
 .container {
@@ -174,10 +190,17 @@ section { padding: var(--space-6) 0; }
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #947656 0%, #A5855F 28%, #C3A37B 52%, #B4946E 70%, #947656 100%);
+  background-color: #A5855F;
+  background-image: linear-gradient(135deg, #947656 0%, #A5855F 28%, #C3A37B 52%, #B4946E 70%, #947656 100%), linear-gradient(100deg, transparent 44%, rgba(255,255,255,0.55) 50%, transparent 56%);
+  background-size: 100% 100%, 260% 100%;
+  background-repeat: no-repeat, no-repeat;
+  background-attachment: scroll, fixed;
+  background-position: 0 0, 160% 0;
+  background-blend-mode: normal, screen;
   border: 1px solid #B4946E;
   color: #0B0A09;
   box-shadow: 0 8px 24px var(--gold-glow);
+  animation: gold-accent-shimmer 12s ease-in-out infinite;
 }
 .btn-primary:hover {
   filter: brightness(1.08);
@@ -232,11 +255,17 @@ section { padding: var(--space-6) 0; }
 }
 .brand,
 .brand span {
-  background-image: linear-gradient(180deg, #D3B388 0%, #C3A37B 25%, #B4946E 48%, #A5855F 68%, #947656 84%, #7D6347 100%);
+  background-image: linear-gradient(180deg, #D3B388 0%, #C3A37B 25%, #B4946E 48%, #A5855F 68%, #947656 84%, #7D6347 100%), linear-gradient(100deg, transparent 44%, rgba(255,255,255,0.55) 50%, transparent 56%);
+  background-size: 100% 100%, 260% 100%;
+  background-repeat: no-repeat, no-repeat;
+  background-attachment: scroll, fixed;
+  background-position: 0 0, 160% 0;
+  background-blend-mode: normal, screen;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
   color: transparent;
+  animation: gold-accent-shimmer 12s ease-in-out infinite;
 }
 .brand { display: inline-flex; align-items: center; gap: 0.75em; }
 .brand-mark {
@@ -247,38 +276,35 @@ section { padding: var(--space-6) 0; }
   filter: drop-shadow(0 5px 7px rgba(0,0,0,0.42)) drop-shadow(0 0 12px rgba(180, 148, 110,0.10));
 }
 
-/* --- Single site-wide shimmer. One soft band of light sweeps right to
-   left across the WHOLE screen — the nav wordmark, the gold buttons, and
-   the hero photo/video all catch it as it passes over their on-screen
-   position, because this is one fixed full-viewport overlay rather than
-   several separate per-element animations running out of sync. The
-   overlay is injected once by js/layout.js (so it's present on every
-   page alongside the shared nav) and sits above the nav but below the
-   launch banner / toasts.
+/* --- Shared bronze-gold shimmer ---
+   One soft band of light sweeps right to left, but only across elements
+   that are themselves bronze-gold — the wordmark, the hero heading, the
+   two "Request a Quote" buttons, and the eyebrow labels/accent lines.
+   Photos, white text, and the page background are untouched.
 
-   mix-blend-mode: screen means it only brightens what's underneath it
-   (never darkens), and brightens gold/light pixels far more than the
-   near-black background — so in practice it reads as picking out the
-   wordmark, buttons and photos rather than washing out the whole page. */
-.page-shimmer {
-  position: fixed;
-  inset: 0;
-  z-index: 150;
-  pointer-events: none;
-  background-image: linear-gradient(100deg, transparent 44%, rgba(255,255,255,0.32) 50%, transparent 56%);
-  background-size: 260% 100%;
-  background-repeat: no-repeat;
-  background-position: 160% 0;
-  mix-blend-mode: screen;
-  animation: page-shimmer-sweep 6s ease-in-out infinite;
-}
-@keyframes page-shimmer-sweep {
-  0%   { background-position: 160% 0; }
-  50%  { background-position: -60% 0; }
-  100% { background-position: -60% 0; }
+   Each of those elements keeps its own normal gold background/gradient
+   as one background layer, with this shimmer highlight as a second
+   layer on top, combined via background-blend-mode: screen (brightens
+   only, never darkens). The shimmer layer uses
+   background-attachment: fixed, which makes its position/size resolve
+   against the viewport instead of the element's own box — so every
+   element, however small or wherever it sits on the page, moves through
+   the exact same keyframe in lockstep and reads as one single light
+   crossing the screen, not several separate animations.
+
+   12s per cycle: ~6s to sweep across, ~6s paused off-screen before it
+   loops — half the speed of the previous version. */
+@keyframes gold-accent-shimmer {
+  0%   { background-position: 0 0, 160% 0; }
+  50%  { background-position: 0 0, -60% 0; }
+  100% { background-position: 0 0, -60% 0; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .page-shimmer { display: none; }
+  .brand, .brand span,
+  .btn-primary, .nav-cta,
+  .eyebrow, .eyebrow::before {
+    animation: none;
+  }
 }
 
 .nav-links {
@@ -368,12 +394,18 @@ section { padding: var(--space-6) 0; }
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--basalt);
-  background: var(--gold);
+  background-image: linear-gradient(var(--gold), var(--gold)), linear-gradient(100deg, transparent 44%, rgba(255,255,255,0.55) 50%, transparent 56%);
+  background-size: 100% 100%, 260% 100%;
+  background-repeat: no-repeat, no-repeat;
+  background-attachment: scroll, fixed;
+  background-position: 0 0, 160% 0;
+  background-blend-mode: normal, screen;
   padding: 0.6em 1.3em;
   border-radius: var(--radius);
-  transition: background 0.2s;
+  transition: background-image 0.2s;
+  animation: gold-accent-shimmer 12s ease-in-out infinite;
 }
-.nav-cta:hover { background: var(--gold-soft); }
+.nav-cta:hover { background-image: linear-gradient(var(--gold-soft), var(--gold-soft)), linear-gradient(100deg, transparent 44%, rgba(255,255,255,0.55) 50%, transparent 56%); }
 
 .nav-toggle {
   display: none;

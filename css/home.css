@@ -66,9 +66,11 @@ pointer-events: none;
 }
 
 /* The hero used to have its own independent light sweep here
-   (.hero-grain-sweep, a 9s left-to-right band). That's now handled by
-   the single site-wide .page-shimmer overlay in base.css instead, so
-   the hero doesn't run a second, out-of-sync sweep on top of it. */
+   (.hero-grain-sweep), and later a full-viewport .page-shimmer overlay
+   that swept the whole screen including this photo. Both are gone —
+   the shimmer now only lives on bronze-gold elements themselves (see
+   gold-accent-shimmer in base.css), so the hero photo/video no longer
+   catches any light sweep at all. */
 
 .hero-content {
 position: relative;
@@ -83,15 +85,28 @@ margin: var(--space-2) 0 var(--space-3);
 .hero h1 em,
 .hero h1 em .cascade-word {
 font-style: italic;
-background-image: linear-gradient(180deg, #D3B388 0%, #C3A37B 30%, #B4946E 54%, #947656 100%);
+background-image: linear-gradient(180deg, #D3B388 0%, #C3A37B 30%, #B4946E 54%, #947656 100%), linear-gradient(100deg, transparent 44%, rgba(255,255,255,0.55) 50%, transparent 56%);
+background-size: 100% 100%, 260% 100%;
+background-repeat: no-repeat, no-repeat;
+background-attachment: scroll, fixed;
+background-position: 0 0, 160% 0;
+background-blend-mode: normal, screen;
 -webkit-background-clip: text;
 background-clip: text;
 -webkit-text-fill-color: transparent;
 color: transparent;
-/* No animation here — the shimmer is now the single site-wide
-   .page-shimmer overlay in base.css, which sweeps over this heading
-   along with the wordmark, buttons, and the hero photo/video as one
-   light passing over the whole screen. */
+/* Shares the gold-accent-shimmer keyframe (defined in base.css) with the
+   wordmark, both "Request a Quote" buttons, and the eyebrow labels —
+   background-attachment: fixed keeps all of them in lockstep as one
+   light sweeping right to left, visible only on the bronze-gold parts
+   of the page rather than across photos or white text. */
+animation: gold-accent-shimmer 12s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero h1 em,
+  .hero h1 em .cascade-word {
+    animation: none;
+  }
 }
 
 .hero-sub {
