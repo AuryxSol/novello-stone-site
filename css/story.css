@@ -17,7 +17,9 @@
 /* ===== HOW WE WORK (values) ===== */
 /* Background photo + light handled by .stone-section (see our-story.html) */
 .story-values-section { color: var(--limestone); }
-.story-values-section .eyebrow { color: var(--gold); text-shadow: 0 1px 4px rgba(0,0,0,0.7), 0 0 calc(var(--shimmer-strength, 0) * 9px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.60)); }
+/* No `color` override — base .eyebrow (base.css) is transparent +
+   background-clip:text; only the static legibility shadow is kept. */
+.story-values-section .eyebrow { text-shadow: 0 1px 4px rgba(0,0,0,0.7); }
 .story-values-section h2 { color: var(--limestone); text-shadow: 0 2px 8px rgba(0,0,0,0.55); }
 
 .story-values-grid {
@@ -53,7 +55,7 @@
 /* ===== HOW A JOB RUNS ===== */
 /* Background photo + light handled by .stone-section (see our-story.html) */
 .story-process-section { color: var(--limestone); }
-.story-process-section .eyebrow { color: var(--gold); text-shadow: 0 1px 4px rgba(0,0,0,0.7), 0 0 calc(var(--shimmer-strength, 0) * 9px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.60)); }
+.story-process-section .eyebrow { text-shadow: 0 1px 4px rgba(0,0,0,0.7); }
 .story-process-section h2 { color: var(--limestone); text-shadow: 0 2px 8px rgba(0,0,0,0.55); }
 
 .story-process-grid {
@@ -89,7 +91,7 @@
 /* ===== HOW WE PRICE ===== */
 /* Background photo + light handled by .stone-section (see our-story.html) */
 .story-pricing-section { color: var(--limestone); }
-.story-pricing-section .eyebrow { color: var(--gold); text-shadow: 0 1px 4px rgba(0,0,0,0.7), 0 0 calc(var(--shimmer-strength, 0) * 9px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.60)); }
+.story-pricing-section .eyebrow { text-shadow: 0 1px 4px rgba(0,0,0,0.7); }
 .story-pricing-section h2 { color: var(--limestone); text-shadow: 0 2px 8px rgba(0,0,0,0.55); }
 .story-pricing-lead {
   max-width: 640px;
@@ -140,7 +142,7 @@
 }
 .story-fleet-image { display: block; width: 100%; height: auto; object-fit: contain; border-radius: inherit; }
 .story-fleet-text { max-width: 720px; color: var(--limestone); }
-.story-fleet-text .eyebrow { color: var(--gold); text-shadow: 0 1px 4px rgba(0,0,0,0.7), 0 0 calc(var(--shimmer-strength, 0) * 9px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.60)); margin-bottom: var(--space-2); }
+.story-fleet-text .eyebrow { text-shadow: 0 1px 4px rgba(0,0,0,0.7); margin-bottom: var(--space-2); }
 .story-fleet-text h2 { color: var(--limestone); text-shadow: 0 2px 8px rgba(0,0,0,0.55); }
 .story-fleet-text p { color: var(--limestone); opacity: 0.9; margin: var(--space-2) 0 var(--space-3); text-shadow: 0 1px 4px rgba(0,0,0,0.6); }
 .story-fleet-quote {

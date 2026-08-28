@@ -87,18 +87,13 @@ margin: var(--space-2) 0 var(--space-3);
 font-style: italic;
 /* Canonical N-monogram-calibrated gradient — same exact stops as the
    wordmark (.brand in base.css), so the hero's highlighted word reads
-   as the identical metal rather than a slightly different curve. */
-background-image: var(--novello-bronze-metallic-gradient);
+   as the identical metal rather than a slightly different curve.
+   Specular reflection layers on top, clipped to the same glyphs. */
+background-image: var(--novello-specular-reflection), var(--novello-bronze-metallic-gradient);
 -webkit-background-clip: text;
 background-clip: text;
 -webkit-text-fill-color: transparent;
 color: transparent;
-/* Reads --shimmer-strength (written by js/shimmer.js, see base.css for
-   the full explanation) — same beam, same moment, as the wordmark and
-   both "Request a Quote" buttons, because it's driven by this element's
-   real screen position rather than a per-element animation. */
-filter: brightness(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-brightness-lift, 0.18))) saturate(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-saturation-lift, 0.11)));
-text-shadow: 0 0 calc(var(--shimmer-strength, 0) * 9px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.60));
 }
 
 .hero-sub {
@@ -126,9 +121,11 @@ width: fit-content;
 .hero-stats .stat-value {
 font-family: var(--font-mono);
 font-size: 1.6rem;
-color: var(--gold);
-filter: brightness(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-brightness-lift, 0.18))) saturate(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-saturation-lift, 0.11)));
-text-shadow: 0 0 calc(var(--shimmer-strength, 0) * 9px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.60));
+background-image: var(--novello-specular-reflection), linear-gradient(var(--gold), var(--gold));
+-webkit-background-clip: text;
+background-clip: text;
+-webkit-text-fill-color: transparent;
+color: transparent;
 }
 .hero-stats .stat-label {
 font-family: var(--font-mono);
@@ -147,7 +144,13 @@ color: inherit;
 transition: opacity 0.2s ease;
 }
 .hero-pillars a:hover { opacity: 0.7; }
-.hero-pillars a:hover .stat-value { color: var(--limestone); }
+.hero-pillars a:hover .stat-value {
+  /* .stat-value is transparent + background-clip:text (see .hero-stats
+     .stat-value above), so this hover state must override the
+     background-image fill rather than `color` — a plain `color`
+     override wouldn't be visible through the text-clip technique. */
+  background-image: var(--novello-specular-reflection), linear-gradient(var(--limestone), var(--limestone));
+}
 
 @media (max-width: 720px) {
 .hero-stats { grid-template-columns: 1fr; gap: var(--space-2); }
@@ -244,15 +247,29 @@ font-family: var(--font-mono);
 font-size: 0.78rem;
 letter-spacing: 0.06em;
 text-transform: uppercase;
-color: var(--gold);
 display: inline-flex;
 align-items: center;
 gap: 0.4em;
 margin-top: var(--space-2);
-filter: brightness(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-brightness-lift, 0.18))) saturate(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-saturation-lift, 0.11)));
-text-shadow: 0 0 calc(var(--shimmer-strength, 0) * 9px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.60));
+background-image: var(--novello-specular-reflection), linear-gradient(var(--gold), var(--gold));
+-webkit-background-clip: text;
+background-clip: text;
+-webkit-text-fill-color: transparent;
+color: transparent;
 }
-.pillar-link::after { content: '\2192'; transition: transform 0.2s; }
+.pillar-link::after {
+  content: '\2192';
+  transition: transform 0.2s;
+  /* The arrow is its own glyph, not part of .pillar-link's text run, so
+     it needs its own background-clip:text pass — it inherits the
+     correctly-resolved --novello-specular-reflection value from its
+     .pillar-link parent (see base.css comment on this pattern). */
+  background-image: var(--novello-specular-reflection), linear-gradient(var(--gold), var(--gold));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
 .pillar-card:hover .pillar-link::after { transform: translateX(4px); }
 
 @media (max-width: 860px) {
@@ -265,11 +282,12 @@ text-shadow: 0 0 calc(var(--shimmer-strength, 0) * 9px) rgba(var(--shimmer-highl
 color: var(--limestone);
 }
 .process-section .eyebrow {
-  color: var(--gold);
-  /* Static legibility shadow (over the backdrop photo) plus the
-     shimmer glow, combined — a page-level override on .eyebrow's
-     text-shadow would otherwise silently drop the shimmer half. */
-  text-shadow: 0 1px 4px rgba(0,0,0,0.7), 0 0 calc(var(--shimmer-strength, 0) * 9px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.60));
+  /* No `color` override here — the base .eyebrow rule (base.css) is
+     transparent + background-clip:text, and a `color` override would
+     defeat that. Only the static legibility shadow (for readability
+     over the backdrop photo) is kept; the reflection itself is handled
+     entirely by the base rule's background-image layers. */
+  text-shadow: 0 1px 4px rgba(0,0,0,0.7);
 }
 .process-section h2 { color: var(--limestone); text-shadow: 0 2px 8px rgba(0,0,0,0.55); }
 
@@ -285,12 +303,17 @@ padding-left: var(--space-2);
 }
 .process-step .step-mono {
 font-family: var(--font-mono);
-color: var(--gold);
 font-size: 0.8rem;
 display: block;
 margin-bottom: 0.6em;
-filter: brightness(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-brightness-lift, 0.18))) saturate(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-saturation-lift, 0.11)));
-text-shadow: 0 1px 4px rgba(0,0,0,0.75), 0 0 calc(var(--shimmer-strength, 0) * 9px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.60));
+background-image: var(--novello-specular-reflection), linear-gradient(var(--gold), var(--gold));
+-webkit-background-clip: text;
+background-clip: text;
+-webkit-text-fill-color: transparent;
+color: transparent;
+/* Static legibility shadow only (over the backdrop photo) — the glyph
+   outline still casts this shadow even though the fill is transparent. */
+text-shadow: 0 1px 4px rgba(0,0,0,0.75);
 }
 .process-step h4 {
 color: var(--limestone);
@@ -387,9 +410,11 @@ text-align: center;
 .cta-band .btn { border-color: var(--limestone); }
 .cta-band .btn-ghost-dark:hover {
   background: var(--limestone);
-  color: var(--gold);
-  filter: brightness(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-brightness-lift, 0.18))) saturate(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-saturation-lift, 0.11)));
-  text-shadow: 0 0 calc(var(--shimmer-strength, 0) * 9px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.60));
+  background-image: var(--novello-specular-reflection), linear-gradient(var(--gold), var(--gold));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
 }
 
 /* ===== FAQ ("What clients ask us") ===== */
@@ -420,15 +445,17 @@ text-align: center;
 .faq-item summary::after {
   content: '\002B';
   font-family: var(--font-mono);
-  color: var(--gold);
   font-size: 1.3rem;
   line-height: 1;
   flex-shrink: 0;
   transition: transform 0.2s ease;
-  /* Inherits --shimmer-strength from .faq-item summary (marked purely
-     so this +/- icon can read it). */
-  filter: brightness(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-brightness-lift, 0.18))) saturate(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-saturation-lift, 0.11)));
-  text-shadow: 0 0 calc(var(--shimmer-strength, 0) * 9px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.60));
+  /* Inherits the resolved --novello-specular-reflection value from
+     .faq-item summary (marked purely so this +/- icon can read it). */
+  background-image: var(--novello-specular-reflection), linear-gradient(var(--gold), var(--gold));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
 }
 .faq-item[open] summary::after {
   content: '\2212';

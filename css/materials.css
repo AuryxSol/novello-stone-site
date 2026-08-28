@@ -10,7 +10,9 @@
   padding-top: calc(76px + var(--space-5));
   padding-bottom: var(--space-5);
 }
-.material-hero .eyebrow { color: var(--gold); }
+/* No colour override here — the base .eyebrow rule (base.css) is
+   already transparent + background-clip:text, and a `color` override
+   would defeat that technique. */
 .material-hero h1 { margin: var(--space-2) 0 var(--space-3); max-width: 800px; }
 .material-hero .lead { font-size: 1.15rem; color: var(--travertine); max-width: 640px; }
 
@@ -115,13 +117,15 @@
   border: 1px solid var(--hairline);
 }
 .material-es-card .mono {
-  color: var(--gold);
   font-size: 0.78rem;
   letter-spacing: 0.06em;
   display: block;
   margin-bottom: var(--space-1);
-  filter: brightness(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-brightness-lift, 0.18))) saturate(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-saturation-lift, 0.11)));
-  text-shadow: 0 0 calc(var(--shimmer-strength, 0) * 9px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.60));
+  background-image: var(--novello-specular-reflection), linear-gradient(var(--gold), var(--gold));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
 }
 .material-es-card p { color: var(--travertine); font-size: 0.94rem; margin: 0; }
 
@@ -141,12 +145,14 @@
 }
 .material-care-item .step-mono {
   font-family: var(--font-mono);
-  color: var(--gold);
   font-size: 0.8rem;
   display: block;
   margin-bottom: 0.6em;
-  filter: brightness(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-brightness-lift, 0.18))) saturate(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-saturation-lift, 0.11)));
-  text-shadow: 0 0 calc(var(--shimmer-strength, 0) * 9px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.60));
+  background-image: var(--novello-specular-reflection), linear-gradient(var(--gold), var(--gold));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
 }
 .material-care-item h4 { font-size: 1rem; margin-bottom: 0.4em; }
 .material-care-item p { color: var(--travertine); font-size: 0.9rem; margin: 0; }
@@ -193,10 +199,12 @@
   transform: translateY(-3px);
 }
 .material-link-card .mono {
-  color: var(--gold);
   font-size: 0.72rem;
-  filter: brightness(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-brightness-lift, 0.18))) saturate(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-saturation-lift, 0.11)));
-  text-shadow: 0 0 calc(var(--shimmer-strength, 0) * 9px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.60));
+  background-image: var(--novello-specular-reflection), linear-gradient(var(--gold), var(--gold));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
 }
 .material-link-card h4 { margin: var(--space-1) 0 0.4em; font-size: 1.05rem; color: var(--limestone); }
 .material-link-card p { color: var(--travertine); font-size: 0.88rem; margin: 0 0 0.8em; }

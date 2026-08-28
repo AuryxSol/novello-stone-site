@@ -53,21 +53,6 @@
   --gold-highlight: var(--novello-bronze-highlight);
   --gold-border:    rgba(180, 148, 110, 0.32);
   --gold-glow:      rgba(180, 148, 110, 0.14);
-  /* Warm champagne highlight used ONLY by the travelling shimmer peak
-     (js/shimmer.js) — never the resting color of anything. Sampled
-     from the brightest genuinely-bronze (non-specular-blowout) pixels
-     in the N monogram artwork (~90th percentile warm tone, roughly
-     #E2C39B) and pulled back slightly toward --novello-bronze-highlight
-     so it reads as "the same metal, lit brighter" rather than a
-     different, paler gold. ~9% brighter per channel than the resting
-     highlight tone — stays warm/bronze (R > G > B held throughout),
-     never drifts toward white, silver, or pale yellow. */
-  --shimmer-highlight-rgb: 230, 199, 156;
-  /* Multiplicative peak lift applied to shimmer-strength (0–1) across
-     every bronze-gold element — single source of truth so the "how
-     much brighter at peak" tuning lives in exactly one place. */
-  --shimmer-brightness-lift: 0.18;  /* peak brightness: +18% */
-  --shimmer-saturation-lift: 0.11;  /* peak saturation: +11% */
   --novello-metallic-gold: var(--novello-bronze-metallic-gradient);
 
   /* Legacy aliases — kept so existing component rules stay in sync */
@@ -80,34 +65,64 @@
   --hairline:       rgba(180, 148, 110, 0.22); /* fine architectural bronze-gold line */
   --white:          #F3F0EA;
 
-  /* Live 0–1 value written every animation frame by js/shimmer.js onto
-     each [data-bronze-shimmer] element, based on that element's actual
-     distance from the sweeping beam. Defaults to 0 (no effect at all)
-     so every consuming rule below renders at its normal resting
-     appearance if JS hasn't run yet or fails to load. */
+  /* ===========================================================
+     Bronze-gold SPECULAR REFLECTION system (Version B — approved)
+     ===========================================================
+     Replaces the earlier whole-element brightness/saturation/glow
+     technique entirely. js/shimmer.js writes two live values onto
+     every [data-bronze-shimmer] element every frame, based on that
+     element's real on-screen position relative to one global beam:
+
+       --shimmer-x         the beam's position *inside this element's
+                            own box*, as a % of its own width.
+       --shimmer-strength   a narrow 0–1 entry/exit fade (1 while the
+                            beam is inside the box, ramping to 0 just
+                            outside it) — NOT a "how lit up" scalar.
+
+     Both default to values that render zero visible effect (x parked
+     far off any element, strength 0) so every consuming rule below
+     is a normal, static bronze element if JS hasn't run.
+     =========================================================== */
+  --shimmer-x: -999%;
   --shimmer-strength: 0;
 
-  /* --- Type tokens --- */
-  --font-display: 'Oswald', sans-serif;
-  --font-wordmark: 'Cinzel', serif;
-  --font-headline: 'Cormorant Garamond', serif;
-  --font-body: 'Source Sans 3', sans-serif;
-  --font-mono: 'IBM Plex Mono', monospace;
+  /* Warm champagne-white core, unchanged from the approved proof. */
+  --novello-specular-core-rgb: 250, 238, 214;
+  /* Same bronze tone as the resting highlight — the shoulders read as
+     "the metal itself, lit", never a different colour. */
+  --novello-specular-shoulder-rgb: 230, 199, 156;
+  /* 10deg from vertical, unchanged from the approved proof. */
+  --novello-specular-angle: 100deg;
 
-  /* --- Spacing scale --- */
-  --space-1: 0.5rem;
-  --space-2: 1rem;
-  --space-3: 1.5rem;
-  --space-4: 2.5rem;
-  --space-5: 4rem;
-  --space-6: 6.5rem;
+  /* Version B (approved 2026-08-28): 5px core, 12px shoulders,
+     brighter core + shoulder opacity than the first (Version A) pass. */
+  --novello-specular-core-half-width: 2.5px;   /* 5px total bright core */
+  --novello-specular-shoulder-width: 12px;     /* soft feather each side */
+  --novello-specular-core-alpha: 0.81;
+  --novello-specular-shoulder-alpha: 0.28;
+}
 
-  /* --- Layout --- */
-  /* Fluid on large screens: holds at 1180px up to laptop widths, then
-     grows gently toward 1400px on wide desktop/ultrawide monitors so the
-     page doesn't read as a narrow column stranded in empty space. */
-  --max-width: clamp(1180px, 74vw + 260px, 1400px);
-  --radius: 2px; /* near-zero radius — precision, not softness */
+/* IMPORTANT: --novello-specular-reflection is declared on
+   [data-bronze-shimmer] (the attribute every tracked element carries),
+   NOT on :root. A custom property's var() references are resolved
+   ONCE, at the element where that property is declared — if this
+   lived on :root, its var(--shimmer-x) would always resolve to
+   :root's own (unmoving) default, and every element would inherit
+   that same frozen value instead of re-resolving against its OWN
+   local --shimmer-x/--shimmer-strength (set every frame via inline
+   style, which always wins the cascade over this rule). Declaring it
+   here makes it re-evaluate correctly on every single element. */
+[data-bronze-shimmer] {
+  --novello-specular-reflection: linear-gradient(
+    var(--novello-specular-angle),
+    transparent,
+    transparent calc(var(--shimmer-x) - var(--novello-specular-shoulder-width) - var(--novello-specular-core-half-width)),
+    rgba(var(--novello-specular-shoulder-rgb), calc(var(--shimmer-strength) * var(--novello-specular-shoulder-alpha))) calc(var(--shimmer-x) - var(--novello-specular-core-half-width)),
+    rgba(var(--novello-specular-core-rgb), calc(var(--shimmer-strength) * var(--novello-specular-core-alpha))) var(--shimmer-x),
+    rgba(var(--novello-specular-shoulder-rgb), calc(var(--shimmer-strength) * var(--novello-specular-shoulder-alpha))) calc(var(--shimmer-x) + var(--novello-specular-core-half-width)),
+    transparent calc(var(--shimmer-x) + var(--novello-specular-shoulder-width) + var(--novello-specular-core-half-width)),
+    transparent
+  );
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -169,29 +184,34 @@ a { color: inherit; text-decoration: none; }
   font-weight: 500;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--gold);
   display: inline-flex;
   align-items: center;
   gap: 0.5em;
-  /* Bronze-gold shimmer (js/shimmer.js writes --shimmer-strength here as
-     the beam crosses this element's actual screen position). Some pages
-     override text-shadow on their own .eyebrow instance for legibility
-     over photos (see about.css/home.css/materials.css/story.css) — those
-     still get the brightness/saturation shimmer below, just without this
-     particular glow, since text-shadow doesn't merge across rules. */
-  filter: brightness(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-brightness-lift, 0.18))) saturate(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-saturation-lift, 0.11)));
-  text-shadow: 0 0 calc(var(--shimmer-strength, 0) * 9px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.60));
+  /* Bronze-gold specular reflection, clipped to the glyph shapes via
+     background-clip: text. A flat two-stop gradient of the resting
+     colour is the base layer (so it reads as solid bronze at rest),
+     with the reflection layered on top — both clip to the letterforms
+     together. Some pages override this element's colour for
+     legibility over photos (materials.css/home.css/story.css); those
+     have been updated to use the same background-clip technique so
+     the reflection still applies there too. */
+  background-image: var(--novello-specular-reflection), linear-gradient(var(--gold), var(--gold));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
 }
 
 .eyebrow::before {
   content: '';
   width: 18px;
   height: 1px;
-  background: var(--gold);
   display: inline-block;
-  /* Inherits --shimmer-strength from .eyebrow (its originating element) */
-  filter: brightness(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-brightness-lift, 0.18))) saturate(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-saturation-lift, 0.11)));
-  box-shadow: 0 0 calc(var(--shimmer-strength, 0) * 7px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.50));
+  background-color: var(--gold);
+  /* Inherits --shimmer-x/--shimmer-strength from .eyebrow (its
+     originating element) — this is a solid line, not text, so the
+     reflection just layers on top of the flat colour directly. */
+  background-image: var(--novello-specular-reflection);
 }
 
 .container {
@@ -226,15 +246,20 @@ section { padding: var(--space-6) 0; }
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #947656 0%, #A5855F 28%, #C3A37B 52%, #B4946E 70%, #947656 100%);
+  /* Reflection layered on top of the button's existing gradient fill —
+     clips to the border-radius automatically (standard background
+     behaviour), no separate glow or overflow needed. */
+  background-image: var(--novello-specular-reflection), linear-gradient(135deg, #947656 0%, #A5855F 28%, #C3A37B 52%, #B4946E 70%, #947656 100%);
   border: 1px solid #B4946E;
   color: #0B0A09;
-  box-shadow: 0 8px 24px var(--gold-glow), 0 0 calc(var(--shimmer-strength, 0) * 15px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.55));
-  filter: brightness(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-brightness-lift, 0.18))) saturate(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-saturation-lift, 0.11)));
+  /* Static resting shadow only — not shimmer-linked. */
+  box-shadow: 0 8px 24px var(--gold-glow);
+  transition: filter 0.2s ease, box-shadow 0.2s ease;
 }
 .btn-primary:hover {
-  filter: brightness(calc(1.08 + var(--shimmer-strength, 0) * var(--shimmer-brightness-lift, 0.18))) saturate(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-saturation-lift, 0.11)));
-  box-shadow: 0 10px 30px rgba(180, 148, 110, 0.20), 0 0 calc(var(--shimmer-strength, 0) * 15px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.55));
+  /* Ordinary (non-shimmer) hover polish, independent of the sweep. */
+  filter: brightness(1.08);
+  box-shadow: 0 10px 30px rgba(180, 148, 110, 0.20);
 }
 
 .btn-ghost-dark {
@@ -242,22 +267,22 @@ section { padding: var(--space-6) 0; }
   color: var(--limestone);
 }
 /* Bronze-gold only while hovered — the resting (non-hover) button is
-   limestone/neutral and must stay untouched, so the shimmer read here
+   limestone/neutral and must stay untouched, so the reflection here
    is scoped to the :hover rule only, never the base .btn-ghost-dark. */
 .btn-ghost-dark:hover {
   background: transparent;
   border-color: var(--gold-mid);
-  color: var(--gold-mid);
-  filter: brightness(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-brightness-lift, 0.18))) saturate(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-saturation-lift, 0.11)));
-  text-shadow: 0 0 calc(var(--shimmer-strength, 0) * 9px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.60));
+  background-image: var(--novello-specular-reflection), linear-gradient(var(--gold-mid), var(--gold-mid));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
 }
 
 .btn-ghost:hover {
-  background: var(--gold-base);
   border-color: var(--gold-base);
   color: var(--basalt);
-  filter: brightness(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-brightness-lift, 0.18))) saturate(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-saturation-lift, 0.11)));
-  box-shadow: 0 0 calc(var(--shimmer-strength, 0) * 13px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.55));
+  background-image: var(--novello-specular-reflection), linear-gradient(var(--gold-base), var(--gold-base));
 }
 
 /* --- Nav --- */
@@ -301,45 +326,75 @@ section { padding: var(--space-6) 0; }
 .brand,
 .brand span {
   /* Canonical N-monogram-calibrated gradient — shared with the hero's
-     highlighted heading word (home.css) so every gradient-text element
-     reads as the exact same metal. */
-  background-image: var(--novello-bronze-metallic-gradient);
+     highlighted heading word (home.css) — with the specular reflection
+     layered on top, both clipped to the glyph shapes together. */
+  background-image: var(--novello-specular-reflection), var(--novello-bronze-metallic-gradient);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
   color: transparent;
-  filter: brightness(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-brightness-lift, 0.18))) saturate(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-saturation-lift, 0.11)));
-  text-shadow: 0 0 calc(var(--shimmer-strength, 0) * 9px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.60));
 }
 .brand { display: inline-flex; align-items: center; gap: 0.75em; }
-.brand-mark {
+
+/* N monogram — the reflection can't be painted directly on an <img>
+   (background-clip: text doesn't apply to images, and ::before/::after
+   on <img> is unreliable across browsers), so js/layout.js wraps the
+   monogram in a same-sized container with a second, absolutely
+   positioned overlay masked to the PNG's own alpha channel. The
+   reflection only ever appears on the N's actual opaque pixels —
+   never as a rectangular glow around it. */
+.brand-mark-wrap {
+  position: relative;
+  display: inline-block;
   width: 46px;
   height: 46px;
+  flex-shrink: 0;
+}
+.brand-mark {
+  width: 100%;
+  height: 100%;
   display: block;
   object-fit: contain;
-  filter: drop-shadow(0 5px 7px rgba(0,0,0,0.42)) drop-shadow(0 0 12px rgba(180, 148, 110,0.10))
-    brightness(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-brightness-lift, 0.18))) saturate(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-saturation-lift, 0.11)))
-    drop-shadow(0 0 calc(var(--shimmer-strength, 0) * 7px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.55)));
+  /* Static resting shadows only — NOT shimmer-linked, unchanged by the sweep. */
+  filter: drop-shadow(0 5px 7px rgba(0,0,0,0.42)) drop-shadow(0 0 12px rgba(180, 148, 110,0.10));
+}
+.brand-mark-reflection {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  -webkit-mask-image: url('../img/novello-n-monogram.png');
+  mask-image: url('../img/novello-n-monogram.png');
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  mask-mode: alpha;
+  background-image: var(--novello-specular-reflection);
 }
 
-/* --- Bronze-gold shimmer ---
-   A narrow, soft "studio spotlight" sweeps right to left across the
-   viewport (~8s on desktop, ~7s on mobile), then rests off-screen for
-   7–10s before the next pass. The light itself is invisible — js/shimmer.js runs one
-   requestAnimationFrame loop that tracks a single beam position and,
-   every frame, measures each [data-bronze-shimmer] element's actual
-   distance from that beam (via getBoundingClientRect, in real screen
-   pixels — not DOM order, not per-element animation delays) and writes
-   the result as --shimmer-strength (0–1) directly on that element.
+/* --- Bronze-gold specular reflection ---
+   A narrow, polished-metal reflection line sweeps right to left across
+   the viewport (~8s on desktop, ~7s on mobile), then rests off-screen
+   for ~8.5s before the next pass. The light itself is invisible —
+   js/shimmer.js runs one requestAnimationFrame loop that tracks a
+   single beam position and, every frame, measures each
+   [data-bronze-shimmer] element's actual position relative to that
+   beam (via getBoundingClientRect, in real screen pixels — not DOM
+   order, not per-element animation delays) and writes the result as
+   --shimmer-x / --shimmer-strength directly on that element.
 
-   Every rule below only ever *reads* --shimmer-strength — it never sets
-   it — so this file has no knowledge of timing at all; it just says
-   "brighten/saturate/glow this much for however lit-up this element
-   currently is". That's what keeps every element in lockstep as one
-   light crossing the screen, rather than separate animations. See
-   js/shimmer.js for the beam math, easing, resize/visibility handling,
-   and prefers-reduced-motion fallback (a fixed, very subtle glow with
-   no travelling motion at all). */
+   Every rule below only ever *reads* those two variables — via a
+   background-clip: text gradient, a layered background-image, or a
+   mask-image on the monogram — it never sets a whole-element
+   brightness/saturation filter or an expanding shadow. That's what
+   keeps the effect a thin reflection confined to the actual
+   bronze-gold shape, in lockstep with one light crossing the screen,
+   rather than the whole object glowing. See js/shimmer.js for the
+   beam math, easing, resize/visibility handling, and
+   prefers-reduced-motion fallback (no travelling reflection at all —
+   just the normal resting bronze appearance). */
 
 .nav-links {
   display: flex;
@@ -362,9 +417,11 @@ section { padding: var(--space-6) 0; }
    (non-gold) and must stay untouched; scoped to :hover only. */
 .nav-links a:hover {
   opacity: 1;
-  color: var(--gold-mid);
-  filter: brightness(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-brightness-lift, 0.18))) saturate(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-saturation-lift, 0.11)));
-  text-shadow: 0 0 calc(var(--shimmer-strength, 0) * 9px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.60));
+  background-image: var(--novello-specular-reflection), linear-gradient(var(--gold-mid), var(--gold-mid));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
 }
 .nav-links a.active { opacity: 1; }
 .nav-links a.active::after {
@@ -372,12 +429,10 @@ section { padding: var(--space-6) 0; }
   position: absolute;
   left: 0; bottom: 0;
   width: 100%; height: 2px;
-  background: linear-gradient(90deg, #7D6347, #C3A37B, #7D6347);
-  /* Inherits --shimmer-strength from .nav-links a.active. The active
-     link's own (non-gold, limestone) text is untouched — only this
-     underline bar reacts. */
-  filter: brightness(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-brightness-lift, 0.18))) saturate(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-saturation-lift, 0.11)));
-  box-shadow: 0 0 calc(var(--shimmer-strength, 0) * 7px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.50));
+  /* Inherits --shimmer-x/--shimmer-strength from .nav-links a.active.
+     The active link's own (non-gold, limestone) text is untouched —
+     only this underline bar reacts. */
+  background-image: var(--novello-specular-reflection), linear-gradient(90deg, #7D6347, #C3A37B, #7D6347);
 }
 
 /* --- Materials dropdown (desktop) --- */
@@ -421,20 +476,34 @@ section { padding: var(--space-6) 0; }
 }
 .nav-dropdown-menu a {
   display: block;
+  position: relative;
   padding: 0.65em 1.3em;
   font-size: 0.78rem;
   opacity: 0.82;
   white-space: nowrap;
 }
+/* The hover/active row highlight is a separate ::after fill (not this
+   link's own background) because the link itself needs
+   background-clip: text for the reflection — a single element can't
+   clip its background to BOTH "the whole row" and "just the glyphs"
+   at once. The fill sits behind the text (z-index: -1). */
+.nav-dropdown-menu a:hover::after,
+.nav-dropdown-menu a.active::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(180, 148, 110, 0.07);
+  z-index: -1;
+}
 .nav-dropdown-menu a:hover,
 .nav-dropdown-menu a.active {
   opacity: 1;
-  color: var(--gold-mid);
-  background: rgba(180, 148, 110, 0.07);
-  filter: brightness(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-brightness-lift, 0.18))) saturate(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-saturation-lift, 0.11)));
-  text-shadow: 0 0 calc(var(--shimmer-strength, 0) * 9px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.60));
+  background-image: var(--novello-specular-reflection), linear-gradient(var(--gold-mid), var(--gold-mid));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
 }
-.nav-dropdown-menu a.active::after { display: none; }
 
 .nav-cta {
   font-family: var(--font-mono);
@@ -442,14 +511,13 @@ section { padding: var(--space-6) 0; }
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--basalt);
-  background: var(--gold);
+  background-color: var(--gold);
+  background-image: var(--novello-specular-reflection);
   padding: 0.6em 1.3em;
   border-radius: var(--radius);
-  transition: background 0.2s;
-  filter: brightness(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-brightness-lift, 0.18))) saturate(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-saturation-lift, 0.11)));
-  box-shadow: 0 0 calc(var(--shimmer-strength, 0) * 13px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.55));
+  transition: background-color 0.2s;
 }
-.nav-cta:hover { background: var(--gold-soft); }
+.nav-cta:hover { background-color: var(--gold-soft); }
 
 .nav-toggle {
   display: none;
@@ -496,14 +564,14 @@ section { padding: var(--space-6) 0; }
     padding-bottom: var(--space-2);
   }
   /* Mobile "Request a Quote" link — the one gold accent inside the
-     mobile menu. Was previously a hardcoded inline style in
-     js/layout.js; now a proper class on the shared bronze token so it
-     shimmers in lockstep with the rest of the site. */
+     mobile menu. */
   .mobile-menu a.mobile-menu-cta {
-    color: var(--gold-mid);
     border-bottom-color: rgba(180, 148, 110, 0.35);
-    filter: brightness(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-brightness-lift, 0.18))) saturate(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-saturation-lift, 0.11)));
-    text-shadow: 0 0 calc(var(--shimmer-strength, 0) * 9px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.60));
+    background-image: var(--novello-specular-reflection), linear-gradient(var(--gold-mid), var(--gold-mid));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
   }
 }
 
@@ -542,20 +610,18 @@ footer {
   content: '';
   flex: 1;
   height: 1px;
-  background: rgba(180, 148, 110, 0.55);
-  /* Inherits --shimmer-strength from .brand-divider (marked purely for
-     these two decorative lines to read it). */
-  filter: brightness(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-brightness-lift, 0.18))) saturate(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-saturation-lift, 0.11)));
-  box-shadow: 0 0 calc(var(--shimmer-strength, 0) * 7px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.50));
+  background-color: rgba(180, 148, 110, 0.55);
+  /* Inherits --shimmer-x/--shimmer-strength from .brand-divider (marked
+     purely for these two decorative lines to read it). */
+  background-image: var(--novello-specular-reflection);
 }
 .brand-divider .diamond {
   width: 6px;
   height: 6px;
-  background: var(--gold);
+  background-color: var(--gold);
+  background-image: var(--novello-specular-reflection);
   transform: rotate(45deg);
   flex-shrink: 0;
-  filter: brightness(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-brightness-lift, 0.18))) saturate(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-saturation-lift, 0.11)));
-  box-shadow: 0 0 calc(var(--shimmer-strength, 0) * 7px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.50));
 }
 .footer-grid p, .footer-grid a {
   font-size: 0.92rem;
@@ -569,9 +635,12 @@ footer {
    (non-gold) and must stay untouched; scoped to :hover only. */
 .footer-grid a:hover {
   opacity: 1;
-  color: var(--gold-mid);
-  filter: brightness(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-brightness-lift, 0.18))) saturate(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-saturation-lift, 0.11)));
-  text-shadow: 0 0 calc(var(--shimmer-strength, 0) * 9px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.60));
+  background-image: var(--novello-specular-reflection), linear-gradient(var(--gold-mid), var(--gold-mid));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  text-shadow: none;
 }
 .footer-social {
   display: flex;
@@ -590,12 +659,17 @@ footer {
   border-radius: 50%;
   transition: opacity 0.2s, color 0.2s, border-color 0.2s;
 }
+/* Icons are SVG (fill: currentColor), not text, so they can't use
+   background-clip: text — the reflection instead layers as a
+   background-image on the circular badge itself, which clips to the
+   badge's own border-radius automatically (same "layer on top of the
+   existing fill" technique as the buttons/dividers). It's confined to
+   the round badge shape, not a rectangular halo around it. */
 .footer-social a:hover {
   opacity: 1;
   color: var(--gold-mid);
   border-color: var(--gold-mid);
-  filter: brightness(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-brightness-lift, 0.18))) saturate(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-saturation-lift, 0.11)));
-  box-shadow: 0 0 calc(var(--shimmer-strength, 0) * 9px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.55));
+  background-image: var(--novello-specular-reflection);
 }
 .footer-social svg { width: 16px; height: 16px; display: block; }
 .footer-bottom {
@@ -774,7 +848,5 @@ footer {
 .gold-divider {
   height: 1px;
   border: none;
-  background: linear-gradient(90deg, transparent, #7D6347, #B4946E, #D3B388, #B4946E, #7D6347, transparent);
-  filter: brightness(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-brightness-lift, 0.18))) saturate(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-saturation-lift, 0.11)));
-  box-shadow: 0 0 calc(var(--shimmer-strength, 0) * 7px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.50));
+  background-image: var(--novello-specular-reflection), linear-gradient(90deg, transparent, #7D6347, #B4946E, #D3B388, #B4946E, #7D6347, transparent);
 }
