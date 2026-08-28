@@ -324,7 +324,7 @@ section { padding: var(--space-6) 0; }
 
 /* --- Bronze-gold shimmer ---
    A compact, softly feathered "Thinking"-style highlight sweeps left to
-   right across the viewport (~2.8s on desktop, ~2.3s on mobile), then rests off-screen for
+   right across the viewport (~3.6s on desktop, ~3s on mobile), then rests off-screen for
    7–10s before the next pass. The light itself is invisible — js/shimmer.js runs one
    requestAnimationFrame loop that tracks a single beam position and,
    every frame, measures each [data-bronze-shimmer] element's actual
