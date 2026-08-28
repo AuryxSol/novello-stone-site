@@ -7,7 +7,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const materialsActive = materialPages.includes(activePage);
 
   const navHTML = `
-    <div class="page-shimmer" aria-hidden="true"></div>
     <nav class="site-nav">
       <div class="container">
         <a href="index.html" class="brand"><img src="img/novello-n-monogram.png" alt="" class="brand-mark">NOVELLO <span>STONE</span></a>
