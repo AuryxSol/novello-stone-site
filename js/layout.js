@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const navHTML = `
     <nav class="site-nav">
       <div class="container">
-        <a href="index.html" class="brand"><span class="brand-mark-wrap"><img src="img/novello-n-monogram.png" alt="" class="brand-mark"><span class="brand-mark-reflection" aria-hidden="true"></span></span>NOVELLO <span>STONE</span></a>
+        <a href="index.html" class="brand"><img src="img/novello-n-monogram.png" alt="" class="brand-mark">NOVELLO <span>STONE</span></a>
         <ul class="nav-links">
           <li><a href="index.html" class="${activePage === 'home' ? 'active' : ''}">Home</a></li>
           <li class="nav-dropdown">
