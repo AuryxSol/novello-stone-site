@@ -74,8 +74,16 @@
   // A compact, softly feathered band inspired by the moving highlight in
   // ChatGPT's "Thinking" status. It remains broad enough to read as warm
   // bronze illumination, never the thin specular line used by Version B.
-  var DESKTOP_BEAM_RADIUS_PX = 190;
-  var MOBILE_BEAM_RADIUS_PX = 120;
+  // The high-intensity centre now spans roughly 2–3 letters in the desktop
+  // wordmark reference (about 60–70px), with a proportionate mobile width.
+  var DESKTOP_BEAM_RADIUS_PX = 75;
+  var MOBILE_BEAM_RADIUS_PX = 55;
+
+  // Preserve the previously approved off-screen travel path independently
+  // from the narrower focus width, so the sweep's speed and timing do not
+  // change when the beam radius changes.
+  var DESKTOP_TRAVEL_PADDING_PX = 190;
+  var MOBILE_TRAVEL_PADDING_PX = 120;
 
   // Smooth, steady travel matching the visual pace of the "Thinking"
   // shimmer. The existing rest interval is intentionally preserved so the
@@ -99,12 +107,14 @@
   // Cached per-breakpoint config, refreshed on resize/orientation change
   // rather than read every animation frame.
   var beamRadiusPx = DESKTOP_BEAM_RADIUS_PX;
+  var travelPaddingPx = DESKTOP_TRAVEL_PADDING_PX;
   var sweepDurationMs = DESKTOP_SWEEP_MS;
   var cycleMs = sweepDurationMs + PAUSE_MS;
 
   function refreshBreakpointConfig() {
     var isMobile = (window.innerWidth || document.documentElement.clientWidth) <= MOBILE_BREAKPOINT;
     beamRadiusPx = isMobile ? MOBILE_BEAM_RADIUS_PX : DESKTOP_BEAM_RADIUS_PX;
+    travelPaddingPx = isMobile ? MOBILE_TRAVEL_PADDING_PX : DESKTOP_TRAVEL_PADDING_PX;
     sweepDurationMs = isMobile ? MOBILE_SWEEP_MS : DESKTOP_SWEEP_MS;
     cycleMs = sweepDurationMs + PAUSE_MS;
   }
@@ -153,12 +163,14 @@
       // Constant-speed left-to-right travel, matching the calm running motion
       // of the ChatGPT "Thinking" shimmer. The beam starts and ends fully
       // outside the viewport, so the visible movement never pops or resets.
-      // Travels from (-radius) to (100vw + radius), i.e. fully off-screen
+      // Travels along the previously approved off-screen path. Focus width
+      // is deliberately independent, so this geometry and speed stay fixed.
+      // Travels from (-padding) to (100vw + padding), i.e. fully off-screen
       // left to fully off-screen right — the beam always fully
       // clears the viewport before the pause begins.
-      beamX = -beamRadiusPx + t * (vw + beamRadiusPx * 2);
+      beamX = -travelPaddingPx + t * (vw + travelPaddingPx * 2);
     } else {
-      beamX = beamRadiusPx * 100; // parked far off-screen during the pause
+      beamX = travelPaddingPx * 100; // parked far off-screen during the pause
     }
 
     for (var i = 0; i < elements.length; i++) {
