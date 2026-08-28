@@ -77,11 +77,11 @@
   var DESKTOP_BEAM_RADIUS_PX = 190;
   var MOBILE_BEAM_RADIUS_PX = 120;
 
-  // Brisk, steady travel matching the visual pace of the "Thinking"
+  // Smooth, steady travel matching the visual pace of the "Thinking"
   // shimmer. The existing rest interval is intentionally preserved so the
   // website stays elegant instead of looking permanently busy.
-  var DESKTOP_SWEEP_MS = 2800;
-  var MOBILE_SWEEP_MS = 2300;
+  var DESKTOP_SWEEP_MS = 3600;
+  var MOBILE_SWEEP_MS = 3000;
 
   var INITIAL_DELAY_MS = 900;
   var PAUSE_MS = 8500;         // rest between sweeps, within the 7–10s spec range
