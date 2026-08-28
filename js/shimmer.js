@@ -2,7 +2,7 @@
    NOVELLO STONE — Bronze-gold shimmer controller
    ===========================================================
    A single global "beam" (an invisible position, never a visible
-   layer) travels right-to-left across the viewport on a timer. Every
+   layer) travels left-to-right across the viewport on a timer. Every
    frame, every registered bronze-gold element measures its own real
    distance from that beam (via getBoundingClientRect — actual screen
    position, not DOM order) and writes the result as a 0–1
@@ -11,8 +11,8 @@
    only ever *reads* that variable (brightness/saturation/glow) — this
    file is the only place that ever *writes* it, and it writes real
    position-based values, so every element lights up in perfect
-   lockstep as the same beam passes its own spot on screen: right-side
-   elements first, centre next, left-side last — with no independent
+   lockstep as the same beam passes its own spot on screen: left-side
+   elements first, centre next, right-side last — with no independent
    per-element animations to fall out of sync.
 
    Nothing here touches layout, text, colours, hover/focus states, or
@@ -71,16 +71,22 @@
   // get a beam sized and timed for that class of screen).
   var MOBILE_BREAKPOINT = 860; // matches the site's existing nav breakpoint
 
-  var DESKTOP_BEAM_RADIUS_PX = 260; // within the 220–320px spec range
-  var MOBILE_BEAM_RADIUS_PX = 150;  // within the 120–180px spec range
+  // A compact, softly feathered band inspired by the moving highlight in
+  // ChatGPT's "Thinking" status. It remains broad enough to read as warm
+  // bronze illumination, never the thin specular line used by Version B.
+  var DESKTOP_BEAM_RADIUS_PX = 190;
+  var MOBILE_BEAM_RADIUS_PX = 120;
 
-  var DESKTOP_SWEEP_MS = 8000; // within the 7500–8500ms spec range
-  var MOBILE_SWEEP_MS = 7000;  // within the 6500–7500ms spec range
+  // Brisk, steady travel matching the visual pace of the "Thinking"
+  // shimmer. The existing rest interval is intentionally preserved so the
+  // website stays elegant instead of looking permanently busy.
+  var DESKTOP_SWEEP_MS = 2800;
+  var MOBILE_SWEEP_MS = 2300;
 
-  var INITIAL_DELAY_MS = 1500; // first sweep begins ~1.5s after load
+  var INITIAL_DELAY_MS = 900;
   var PAUSE_MS = 8500;         // rest between sweeps, within the 7–10s spec range
 
-  var FALLOFF_POWER = 1.45;    // soft, feathered spotlight edge on both sides
+  var FALLOFF_POWER = 1.15;    // soft shoulders like the "Thinking" shimmer
   var STATIC_REDUCED_MOTION_STRENGTH = '0.22'; // fixed, very subtle glow — no travelling motion
 
   var reduceMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -101,15 +107,6 @@
     beamRadiusPx = isMobile ? MOBILE_BEAM_RADIUS_PX : DESKTOP_BEAM_RADIUS_PX;
     sweepDurationMs = isMobile ? MOBILE_SWEEP_MS : DESKTOP_SWEEP_MS;
     cycleMs = sweepDurationMs + PAUSE_MS;
-  }
-
-  // Gentle sine ease — smooth, cinematic acceleration/deceleration with no
-  // sharp onset or sudden speed change at either end of the sweep, and no
-  // visible pop at the cycle boundary (the beam is already fully off-screen,
-  // and every element's strength has already decayed to 0, well before the
-  // sweep phase ends).
-  function easeInOutSine(t) {
-    return -(Math.cos(Math.PI * t) - 1) / 2;
   }
 
   function collectElements() {
@@ -153,13 +150,15 @@
     var beamX;
     if (cyclePos <= sweepDurationMs) {
       var t = cyclePos / sweepDurationMs;
-      var eased = easeInOutSine(t);
-      // Travels from (100vw + radius) to (-radius), i.e. fully off-screen
-      // right to fully off-screen left, per spec — the beam always fully
+      // Constant-speed left-to-right travel, matching the calm running motion
+      // of the ChatGPT "Thinking" shimmer. The beam starts and ends fully
+      // outside the viewport, so the visible movement never pops or resets.
+      // Travels from (-radius) to (100vw + radius), i.e. fully off-screen
+      // left to fully off-screen right — the beam always fully
       // clears the viewport before the pause begins.
-      beamX = (vw + beamRadiusPx) - eased * (vw + beamRadiusPx * 2);
+      beamX = -beamRadiusPx + t * (vw + beamRadiusPx * 2);
     } else {
-      beamX = -beamRadiusPx * 100; // parked far off-screen during the pause
+      beamX = beamRadiusPx * 100; // parked far off-screen during the pause
     }
 
     for (var i = 0; i < elements.length; i++) {
