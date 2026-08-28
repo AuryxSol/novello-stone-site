@@ -1,22 +1,39 @@
 /* ===========================================================
-   NOVELLO STONE — Bronze-gold shimmer controller
+   NOVELLO STONE — Bronze-gold specular reflection controller
    ===========================================================
    A single global "beam" (an invisible position, never a visible
-   layer) travels right-to-left across the viewport on a timer. Every
-   frame, every registered bronze-gold element measures its own real
-   distance from that beam (via getBoundingClientRect — actual screen
-   position, not DOM order) and writes the result as a 0–1
-   --shimmer-strength custom property on itself. The CSS in base.css /
-   home.css / materials.css / contact.css / story.css / launch-banner.css
-   only ever *reads* that variable (brightness/saturation/glow) — this
-   file is the only place that ever *writes* it, and it writes real
-   position-based values, so every element lights up in perfect
+   layer) travels right-to-left across the viewport on a timer —
+   same 8s desktop / 7s mobile sweep, 1.5s initial delay, 8.5s rest,
+   sine easing as before. Every frame, every registered bronze-gold
+   element measures its own real distance from that beam (via
+   getBoundingClientRect — actual screen position, not DOM order)
+   and writes TWO custom properties on itself:
+
+     --shimmer-x         the beam's position *inside that element's
+                          own box*, as a percentage of its own width
+                          (can go negative or past 100% while the beam
+                          is still approaching/leaving) — this is what
+                          lets each element's CSS gradient know exactly
+                          where, along that specific element, to paint
+                          a thin reflection line.
+     --shimmer-strength   a narrow entry/exit fade (0–1): 1 while the
+                          beam is anywhere inside the element's own
+                          box, ramping smoothly to 0 over a small fixed
+                          pixel buffer just outside the box on either
+                          side, so the reflection never pops in or out.
+
+   The CSS in base.css / home.css / materials.css / contact.css /
+   story.css / launch-banner.css only ever *reads* these two variables
+   — via a clipped/masked gradient (background-clip: text, a layered
+   background-image, or a mask-image on the N monogram) — never a
+   whole-element brightness/saturation filter or an expanding shadow.
+   This file is the only place that ever *writes* them, and it writes
+   real position-based values, so every element lights up in perfect
    lockstep as the same beam passes its own spot on screen: right-side
-   elements first, centre next, left-side last — with no independent
-   per-element animations to fall out of sync.
+   elements first, centre next, left-side last.
 
    Nothing here touches layout, text, colours, hover/focus states, or
-   button dimensions — it only ever sets one CSS custom property.
+   button dimensions — it only ever sets two CSS custom properties.
    =========================================================== */
 
 (function () {
@@ -26,13 +43,13 @@
   // Centralised here as the single source of truth — add a selector to
   // extend the effect, nothing else needs to change. Elements that are
   // gold only in a hover/active state are included here too (so
-  // --shimmer-strength keeps updating on them continuously); the base.css
-  // rules then decide whether that value is actually *read* at rest or
-  // only inside :hover/.active — the resting appearance of those
-  // elements is never touched.
+  // --shimmer-x/--shimmer-strength keep updating on them continuously);
+  // the CSS rules then decide whether that value is actually *read* at
+  // rest or only inside :hover/.active — the resting appearance of
+  // those elements is never touched.
   var SELECTORS = [
     '.brand',                        // NOVELLO STONE wordmark
-    '.brand-mark',                   // N monogram
+    '.brand-mark-wrap',              // N monogram (wrapper — see markup note below)
     '.hero h1 em',                   // hero highlighted word ("stone")
     '.btn-primary',                  // gold "Request a Quote" button (hero)
     '.btn-ghost-dark',                // ghost button — gold only on hover
@@ -66,22 +83,21 @@
     '.launch-card a.launch-card-cta' // notice "GET IN TOUCH →" link
   ];
 
-  // --- Timing & geometry: explicit, breakpoint-aware, in real pixels ---
-  // (never viewport-relative — a narrow phone and a wide desktop each
-  // get a beam sized and timed for that class of screen).
+  // --- Timing: unchanged from the previous (glow-based) version ---
   var MOBILE_BREAKPOINT = 860; // matches the site's existing nav breakpoint
+  var DESKTOP_SWEEP_MS = 8000;
+  var MOBILE_SWEEP_MS = 7000;
+  var INITIAL_DELAY_MS = 1500;
+  var PAUSE_MS = 8500;
 
-  var DESKTOP_BEAM_RADIUS_PX = 260; // within the 220–320px spec range
-  var MOBILE_BEAM_RADIUS_PX = 150;  // within the 120–180px spec range
-
-  var DESKTOP_SWEEP_MS = 8000; // within the 7500–8500ms spec range
-  var MOBILE_SWEEP_MS = 7000;  // within the 6500–7500ms spec range
-
-  var INITIAL_DELAY_MS = 1500; // first sweep begins ~1.5s after load
-  var PAUSE_MS = 8500;         // rest between sweeps, within the 7–10s spec range
-
-  var FALLOFF_POWER = 1.45;    // soft, feathered spotlight edge on both sides
-  var STATIC_REDUCED_MOTION_STRENGTH = '0.22'; // fixed, very subtle glow — no travelling motion
+  // Small fixed buffer (px): both the off-screen travel padding for the
+  // beam's start/end position, AND each element's own entry/exit fade
+  // zone (how far outside its box the beam can be while the reflection
+  // is still ramping in/out). This replaced the old wide (220–320px)
+  // "spotlight" radius — that concept doesn't apply to a specular line
+  // clipped to each element's own shape, only this narrow easing buffer
+  // does.
+  var EDGE_FADE_PX = 50;
 
   var reduceMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
 
@@ -89,25 +105,18 @@
   var rafId = null;
   var cycleStart = null;
   var tabHidden = false;
-
-  // Cached per-breakpoint config, refreshed on resize/orientation change
-  // rather than read every animation frame.
-  var beamRadiusPx = DESKTOP_BEAM_RADIUS_PX;
   var sweepDurationMs = DESKTOP_SWEEP_MS;
   var cycleMs = sweepDurationMs + PAUSE_MS;
 
   function refreshBreakpointConfig() {
     var isMobile = (window.innerWidth || document.documentElement.clientWidth) <= MOBILE_BREAKPOINT;
-    beamRadiusPx = isMobile ? MOBILE_BEAM_RADIUS_PX : DESKTOP_BEAM_RADIUS_PX;
     sweepDurationMs = isMobile ? MOBILE_SWEEP_MS : DESKTOP_SWEEP_MS;
     cycleMs = sweepDurationMs + PAUSE_MS;
   }
 
   // Gentle sine ease — smooth, cinematic acceleration/deceleration with no
   // sharp onset or sudden speed change at either end of the sweep, and no
-  // visible pop at the cycle boundary (the beam is already fully off-screen,
-  // and every element's strength has already decayed to 0, well before the
-  // sweep phase ends).
+  // visible pop at the cycle boundary.
   function easeInOutSine(t) {
     return -(Math.cos(Math.PI * t) - 1) / 2;
   }
@@ -128,9 +137,10 @@
     elements = found;
   }
 
-  function setAllStrength(value) {
+  function setAllStatic(x, strength) {
     for (var i = 0; i < elements.length; i++) {
-      elements[i].style.setProperty('--shimmer-strength', value);
+      elements[i].style.setProperty('--shimmer-x', x);
+      elements[i].style.setProperty('--shimmer-strength', strength);
     }
   }
 
@@ -154,21 +164,29 @@
     if (cyclePos <= sweepDurationMs) {
       var t = cyclePos / sweepDurationMs;
       var eased = easeInOutSine(t);
-      // Travels from (100vw + radius) to (-radius), i.e. fully off-screen
-      // right to fully off-screen left, per spec — the beam always fully
-      // clears the viewport before the pause begins.
-      beamX = (vw + beamRadiusPx) - eased * (vw + beamRadiusPx * 2);
+      // Travels from (100vw + edge) to (-edge), i.e. fully off-screen
+      // right to fully off-screen left — the beam always fully clears
+      // the viewport before the pause begins.
+      beamX = (vw + EDGE_FADE_PX) - eased * (vw + EDGE_FADE_PX * 2);
     } else {
-      beamX = -beamRadiusPx * 100; // parked far off-screen during the pause
+      beamX = -EDGE_FADE_PX * 100; // parked far off-screen during the pause
     }
 
     for (var i = 0; i < elements.length; i++) {
       var el = elements[i];
       var rect = el.getBoundingClientRect();
       if (rect.width === 0 && rect.height === 0) continue; // not rendered (e.g. nav-cta hidden on mobile)
-      var centerX = rect.left + rect.width / 2;
-      var raw = 1 - Math.abs(centerX - beamX) / beamRadiusPx;
-      var strength = raw > 0 ? Math.pow(raw, FALLOFF_POWER) : 0;
+
+      var localX = beamX - rect.left; // px, relative to this element's own box
+      var xPercent = rect.width > 0 ? (localX / rect.width) * 100 : 50;
+
+      var outsideDist = 0;
+      if (localX < 0) outsideDist = -localX;
+      else if (localX > rect.width) outsideDist = localX - rect.width;
+
+      var strength = outsideDist <= 0 ? 1 : Math.max(0, 1 - outsideDist / EDGE_FADE_PX);
+
+      el.style.setProperty('--shimmer-x', xPercent.toFixed(2) + '%');
       el.style.setProperty('--shimmer-strength', strength.toFixed(3));
     }
 
@@ -190,10 +208,13 @@
 
   function applyReducedMotionState() {
     if (reduceMotionQuery.matches) {
+      // No travelling reflection at all — every element simply renders
+      // its normal resting bronze appearance (per the "retain only
+      // normal metallic styling" reduced-motion requirement).
       stop();
-      setAllStrength(STATIC_REDUCED_MOTION_STRENGTH);
+      setAllStatic('-999%', '0');
     } else {
-      setAllStrength('0');
+      setAllStatic('-999%', '0');
       start();
     }
   }
