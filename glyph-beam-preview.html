@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Novello Stone — Glyph Beam Staging Proof</title>
+  <link rel="stylesheet" href="css/base.css">
+  <style>
+    :root {
+      --proof-bronze-gradient: linear-gradient(180deg,
+        #D3B388 0%, #C3A37B 25%, #B4946E 48%,
+        #A5855F 68%, #947656 84%, #7D6347 100%);
+      --proof-beam-core: rgba(230, 199, 156, 0.44);
+      --proof-beam-shoulder: rgba(211, 179, 136, 0.18);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      color: var(--limestone);
+      background:
+        radial-gradient(circle at 28% -8%, rgba(180,148,110,0.10), transparent 34%),
+        #080807;
+      overflow-x: hidden;
+    }
+
+    .proof-nav {
+      height: 76px;
+      border-bottom: 1px solid rgba(180,148,110,0.16);
+      background: rgba(8,8,7,0.94);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.24);
+    }
+
+    .proof-nav-inner {
+      width: min(1400px, calc(100% - 8vw));
+      height: 100%;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+
+    .proof-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75em;
+      white-space: nowrap;
+      text-decoration: none;
+    }
+
+    .proof-mark {
+      position: relative;
+      width: 46px;
+      height: 46px;
+      flex: 0 0 46px;
+    }
+
+    .proof-mark img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: contain;
+      filter: drop-shadow(0 5px 7px rgba(0,0,0,0.42))
+              drop-shadow(0 0 12px rgba(180,148,110,0.10));
+    }
+
+    .proof-mark-beam {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(90deg,
+        transparent calc(var(--beam-x, -999px) - 7px),
+        var(--proof-beam-shoulder) calc(var(--beam-x, -999px) - 4px),
+        var(--proof-beam-core) calc(var(--beam-x, -999px) - 1px),
+        var(--proof-beam-core) calc(var(--beam-x, -999px) + 1px),
+        var(--proof-beam-shoulder) calc(var(--beam-x, -999px) + 4px),
+        transparent calc(var(--beam-x, -999px) + 7px));
+      -webkit-mask: url('img/novello-n-monogram.png') center / contain no-repeat;
+      mask: url('img/novello-n-monogram.png') center / contain no-repeat;
+    }
+
+    .proof-wordmark,
+    .proof-glyph {
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+      background-image:
+        linear-gradient(90deg,
+          transparent calc(var(--beam-x, -999px) - 7px),
+          var(--proof-beam-shoulder) calc(var(--beam-x, -999px) - 4px),
+          var(--proof-beam-core) calc(var(--beam-x, -999px) - 1px),
+          var(--proof-beam-core) calc(var(--beam-x, -999px) + 1px),
+          var(--proof-beam-shoulder) calc(var(--beam-x, -999px) + 4px),
+          transparent calc(var(--beam-x, -999px) + 7px)),
+        var(--proof-bronze-gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      background-repeat: no-repeat;
+    }
+
+    .proof-wordmark {
+      font-family: var(--font-wordmark);
+      font-size: 1.2rem;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+    }
+
+    .proof-links {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .proof-links a {
+      position: relative;
+      padding-bottom: 4px;
+      color: var(--limestone);
+      font-family: var(--font-body);
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-decoration: none;
+      text-transform: uppercase;
+      opacity: 0.78;
+    }
+
+    .proof-links a.active { opacity: 1; }
+
+    .proof-links a.active::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 2px;
+      background:
+        linear-gradient(90deg,
+          transparent calc(var(--beam-x, -999px) - 7px),
+          var(--proof-beam-shoulder) calc(var(--beam-x, -999px) - 4px),
+          var(--proof-beam-core) calc(var(--beam-x, -999px) - 1px),
+          var(--proof-beam-core) calc(var(--beam-x, -999px) + 1px),
+          var(--proof-beam-shoulder) calc(var(--beam-x, -999px) + 4px),
+          transparent calc(var(--beam-x, -999px) + 7px)),
+        linear-gradient(90deg, #7D6347, #C3A37B, #7D6347);
+    }
+
+    .proof-cta {
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+      padding: 0.8rem 1.35rem;
+      border: 1px solid rgba(211,179,136,0.32);
+      border-radius: 2px;
+      color: #080807;
+      background: linear-gradient(135deg,
+        #947656 0%, #A5855F 28%, #C3A37B 52%,
+        #B4946E 70%, #947656 100%);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+    .proof-cta::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      background: linear-gradient(90deg,
+        transparent calc(var(--beam-x, -999px) - 7px),
+        var(--proof-beam-shoulder) calc(var(--beam-x, -999px) - 4px),
+        var(--proof-beam-core) calc(var(--beam-x, -999px) - 1px),
+        var(--proof-beam-core) calc(var(--beam-x, -999px) + 1px),
+        var(--proof-beam-shoulder) calc(var(--beam-x, -999px) + 4px),
+        transparent calc(var(--beam-x, -999px) + 7px));
+    }
+
+    .proof-stage {
+      width: min(980px, calc(100% - 3rem));
+      margin: 0 auto;
+      padding: clamp(5rem, 12vh, 9rem) 0 6rem;
+    }
+
+    .proof-label {
+      margin-bottom: 1.5rem;
+      color: var(--gold-base);
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .proof-glyph {
+      display: inline-block;
+      max-width: 900px;
+      font-family: var(--font-headline);
+      font-size: clamp(3.2rem, 8vw, 7.2rem);
+      font-style: italic;
+      font-weight: 500;
+      line-height: 0.94;
+    }
+
+    .proof-note {
+      max-width: 650px;
+      margin-top: 2.5rem;
+      color: var(--travertine);
+      font-size: 0.92rem;
+      line-height: 1.6;
+    }
+
+    .proof-note strong { color: var(--gold-light); }
+
+    @media (max-width: 860px) {
+      .proof-nav-inner { width: calc(100% - 2rem); }
+      .proof-links { display: none; }
+      .proof-wordmark { font-size: 0.94rem; }
+      .proof-mark { width: 40px; height: 40px; flex-basis: 40px; }
+      .proof-cta { padding: 0.7rem 0.85rem; font-size: 0.62rem; }
+      .proof-stage { width: calc(100% - 2rem); padding-top: 5rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      [data-glyph-beam] { --beam-x: -999px !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="proof-nav">
+    <div class="proof-nav-inner">
+      <a class="proof-brand" href="#" aria-label="Novello Stone">
+        <span class="proof-mark" data-glyph-beam>
+          <img src="img/novello-n-monogram.png" alt="">
+          <span class="proof-mark-beam" aria-hidden="true"></span>
+        </span>
+        <span class="proof-wordmark" data-glyph-beam>NOVELLO STONE</span>
+      </a>
+
+      <ul class="proof-links" aria-label="Preview navigation">
+        <li><a class="active" data-glyph-beam href="#">Home</a></li>
+        <li><a href="#">Materials</a></li>
+        <li><a href="#">Our Story</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+
+      <a class="proof-cta" data-glyph-beam href="#">Request a Quote</a>
+    </div>
+  </header>
+
+  <main class="proof-stage">
+    <p class="proof-label">Staging proof — production unchanged</p>
+    <h1 class="proof-glyph" data-glyph-beam>Stone, shaped with intent.</h1>
+    <p class="proof-note">
+      The proposed beam is a <strong>2px warm-bronze core</strong> with restrained
+      5px shoulders. It is clipped inside the real glyph and monogram shapes,
+      keeps the approved bronze beneath it, and never paints the black background.
+    </p>
+  </main>
+
+  <script>
+    (function () {
+      'use strict';
+
+      var SWEEP_MS = window.innerWidth <= 860 ? 5200 : 6400;
+      var INITIAL_DELAY_MS = 900;
+      var PAUSE_MS = 8500;
+      var TRAVEL_PADDING_PX = window.innerWidth <= 860 ? 120 : 190;
+      var targets = Array.prototype.slice.call(document.querySelectorAll('[data-glyph-beam]'));
+      var cycleStart = null;
+      var rafId = null;
+      var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+      function clearBeam() {
+        targets.forEach(function (target) {
+          target.style.setProperty('--beam-x', '-999px');
+        });
+      }
+
+      function frame(now) {
+        if (document.hidden || reduceMotion.matches) {
+          rafId = null;
+          return;
+        }
+
+        if (cycleStart === null) cycleStart = now + INITIAL_DELAY_MS;
+        var elapsed = now - cycleStart;
+
+        if (elapsed < 0) {
+          rafId = requestAnimationFrame(frame);
+          return;
+        }
+
+        var cycleMs = SWEEP_MS + PAUSE_MS;
+        var cyclePosition = elapsed % cycleMs;
+        var viewportWidth = document.documentElement.clientWidth || window.innerWidth;
+        var beamX = TRAVEL_PADDING_PX * 100;
+
+        if (cyclePosition <= SWEEP_MS) {
+          var progress = cyclePosition / SWEEP_MS;
+          beamX = -TRAVEL_PADDING_PX + progress * (viewportWidth + TRAVEL_PADDING_PX * 2);
+        }
+
+        targets.forEach(function (target) {
+          var rect = target.getBoundingClientRect();
+          target.style.setProperty('--beam-x', (beamX - rect.left).toFixed(2) + 'px');
+        });
+
+        rafId = requestAnimationFrame(frame);
+      }
+
+      function start() {
+        if (rafId !== null || reduceMotion.matches) return;
+        cycleStart = null;
+        rafId = requestAnimationFrame(frame);
+      }
+
+      document.addEventListener('visibilitychange', function () {
+        if (document.hidden) {
+          if (rafId !== null) cancelAnimationFrame(rafId);
+          rafId = null;
+          clearBeam();
+        } else {
+          start();
+        }
+      });
+
+      if (typeof reduceMotion.addEventListener === 'function') {
+        reduceMotion.addEventListener('change', function () {
+          clearBeam();
+          if (!reduceMotion.matches) start();
+        });
+      }
+
+      clearBeam();
+      start();
+    })();
+  </script>
+</body>
+</html>
