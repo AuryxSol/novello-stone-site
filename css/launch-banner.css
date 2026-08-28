@@ -33,13 +33,13 @@
   position: absolute;
   left: 0; top: 10px; bottom: 10px;
   width: 3px;
+  background: linear-gradient(180deg, var(--gold-highlight, #D3B388), var(--gold-shadow, #7D6347));
   border-radius: 2px;
-  /* Inherits the resolved --novello-specular-reflection value from
-     .launch-card (marked purely so this bar can read it — the card
-     itself has no shimmer rule of its own, so its charcoal body is
-     untouched). This is a solid bar, not text, so the reflection just
-     layers on top of the original gradient directly. */
-  background-image: var(--novello-specular-reflection), linear-gradient(180deg, var(--gold-highlight, #D3B388), var(--gold-shadow, #7D6347));
+  /* Inherits --shimmer-strength from .launch-card (marked purely so
+     this bar can read it — the card itself has no shimmer rule of its
+     own, so its charcoal body is untouched). */
+  filter: brightness(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-brightness-lift, 0.18))) saturate(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-saturation-lift, 0.11)));
+  box-shadow: 0 0 calc(var(--shimmer-strength, 0) * 7px) rgba(var(--shimmer-highlight-rgb, 230, 199, 156), calc(var(--shimmer-strength, 0) * 0.50));
 }
 
 .launch-card-close {
@@ -62,13 +62,11 @@
   font-size: 0.68rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
+  color: var(--gold-base, #A5855F);
   display: block;
   margin-bottom: 0.5em;
-  background-image: var(--novello-specular-reflection), linear-gradient(var(--gold-base, #A5855F), var(--gold-base, #A5855F));
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
+  filter: brightness(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-brightness-lift, 0.18))) saturate(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-saturation-lift, 0.11)));
+  text-shadow: 0 0 calc(var(--shimmer-strength, 0) * 9px) rgba(var(--shimmer-highlight-rgb, 230, 199, 156), calc(var(--shimmer-strength, 0) * 0.60));
 }
 
 .launch-card p {
@@ -80,12 +78,10 @@
   padding-right: 0.6em;
 }
 .launch-card p strong {
+  color: var(--gold-mid, #B4946E);
   font-weight: 600;
-  background-image: var(--novello-specular-reflection), linear-gradient(var(--gold-mid, #B4946E), var(--gold-mid, #B4946E));
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
+  filter: brightness(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-brightness-lift, 0.18))) saturate(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-saturation-lift, 0.11)));
+  text-shadow: 0 0 calc(var(--shimmer-strength, 0) * 9px) rgba(var(--shimmer-highlight-rgb, 230, 199, 156), calc(var(--shimmer-strength, 0) * 0.60));
 }
 
 .launch-card a.launch-card-cta {
@@ -93,39 +89,18 @@
   font-size: 0.75rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
+  color: var(--gold-base, #A5855F);
   text-decoration: none;
   display: inline-flex;
   align-items: center;
   gap: 0.4em;
   transition: color 0.2s ease;
-  background-image: var(--novello-specular-reflection), linear-gradient(var(--gold-base, #A5855F), var(--gold-base, #A5855F));
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
+  filter: brightness(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-brightness-lift, 0.18))) saturate(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-saturation-lift, 0.11)));
+  text-shadow: 0 0 calc(var(--shimmer-strength, 0) * 9px) rgba(var(--shimmer-highlight-rgb, 230, 199, 156), calc(var(--shimmer-strength, 0) * 0.60));
 }
-.launch-card a.launch-card-cta:hover {
-  /* Transparent + background-clip:text base means the hover state must
-     swap the background-image fill, not `color`. */
-  background-image: var(--novello-specular-reflection), linear-gradient(var(--gold-highlight, #D3B388), var(--gold-highlight, #D3B388));
-}
-.launch-card a.launch-card-cta::after {
-  content: '\2192';
-  transition: transform 0.2s;
-  /* The arrow is its own glyph, not part of the link's text run, so it
-     needs its own background-clip:text pass — it inherits the
-     correctly-resolved --novello-specular-reflection value from its
-     parent link. */
-  background-image: var(--novello-specular-reflection), linear-gradient(var(--gold-base, #A5855F), var(--gold-base, #A5855F));
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
-}
-.launch-card a.launch-card-cta:hover::after {
-  transform: translateX(3px);
-  background-image: var(--novello-specular-reflection), linear-gradient(var(--gold-highlight, #D3B388), var(--gold-highlight, #D3B388));
-}
+.launch-card a.launch-card-cta:hover { color: var(--gold-highlight, #D3B388); }
+.launch-card a.launch-card-cta::after { content: '\2192'; transition: transform 0.2s; }
+.launch-card a.launch-card-cta:hover::after { transform: translateX(3px); }
 
 @media (max-width: 560px) {
   .launch-card {

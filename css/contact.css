@@ -18,13 +18,11 @@
   font-size: 0.72rem;
   text-transform: uppercase;
   letter-spacing: 0.06em;
+  color: var(--gold);
   display: block;
   margin-bottom: 0.4em;
-  background-image: var(--novello-specular-reflection), linear-gradient(var(--gold), var(--gold));
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
+  filter: brightness(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-brightness-lift, 0.18))) saturate(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-saturation-lift, 0.11)));
+  text-shadow: 0 0 calc(var(--shimmer-strength, 0) * 9px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.60));
 }
 .contact-detail a, .contact-detail span {
   font-size: 1.05rem;
@@ -33,11 +31,9 @@
 /* Bronze-gold only while hovered — resting link color is inherited
    (non-gold) and must stay untouched; scoped to :hover only. */
 .contact-detail a:hover {
-  background-image: var(--novello-specular-reflection), linear-gradient(var(--gold-mid), var(--gold-mid));
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
+  color: var(--gold-mid);
+  filter: brightness(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-brightness-lift, 0.18))) saturate(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-saturation-lift, 0.11)));
+  text-shadow: 0 0 calc(var(--shimmer-strength, 0) * 9px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.60));
 }
 
 .contact-team {
@@ -58,13 +54,11 @@
   font-size: 0.72rem;
   text-transform: uppercase;
   letter-spacing: 0.06em;
+  color: var(--gold);
   display: block;
   margin-bottom: 0.5em;
-  background-image: var(--novello-specular-reflection), linear-gradient(var(--gold), var(--gold));
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
+  filter: brightness(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-brightness-lift, 0.18))) saturate(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-saturation-lift, 0.11)));
+  text-shadow: 0 0 calc(var(--shimmer-strength, 0) * 9px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.60));
 }
 .contact-person a {
   display: block;
@@ -72,11 +66,9 @@
   margin-bottom: 0.3em;
 }
 .contact-person a:hover {
-  background-image: var(--novello-specular-reflection), linear-gradient(var(--gold-mid), var(--gold-mid));
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
+  color: var(--gold-mid);
+  filter: brightness(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-brightness-lift, 0.18))) saturate(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-saturation-lift, 0.11)));
+  text-shadow: 0 0 calc(var(--shimmer-strength, 0) * 9px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.60));
 }
 
 @media (max-width: 480px) {
@@ -155,17 +147,11 @@
   font-family: var(--font-mono);
   font-size: 0.78rem;
   letter-spacing: 0.04em;
-  background-image: var(--novello-specular-reflection), linear-gradient(var(--gold), var(--gold));
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
+  color: var(--gold);
+  filter: brightness(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-brightness-lift, 0.18))) saturate(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-saturation-lift, 0.11)));
+  text-shadow: 0 0 calc(var(--shimmer-strength, 0) * 9px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.60));
 }
-.vcard-link:hover {
-  /* Transparent + background-clip:text base means the hover state must
-     swap the background-image fill, not `color` (see note above). */
-  background-image: var(--novello-specular-reflection), linear-gradient(var(--gold-dark), var(--gold-dark));
-}
+.vcard-link:hover { color: var(--gold-dark); }
 
 @media (max-width: 480px) {
   .vcard-box { flex-direction: column; align-items: flex-start; }
