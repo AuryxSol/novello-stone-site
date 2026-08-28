@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
       <a href="quartzite.html">Quartzite</a>
       <a href="our-story.html">Our Story</a>
       <a href="contact.html">Contact</a>
-      <a href="contact.html" style="color:#B4946E;">Request a Quote &rarr;</a>
+      <a href="contact.html" class="mobile-menu-cta">Request a Quote &rarr;</a>
     </div>
   `;
 

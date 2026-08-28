@@ -7,12 +7,13 @@
    distance from that beam (via getBoundingClientRect — actual screen
    position, not DOM order) and writes the result as a 0–1
    --shimmer-strength custom property on itself. The CSS in base.css /
-   home.css / materials.css / contact.css / launch-banner.css only ever
-   *reads* that variable (brightness/saturation/glow) — this file is the
-   only place that ever *writes* it, and it writes real position-based
-   values, so every element lights up in perfect lockstep as the same
-   beam passes its own spot on screen, with no independent per-element
-   animations to fall out of sync.
+   home.css / materials.css / contact.css / story.css / launch-banner.css
+   only ever *reads* that variable (brightness/saturation/glow) — this
+   file is the only place that ever *writes* it, and it writes real
+   position-based values, so every element lights up in perfect
+   lockstep as the same beam passes its own spot on screen: right-side
+   elements first, centre next, left-side last — with no independent
+   per-element animations to fall out of sync.
 
    Nothing here touches layout, text, colours, hover/focus states, or
    button dimensions — it only ever sets one CSS custom property.
@@ -23,24 +24,40 @@
 
   // Every genuinely bronze-gold element the shimmer is allowed to touch.
   // Centralised here as the single source of truth — add a selector to
-  // extend the effect, nothing else needs to change.
+  // extend the effect, nothing else needs to change. Elements that are
+  // gold only in a hover/active state are included here too (so
+  // --shimmer-strength keeps updating on them continuously); the base.css
+  // rules then decide whether that value is actually *read* at rest or
+  // only inside :hover/.active — the resting appearance of those
+  // elements is never touched.
   var SELECTORS = [
     '.brand',                        // NOVELLO STONE wordmark
     '.brand-mark',                   // N monogram
     '.hero h1 em',                   // hero highlighted word ("stone")
     '.btn-primary',                  // gold "Request a Quote" button (hero)
+    '.btn-ghost-dark',                // ghost button — gold only on hover
+    '.btn-ghost',                     // ghost button — gold only on hover
     '.nav-cta',                      // gold "Request a Quote" button (nav)
     '.eyebrow',                      // eyebrow labels sitewide (+ their ::before line)
-    '.nav-links a.active',           // active nav link (only its ::after underline reacts)
+    '.nav-links a',                   // nav links — gold only on hover/.active underline
+    '.nav-dropdown-menu a',           // materials dropdown links — gold on hover/.active
+    '.mobile-menu-cta',               // mobile menu "Request a Quote" link
     '.hero-stats .stat-value',       // hero "01 / 02 / 03" numbers
     '.pillar-link',                  // "How we work →" links (+ their → arrow)
     '.step-mono',                    // process-step / care-step numbers
+    '.brand-divider',                 // footer divider — parent, for its flanking lines
     '.brand-divider .diamond',       // footer divider accent
+    '.gold-divider',                  // premium horizontal divider
+    '.faq-item summary',              // FAQ row — parent, for its +/- icon
     '.material-es-card .mono',       // material page etch/stain labels
     '.material-link-card .mono',     // material hub link-card labels
     '.contact-detail .mono-label',   // contact page detail labels
+    '.contact-detail a',              // contact page detail links — gold only on hover
     '.contact-person .mono-label',   // contact page team-card labels
+    '.contact-person a',              // contact page team links — gold only on hover
     '.vcard-link',                   // contact page vCard link
+    '.footer-grid a',                 // footer links — gold only on hover
+    '.footer-social a',               // footer social icons — gold only on hover
     '.launch-card',                  // "Coming soon" notice — marked only so its
                                       // ::before accent bar can inherit the value;
                                       // the card body itself has no shimmer rule
@@ -49,12 +66,21 @@
     '.launch-card a.launch-card-cta' // notice "GET IN TOUCH →" link
   ];
 
-  var BEAM_RADIUS_VW = 12;     // how wide the soft falloff is, in vw either side of the beam
-  var FALLOFF_POWER = 1.6;     // >1 = a softer, more concentrated "spotlight" edge than a plain linear ramp
-  var INITIAL_DELAY_MS = 1200;
-  var SWEEP_DURATION_MS = 3800;
-  var PAUSE_MS = 10500;
-  var CYCLE_MS = SWEEP_DURATION_MS + PAUSE_MS;
+  // --- Timing & geometry: explicit, breakpoint-aware, in real pixels ---
+  // (never viewport-relative — a narrow phone and a wide desktop each
+  // get a beam sized and timed for that class of screen).
+  var MOBILE_BREAKPOINT = 860; // matches the site's existing nav breakpoint
+
+  var DESKTOP_BEAM_RADIUS_PX = 260; // within the 220–320px spec range
+  var MOBILE_BEAM_RADIUS_PX = 150;  // within the 120–180px spec range
+
+  var DESKTOP_SWEEP_MS = 8000; // within the 7500–8500ms spec range
+  var MOBILE_SWEEP_MS = 7000;  // within the 6500–7500ms spec range
+
+  var INITIAL_DELAY_MS = 1500; // first sweep begins ~1.5s after load
+  var PAUSE_MS = 8500;         // rest between sweeps, within the 7–10s spec range
+
+  var FALLOFF_POWER = 1.45;    // soft, feathered spotlight edge on both sides
   var STATIC_REDUCED_MOTION_STRENGTH = '0.22'; // fixed, very subtle glow — no travelling motion
 
   var reduceMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -64,8 +90,26 @@
   var cycleStart = null;
   var tabHidden = false;
 
-  function easeInOutCubic(t) {
-    return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+  // Cached per-breakpoint config, refreshed on resize/orientation change
+  // rather than read every animation frame.
+  var beamRadiusPx = DESKTOP_BEAM_RADIUS_PX;
+  var sweepDurationMs = DESKTOP_SWEEP_MS;
+  var cycleMs = sweepDurationMs + PAUSE_MS;
+
+  function refreshBreakpointConfig() {
+    var isMobile = (window.innerWidth || document.documentElement.clientWidth) <= MOBILE_BREAKPOINT;
+    beamRadiusPx = isMobile ? MOBILE_BEAM_RADIUS_PX : DESKTOP_BEAM_RADIUS_PX;
+    sweepDurationMs = isMobile ? MOBILE_SWEEP_MS : DESKTOP_SWEEP_MS;
+    cycleMs = sweepDurationMs + PAUSE_MS;
+  }
+
+  // Gentle sine ease — smooth, cinematic acceleration/deceleration with no
+  // sharp onset or sudden speed change at either end of the sweep, and no
+  // visible pop at the cycle boundary (the beam is already fully off-screen,
+  // and every element's strength has already decayed to 0, well before the
+  // sweep phase ends).
+  function easeInOutSine(t) {
+    return -(Math.cos(Math.PI * t) - 1) / 2;
   }
 
   function collectElements() {
@@ -103,16 +147,16 @@
       return;
     }
 
-    var cyclePos = elapsed % CYCLE_MS;
+    var cyclePos = elapsed % cycleMs;
     var vw = document.documentElement.clientWidth || window.innerWidth;
-    var beamRadiusPx = (BEAM_RADIUS_VW / 100) * vw;
 
     var beamX;
-    if (cyclePos <= SWEEP_DURATION_MS) {
-      var t = cyclePos / SWEEP_DURATION_MS;
-      var eased = easeInOutCubic(t);
+    if (cyclePos <= sweepDurationMs) {
+      var t = cyclePos / sweepDurationMs;
+      var eased = easeInOutSine(t);
       // Travels from (100vw + radius) to (-radius), i.e. fully off-screen
-      // right to fully off-screen left, per spec.
+      // right to fully off-screen left, per spec — the beam always fully
+      // clears the viewport before the pause begins.
       beamX = (vw + beamRadiusPx) - eased * (vw + beamRadiusPx * 2);
     } else {
       beamX = -beamRadiusPx * 100; // parked far off-screen during the pause
@@ -155,6 +199,7 @@
   }
 
   function init() {
+    refreshBreakpointConfig();
     collectElements();
     applyReducedMotionState();
   }
@@ -170,7 +215,10 @@
   var recalcTimer = null;
   function scheduleRecollect() {
     clearTimeout(recalcTimer);
-    recalcTimer = setTimeout(collectElements, 150);
+    recalcTimer = setTimeout(function () {
+      refreshBreakpointConfig();
+      collectElements();
+    }, 150);
   }
   window.addEventListener('resize', scheduleRecollect);
   window.addEventListener('orientationchange', scheduleRecollect);
