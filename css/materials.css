@@ -120,8 +120,8 @@
   letter-spacing: 0.06em;
   display: block;
   margin-bottom: var(--space-1);
-  filter: brightness(calc(1 + var(--shimmer-strength, 0) * 0.16)) saturate(calc(1 + var(--shimmer-strength, 0) * 0.10));
-  text-shadow: 0 0 calc(var(--shimmer-strength, 0) * 8px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.55));
+  filter: brightness(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-brightness-lift, 0.18))) saturate(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-saturation-lift, 0.11)));
+  text-shadow: 0 0 calc(var(--shimmer-strength, 0) * 9px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.60));
 }
 .material-es-card p { color: var(--travertine); font-size: 0.94rem; margin: 0; }
 
@@ -145,8 +145,8 @@
   font-size: 0.8rem;
   display: block;
   margin-bottom: 0.6em;
-  filter: brightness(calc(1 + var(--shimmer-strength, 0) * 0.16)) saturate(calc(1 + var(--shimmer-strength, 0) * 0.10));
-  text-shadow: 0 0 calc(var(--shimmer-strength, 0) * 8px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.55));
+  filter: brightness(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-brightness-lift, 0.18))) saturate(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-saturation-lift, 0.11)));
+  text-shadow: 0 0 calc(var(--shimmer-strength, 0) * 9px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.60));
 }
 .material-care-item h4 { font-size: 1rem; margin-bottom: 0.4em; }
 .material-care-item p { color: var(--travertine); font-size: 0.9rem; margin: 0; }
@@ -195,8 +195,8 @@
 .material-link-card .mono {
   color: var(--gold);
   font-size: 0.72rem;
-  filter: brightness(calc(1 + var(--shimmer-strength, 0) * 0.16)) saturate(calc(1 + var(--shimmer-strength, 0) * 0.10));
-  text-shadow: 0 0 calc(var(--shimmer-strength, 0) * 8px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.55));
+  filter: brightness(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-brightness-lift, 0.18))) saturate(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-saturation-lift, 0.11)));
+  text-shadow: 0 0 calc(var(--shimmer-strength, 0) * 9px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.60));
 }
 .material-link-card h4 { margin: var(--space-1) 0 0.4em; font-size: 1.05rem; color: var(--limestone); }
 .material-link-card p { color: var(--travertine); font-size: 0.88rem; margin: 0 0 0.8em; }

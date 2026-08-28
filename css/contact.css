@@ -21,14 +21,20 @@
   color: var(--gold);
   display: block;
   margin-bottom: 0.4em;
-  filter: brightness(calc(1 + var(--shimmer-strength, 0) * 0.16)) saturate(calc(1 + var(--shimmer-strength, 0) * 0.10));
-  text-shadow: 0 0 calc(var(--shimmer-strength, 0) * 8px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.55));
+  filter: brightness(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-brightness-lift, 0.18))) saturate(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-saturation-lift, 0.11)));
+  text-shadow: 0 0 calc(var(--shimmer-strength, 0) * 9px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.60));
 }
 .contact-detail a, .contact-detail span {
   font-size: 1.05rem;
   display: block;
 }
-.contact-detail a:hover { color: var(--gold-mid); }
+/* Bronze-gold only while hovered — resting link color is inherited
+   (non-gold) and must stay untouched; scoped to :hover only. */
+.contact-detail a:hover {
+  color: var(--gold-mid);
+  filter: brightness(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-brightness-lift, 0.18))) saturate(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-saturation-lift, 0.11)));
+  text-shadow: 0 0 calc(var(--shimmer-strength, 0) * 9px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.60));
+}
 
 .contact-team {
   display: grid;
@@ -51,15 +57,19 @@
   color: var(--gold);
   display: block;
   margin-bottom: 0.5em;
-  filter: brightness(calc(1 + var(--shimmer-strength, 0) * 0.16)) saturate(calc(1 + var(--shimmer-strength, 0) * 0.10));
-  text-shadow: 0 0 calc(var(--shimmer-strength, 0) * 8px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.55));
+  filter: brightness(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-brightness-lift, 0.18))) saturate(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-saturation-lift, 0.11)));
+  text-shadow: 0 0 calc(var(--shimmer-strength, 0) * 9px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.60));
 }
 .contact-person a {
   display: block;
   font-size: 0.95rem;
   margin-bottom: 0.3em;
 }
-.contact-person a:hover { color: var(--gold-mid); }
+.contact-person a:hover {
+  color: var(--gold-mid);
+  filter: brightness(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-brightness-lift, 0.18))) saturate(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-saturation-lift, 0.11)));
+  text-shadow: 0 0 calc(var(--shimmer-strength, 0) * 9px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.60));
+}
 
 @media (max-width: 480px) {
   .contact-team { grid-template-columns: 1fr; }
@@ -138,8 +148,8 @@
   font-size: 0.78rem;
   letter-spacing: 0.04em;
   color: var(--gold);
-  filter: brightness(calc(1 + var(--shimmer-strength, 0) * 0.16)) saturate(calc(1 + var(--shimmer-strength, 0) * 0.10));
-  text-shadow: 0 0 calc(var(--shimmer-strength, 0) * 8px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.55));
+  filter: brightness(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-brightness-lift, 0.18))) saturate(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-saturation-lift, 0.11)));
+  text-shadow: 0 0 calc(var(--shimmer-strength, 0) * 9px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.60));
 }
 .vcard-link:hover { color: var(--gold-dark); }
 

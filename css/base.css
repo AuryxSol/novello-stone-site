@@ -23,22 +23,52 @@
   --novello-charcoal-warm: var(--basalt-soft);
   --novello-warm-stone:   var(--basalt-warm);
 
-  /* --- Novello metallic bronze-gold system --- */
-  --gold-shadow:    #7D6347;   /* darkest bronze — hover-darken, deep shading */
-  --gold-deep:      #947656;
-  --gold-base:      #A5855F;   /* solid fallback — small UI, icons, borders */
-  --gold-mid:       #B4946E;   /* hover-lighten, active states */
-  --gold-light:     #C3A37B;
-  --gold-highlight: #D3B388;   /* satin metallic highlight */
+  /* --- Novello metallic bronze-gold system ---
+     Calibrated directly against the Novello N monogram artwork
+     (img/novello-n-monogram.png), sampled programmatically: the
+     monogram's own dark/mid/light bronze pixel tones map almost
+     exactly onto this existing --gold-* scale (deep bronze ≈ p25,
+     base/mid ≈ median, light/highlight ≈ p75–p90 of sampled warm
+     pixels) — confirming these five stops as the correct master
+     reference. The --novello-bronze-* names below are the canonical
+     aliases every bronze-gold element should reach for; --gold-*
+     stay defined (and identical) so existing rules keep working. */
+  --novello-bronze-shadow:    #7D6347;   /* darkest bronze — deepest shading */
+  --novello-bronze-deep:      #947656;
+  --novello-bronze-base:      #A5855F;   /* solid fallback — small UI, icons, borders */
+  --novello-bronze-mid:       #B4946E;   /* hover-lighten, active states */
+  --novello-bronze-light:     #C3A37B;
+  --novello-bronze-highlight: #D3B388;   /* satin metallic highlight — resting state only */
+  /* Canonical gradient for every metallic gold TEXT element (wordmark,
+     hero highlighted word, and any future gradient-text use) — one
+     shared gradient so nothing drifts to a different tonal curve. */
+  --novello-bronze-metallic-gradient: linear-gradient(180deg,
+    #D3B388 0%, #C3A37B 25%, #B4946E 48%, #A5855F 68%, #947656 84%, #7D6347 100%);
+
+  --gold-shadow:    var(--novello-bronze-shadow);
+  --gold-deep:      var(--novello-bronze-deep);
+  --gold-base:      var(--novello-bronze-base);
+  --gold-mid:       var(--novello-bronze-mid);
+  --gold-light:     var(--novello-bronze-light);
+  --gold-highlight: var(--novello-bronze-highlight);
   --gold-border:    rgba(180, 148, 110, 0.32);
   --gold-glow:      rgba(180, 148, 110, 0.14);
-  /* Warm champagne highlight used only by the bronze-gold shimmer sweep
-     (js/shimmer.js) — derived from --gold-highlight (#D3B388) so the glow
-     always matches the metallic palette, never a plain white streak. */
-  --shimmer-highlight-rgb: 211, 179, 136;
-  --novello-metallic-gold: linear-gradient(135deg,
-    #7D6347 0%, #947656 16%, #A5855F 32%, #C3A37B 48%,
-    #D3B388 58%, #B4946E 72%, #947656 88%, #7D6347 100%);
+  /* Warm champagne highlight used ONLY by the travelling shimmer peak
+     (js/shimmer.js) — never the resting color of anything. Sampled
+     from the brightest genuinely-bronze (non-specular-blowout) pixels
+     in the N monogram artwork (~90th percentile warm tone, roughly
+     #E2C39B) and pulled back slightly toward --novello-bronze-highlight
+     so it reads as "the same metal, lit brighter" rather than a
+     different, paler gold. ~9% brighter per channel than the resting
+     highlight tone — stays warm/bronze (R > G > B held throughout),
+     never drifts toward white, silver, or pale yellow. */
+  --shimmer-highlight-rgb: 230, 199, 156;
+  /* Multiplicative peak lift applied to shimmer-strength (0–1) across
+     every bronze-gold element — single source of truth so the "how
+     much brighter at peak" tuning lives in exactly one place. */
+  --shimmer-brightness-lift: 0.18;  /* peak brightness: +18% */
+  --shimmer-saturation-lift: 0.11;  /* peak saturation: +11% */
+  --novello-metallic-gold: var(--novello-bronze-metallic-gradient);
 
   /* Legacy aliases — kept so existing component rules stay in sync */
   --gold:           var(--gold-base);
@@ -149,8 +179,8 @@ a { color: inherit; text-decoration: none; }
      over photos (see about.css/home.css/materials.css/story.css) — those
      still get the brightness/saturation shimmer below, just without this
      particular glow, since text-shadow doesn't merge across rules. */
-  filter: brightness(calc(1 + var(--shimmer-strength, 0) * 0.16)) saturate(calc(1 + var(--shimmer-strength, 0) * 0.10));
-  text-shadow: 0 0 calc(var(--shimmer-strength, 0) * 8px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.55));
+  filter: brightness(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-brightness-lift, 0.18))) saturate(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-saturation-lift, 0.11)));
+  text-shadow: 0 0 calc(var(--shimmer-strength, 0) * 9px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.60));
 }
 
 .eyebrow::before {
@@ -160,8 +190,8 @@ a { color: inherit; text-decoration: none; }
   background: var(--gold);
   display: inline-block;
   /* Inherits --shimmer-strength from .eyebrow (its originating element) */
-  filter: brightness(calc(1 + var(--shimmer-strength, 0) * 0.16)) saturate(calc(1 + var(--shimmer-strength, 0) * 0.10));
-  box-shadow: 0 0 calc(var(--shimmer-strength, 0) * 6px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.45));
+  filter: brightness(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-brightness-lift, 0.18))) saturate(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-saturation-lift, 0.11)));
+  box-shadow: 0 0 calc(var(--shimmer-strength, 0) * 7px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.50));
 }
 
 .container {
@@ -199,21 +229,36 @@ section { padding: var(--space-6) 0; }
   background: linear-gradient(135deg, #947656 0%, #A5855F 28%, #C3A37B 52%, #B4946E 70%, #947656 100%);
   border: 1px solid #B4946E;
   color: #0B0A09;
-  box-shadow: 0 8px 24px var(--gold-glow), 0 0 calc(var(--shimmer-strength, 0) * 14px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.5));
-  filter: brightness(calc(1 + var(--shimmer-strength, 0) * 0.16)) saturate(calc(1 + var(--shimmer-strength, 0) * 0.10));
+  box-shadow: 0 8px 24px var(--gold-glow), 0 0 calc(var(--shimmer-strength, 0) * 15px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.55));
+  filter: brightness(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-brightness-lift, 0.18))) saturate(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-saturation-lift, 0.11)));
 }
 .btn-primary:hover {
-  filter: brightness(calc(1.08 + var(--shimmer-strength, 0) * 0.16)) saturate(calc(1 + var(--shimmer-strength, 0) * 0.10));
-  box-shadow: 0 10px 30px rgba(180, 148, 110, 0.20), 0 0 calc(var(--shimmer-strength, 0) * 14px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.5));
+  filter: brightness(calc(1.08 + var(--shimmer-strength, 0) * var(--shimmer-brightness-lift, 0.18))) saturate(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-saturation-lift, 0.11)));
+  box-shadow: 0 10px 30px rgba(180, 148, 110, 0.20), 0 0 calc(var(--shimmer-strength, 0) * 15px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.55));
 }
 
 .btn-ghost-dark {
   border-color: var(--limestone);
   color: var(--limestone);
 }
-.btn-ghost-dark:hover { background: transparent; border-color: var(--gold-mid); color: var(--gold-mid); }
+/* Bronze-gold only while hovered — the resting (non-hover) button is
+   limestone/neutral and must stay untouched, so the shimmer read here
+   is scoped to the :hover rule only, never the base .btn-ghost-dark. */
+.btn-ghost-dark:hover {
+  background: transparent;
+  border-color: var(--gold-mid);
+  color: var(--gold-mid);
+  filter: brightness(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-brightness-lift, 0.18))) saturate(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-saturation-lift, 0.11)));
+  text-shadow: 0 0 calc(var(--shimmer-strength, 0) * 9px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.60));
+}
 
-.btn-ghost:hover { background: var(--gold-base); border-color: var(--gold-base); color: var(--basalt); }
+.btn-ghost:hover {
+  background: var(--gold-base);
+  border-color: var(--gold-base);
+  color: var(--basalt);
+  filter: brightness(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-brightness-lift, 0.18))) saturate(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-saturation-lift, 0.11)));
+  box-shadow: 0 0 calc(var(--shimmer-strength, 0) * 13px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.55));
+}
 
 /* --- Nav --- */
 .site-nav {
@@ -255,13 +300,16 @@ section { padding: var(--space-6) 0; }
 }
 .brand,
 .brand span {
-  background-image: linear-gradient(180deg, #D3B388 0%, #C3A37B 25%, #B4946E 48%, #A5855F 68%, #947656 84%, #7D6347 100%);
+  /* Canonical N-monogram-calibrated gradient — shared with the hero's
+     highlighted heading word (home.css) so every gradient-text element
+     reads as the exact same metal. */
+  background-image: var(--novello-bronze-metallic-gradient);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
   color: transparent;
-  filter: brightness(calc(1 + var(--shimmer-strength, 0) * 0.16)) saturate(calc(1 + var(--shimmer-strength, 0) * 0.10));
-  text-shadow: 0 0 calc(var(--shimmer-strength, 0) * 8px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.55));
+  filter: brightness(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-brightness-lift, 0.18))) saturate(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-saturation-lift, 0.11)));
+  text-shadow: 0 0 calc(var(--shimmer-strength, 0) * 9px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.60));
 }
 .brand { display: inline-flex; align-items: center; gap: 0.75em; }
 .brand-mark {
@@ -270,13 +318,14 @@ section { padding: var(--space-6) 0; }
   display: block;
   object-fit: contain;
   filter: drop-shadow(0 5px 7px rgba(0,0,0,0.42)) drop-shadow(0 0 12px rgba(180, 148, 110,0.10))
-    brightness(calc(1 + var(--shimmer-strength, 0) * 0.16)) saturate(calc(1 + var(--shimmer-strength, 0) * 0.10))
-    drop-shadow(0 0 calc(var(--shimmer-strength, 0) * 6px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.5)));
+    brightness(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-brightness-lift, 0.18))) saturate(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-saturation-lift, 0.11)))
+    drop-shadow(0 0 calc(var(--shimmer-strength, 0) * 7px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.55)));
 }
 
 /* --- Bronze-gold shimmer ---
-   A narrow, soft "studio spotlight" sweeps right to left once every
-   10–12s. The light itself is invisible — js/shimmer.js runs one
+   A narrow, soft "studio spotlight" sweeps right to left across the
+   viewport (~8s on desktop, ~7s on mobile), then rests off-screen for
+   7–10s before the next pass. The light itself is invisible — js/shimmer.js runs one
    requestAnimationFrame loop that tracks a single beam position and,
    every frame, measures each [data-bronze-shimmer] element's actual
    distance from that beam (via getBoundingClientRect, in real screen
@@ -309,7 +358,14 @@ section { padding: var(--space-6) 0; }
   position: relative;
   padding-bottom: 4px;
 }
-.nav-links a:hover { opacity: 1; color: var(--gold-mid); }
+/* Bronze-gold only while hovered — resting nav text is limestone
+   (non-gold) and must stay untouched; scoped to :hover only. */
+.nav-links a:hover {
+  opacity: 1;
+  color: var(--gold-mid);
+  filter: brightness(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-brightness-lift, 0.18))) saturate(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-saturation-lift, 0.11)));
+  text-shadow: 0 0 calc(var(--shimmer-strength, 0) * 9px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.60));
+}
 .nav-links a.active { opacity: 1; }
 .nav-links a.active::after {
   content: '';
@@ -320,8 +376,8 @@ section { padding: var(--space-6) 0; }
   /* Inherits --shimmer-strength from .nav-links a.active. The active
      link's own (non-gold, limestone) text is untouched — only this
      underline bar reacts. */
-  filter: brightness(calc(1 + var(--shimmer-strength, 0) * 0.16)) saturate(calc(1 + var(--shimmer-strength, 0) * 0.10));
-  box-shadow: 0 0 calc(var(--shimmer-strength, 0) * 6px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.45));
+  filter: brightness(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-brightness-lift, 0.18))) saturate(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-saturation-lift, 0.11)));
+  box-shadow: 0 0 calc(var(--shimmer-strength, 0) * 7px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.50));
 }
 
 /* --- Materials dropdown (desktop) --- */
@@ -375,6 +431,8 @@ section { padding: var(--space-6) 0; }
   opacity: 1;
   color: var(--gold-mid);
   background: rgba(180, 148, 110, 0.07);
+  filter: brightness(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-brightness-lift, 0.18))) saturate(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-saturation-lift, 0.11)));
+  text-shadow: 0 0 calc(var(--shimmer-strength, 0) * 9px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.60));
 }
 .nav-dropdown-menu a.active::after { display: none; }
 
@@ -388,8 +446,8 @@ section { padding: var(--space-6) 0; }
   padding: 0.6em 1.3em;
   border-radius: var(--radius);
   transition: background 0.2s;
-  filter: brightness(calc(1 + var(--shimmer-strength, 0) * 0.16)) saturate(calc(1 + var(--shimmer-strength, 0) * 0.10));
-  box-shadow: 0 0 calc(var(--shimmer-strength, 0) * 12px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.5));
+  filter: brightness(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-brightness-lift, 0.18))) saturate(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-saturation-lift, 0.11)));
+  box-shadow: 0 0 calc(var(--shimmer-strength, 0) * 13px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.55));
 }
 .nav-cta:hover { background: var(--gold-soft); }
 
@@ -437,6 +495,16 @@ section { padding: var(--space-6) 0; }
     border-bottom: 1px solid rgba(180, 148, 110,0.18);
     padding-bottom: var(--space-2);
   }
+  /* Mobile "Request a Quote" link — the one gold accent inside the
+     mobile menu. Was previously a hardcoded inline style in
+     js/layout.js; now a proper class on the shared bronze token so it
+     shimmers in lockstep with the rest of the site. */
+  .mobile-menu a.mobile-menu-cta {
+    color: var(--gold-mid);
+    border-bottom-color: rgba(180, 148, 110, 0.35);
+    filter: brightness(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-brightness-lift, 0.18))) saturate(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-saturation-lift, 0.11)));
+    text-shadow: 0 0 calc(var(--shimmer-strength, 0) * 9px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.60));
+  }
 }
 
 /* --- Footer --- */
@@ -475,6 +543,10 @@ footer {
   flex: 1;
   height: 1px;
   background: rgba(180, 148, 110, 0.55);
+  /* Inherits --shimmer-strength from .brand-divider (marked purely for
+     these two decorative lines to read it). */
+  filter: brightness(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-brightness-lift, 0.18))) saturate(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-saturation-lift, 0.11)));
+  box-shadow: 0 0 calc(var(--shimmer-strength, 0) * 7px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.50));
 }
 .brand-divider .diamond {
   width: 6px;
@@ -482,8 +554,8 @@ footer {
   background: var(--gold);
   transform: rotate(45deg);
   flex-shrink: 0;
-  filter: brightness(calc(1 + var(--shimmer-strength, 0) * 0.16)) saturate(calc(1 + var(--shimmer-strength, 0) * 0.10));
-  box-shadow: 0 0 calc(var(--shimmer-strength, 0) * 6px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.45));
+  filter: brightness(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-brightness-lift, 0.18))) saturate(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-saturation-lift, 0.11)));
+  box-shadow: 0 0 calc(var(--shimmer-strength, 0) * 7px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.50));
 }
 .footer-grid p, .footer-grid a {
   font-size: 0.92rem;
@@ -493,7 +565,14 @@ footer {
   margin-bottom: 0.5em;
   text-shadow: 0 1px 4px rgba(0,0,0,0.6);
 }
-.footer-grid a:hover { opacity: 1; color: var(--gold-mid); }
+/* Bronze-gold only while hovered — resting footer links are limestone
+   (non-gold) and must stay untouched; scoped to :hover only. */
+.footer-grid a:hover {
+  opacity: 1;
+  color: var(--gold-mid);
+  filter: brightness(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-brightness-lift, 0.18))) saturate(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-saturation-lift, 0.11)));
+  text-shadow: 0 0 calc(var(--shimmer-strength, 0) * 9px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.60));
+}
 .footer-social {
   display: flex;
   gap: 0.9em;
@@ -515,6 +594,8 @@ footer {
   opacity: 1;
   color: var(--gold-mid);
   border-color: var(--gold-mid);
+  filter: brightness(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-brightness-lift, 0.18))) saturate(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-saturation-lift, 0.11)));
+  box-shadow: 0 0 calc(var(--shimmer-strength, 0) * 9px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.55));
 }
 .footer-social svg { width: 16px; height: 16px; display: block; }
 .footer-bottom {
@@ -694,4 +775,6 @@ footer {
   height: 1px;
   border: none;
   background: linear-gradient(90deg, transparent, #7D6347, #B4946E, #D3B388, #B4946E, #7D6347, transparent);
+  filter: brightness(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-brightness-lift, 0.18))) saturate(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-saturation-lift, 0.11)));
+  box-shadow: 0 0 calc(var(--shimmer-strength, 0) * 7px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.50));
 }

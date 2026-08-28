@@ -85,7 +85,10 @@ margin: var(--space-2) 0 var(--space-3);
 .hero h1 em,
 .hero h1 em .cascade-word {
 font-style: italic;
-background-image: linear-gradient(180deg, #D3B388 0%, #C3A37B 30%, #B4946E 54%, #947656 100%);
+/* Canonical N-monogram-calibrated gradient — same exact stops as the
+   wordmark (.brand in base.css), so the hero's highlighted word reads
+   as the identical metal rather than a slightly different curve. */
+background-image: var(--novello-bronze-metallic-gradient);
 -webkit-background-clip: text;
 background-clip: text;
 -webkit-text-fill-color: transparent;
@@ -94,8 +97,8 @@ color: transparent;
    the full explanation) — same beam, same moment, as the wordmark and
    both "Request a Quote" buttons, because it's driven by this element's
    real screen position rather than a per-element animation. */
-filter: brightness(calc(1 + var(--shimmer-strength, 0) * 0.16)) saturate(calc(1 + var(--shimmer-strength, 0) * 0.10));
-text-shadow: 0 0 calc(var(--shimmer-strength, 0) * 8px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.55));
+filter: brightness(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-brightness-lift, 0.18))) saturate(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-saturation-lift, 0.11)));
+text-shadow: 0 0 calc(var(--shimmer-strength, 0) * 9px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.60));
 }
 
 .hero-sub {
@@ -124,8 +127,8 @@ width: fit-content;
 font-family: var(--font-mono);
 font-size: 1.6rem;
 color: var(--gold);
-filter: brightness(calc(1 + var(--shimmer-strength, 0) * 0.16)) saturate(calc(1 + var(--shimmer-strength, 0) * 0.10));
-text-shadow: 0 0 calc(var(--shimmer-strength, 0) * 8px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.55));
+filter: brightness(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-brightness-lift, 0.18))) saturate(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-saturation-lift, 0.11)));
+text-shadow: 0 0 calc(var(--shimmer-strength, 0) * 9px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.60));
 }
 .hero-stats .stat-label {
 font-family: var(--font-mono);
@@ -246,8 +249,8 @@ display: inline-flex;
 align-items: center;
 gap: 0.4em;
 margin-top: var(--space-2);
-filter: brightness(calc(1 + var(--shimmer-strength, 0) * 0.16)) saturate(calc(1 + var(--shimmer-strength, 0) * 0.10));
-text-shadow: 0 0 calc(var(--shimmer-strength, 0) * 8px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.55));
+filter: brightness(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-brightness-lift, 0.18))) saturate(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-saturation-lift, 0.11)));
+text-shadow: 0 0 calc(var(--shimmer-strength, 0) * 9px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.60));
 }
 .pillar-link::after { content: '\2192'; transition: transform 0.2s; }
 .pillar-card:hover .pillar-link::after { transform: translateX(4px); }
@@ -261,7 +264,13 @@ text-shadow: 0 0 calc(var(--shimmer-strength, 0) * 8px) rgba(var(--shimmer-highl
 .process-section {
 color: var(--limestone);
 }
-.process-section .eyebrow { color: var(--gold); text-shadow: 0 1px 4px rgba(0,0,0,0.7); }
+.process-section .eyebrow {
+  color: var(--gold);
+  /* Static legibility shadow (over the backdrop photo) plus the
+     shimmer glow, combined — a page-level override on .eyebrow's
+     text-shadow would otherwise silently drop the shimmer half. */
+  text-shadow: 0 1px 4px rgba(0,0,0,0.7), 0 0 calc(var(--shimmer-strength, 0) * 9px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.60));
+}
 .process-section h2 { color: var(--limestone); text-shadow: 0 2px 8px rgba(0,0,0,0.55); }
 
 .process-grid {
@@ -280,8 +289,8 @@ color: var(--gold);
 font-size: 0.8rem;
 display: block;
 margin-bottom: 0.6em;
-filter: brightness(calc(1 + var(--shimmer-strength, 0) * 0.16)) saturate(calc(1 + var(--shimmer-strength, 0) * 0.10));
-text-shadow: 0 1px 4px rgba(0,0,0,0.75), 0 0 calc(var(--shimmer-strength, 0) * 8px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.55));
+filter: brightness(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-brightness-lift, 0.18))) saturate(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-saturation-lift, 0.11)));
+text-shadow: 0 1px 4px rgba(0,0,0,0.75), 0 0 calc(var(--shimmer-strength, 0) * 9px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.60));
 }
 .process-step h4 {
 color: var(--limestone);
@@ -376,7 +385,12 @@ text-align: center;
 .cta-band h2 { color: var(--limestone); margin-bottom: var(--space-2); text-shadow: 0 2px 8px rgba(0,0,0,0.55); }
 .cta-band p { color: var(--limestone); opacity: 0.92; max-width: 520px; margin: 0 auto var(--space-3); text-shadow: 0 1px 4px rgba(0,0,0,0.6); }
 .cta-band .btn { border-color: var(--limestone); }
-.cta-band .btn-ghost-dark:hover { background: var(--limestone); color: var(--gold); }
+.cta-band .btn-ghost-dark:hover {
+  background: var(--limestone);
+  color: var(--gold);
+  filter: brightness(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-brightness-lift, 0.18))) saturate(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-saturation-lift, 0.11)));
+  text-shadow: 0 0 calc(var(--shimmer-strength, 0) * 9px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.60));
+}
 
 /* ===== FAQ ("What clients ask us") ===== */
 /* Background photo + light handled by .stone-section (see index.html) —
@@ -411,6 +425,10 @@ text-align: center;
   line-height: 1;
   flex-shrink: 0;
   transition: transform 0.2s ease;
+  /* Inherits --shimmer-strength from .faq-item summary (marked purely
+     so this +/- icon can read it). */
+  filter: brightness(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-brightness-lift, 0.18))) saturate(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-saturation-lift, 0.11)));
+  text-shadow: 0 0 calc(var(--shimmer-strength, 0) * 9px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.60));
 }
 .faq-item[open] summary::after {
   content: '\2212';
