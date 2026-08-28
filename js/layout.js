@@ -1,6 +1,15 @@
 // Shared nav + footer, injected on every page so they stay identical
 // without needing a build step. `data-page` on <body> sets active nav link.
 
+// Load the bronze-gold shimmer controller on every page from this one
+// shared file, so no individual HTML page needs its own <script> tag for
+// it. Guarded against double-injection in case layout.js ever runs twice.
+if (!document.querySelector('script[src="js/shimmer.js"]')) {
+  const shimmerScript = document.createElement('script');
+  shimmerScript.src = 'js/shimmer.js';
+  document.head.appendChild(shimmerScript);
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   const activePage = document.body.getAttribute('data-page') || '';
   const materialPages = ['history-of-stone', 'marble', 'engineered-stone', 'porcelain', 'quartzite'];
