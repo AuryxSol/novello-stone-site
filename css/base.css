@@ -323,8 +323,8 @@ section { padding: var(--space-6) 0; }
 }
 
 /* --- Bronze-gold shimmer ---
-   A narrow, soft "studio spotlight" sweeps right to left across the
-   viewport (~8s on desktop, ~7s on mobile), then rests off-screen for
+   A compact, softly feathered "Thinking"-style highlight sweeps left to
+   right across the viewport (~2.8s on desktop, ~2.3s on mobile), then rests off-screen for
    7–10s before the next pass. The light itself is invisible — js/shimmer.js runs one
    requestAnimationFrame loop that tracks a single beam position and,
    every frame, measures each [data-bronze-shimmer] element's actual
@@ -337,7 +337,7 @@ section { padding: var(--space-6) 0; }
    "brighten/saturate/glow this much for however lit-up this element
    currently is". That's what keeps every element in lockstep as one
    light crossing the screen, rather than separate animations. See
-   js/shimmer.js for the beam math, easing, resize/visibility handling,
+   js/shimmer.js for the beam math, timing, resize/visibility handling,
    and prefers-reduced-motion fallback (a fixed, very subtle glow with
    no travelling motion at all). */
 
