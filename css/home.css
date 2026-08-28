@@ -67,10 +67,10 @@ pointer-events: none;
 
 /* The hero used to have its own independent light sweep here
    (.hero-grain-sweep), and later a full-viewport .page-shimmer overlay
-   that swept the whole screen including this photo. Both are gone —
-   the shimmer now only lives on bronze-gold elements themselves (see
-   gold-accent-shimmer in base.css), so the hero photo/video no longer
-   catches any light sweep at all. */
+   that swept the whole screen including this photo. Both are gone — the
+   shimmer (js/shimmer.js + --shimmer-strength, see base.css) only ever
+   touches bronze-gold elements themselves, so the hero photo/video never
+   catches any light at all. */
 
 .hero-content {
 position: relative;
@@ -85,28 +85,17 @@ margin: var(--space-2) 0 var(--space-3);
 .hero h1 em,
 .hero h1 em .cascade-word {
 font-style: italic;
-background-image: linear-gradient(180deg, #D3B388 0%, #C3A37B 30%, #B4946E 54%, #947656 100%), linear-gradient(100deg, transparent 44%, rgba(255,255,255,0.55) 50%, transparent 56%);
-background-size: 100% 100%, 260% 100%;
-background-repeat: no-repeat, no-repeat;
-background-attachment: scroll, fixed;
-background-position: 0 0, 160% 0;
-background-blend-mode: normal, screen;
+background-image: linear-gradient(180deg, #D3B388 0%, #C3A37B 30%, #B4946E 54%, #947656 100%);
 -webkit-background-clip: text;
 background-clip: text;
 -webkit-text-fill-color: transparent;
 color: transparent;
-/* Shares the gold-accent-shimmer keyframe (defined in base.css) with the
-   wordmark, both "Request a Quote" buttons, and the eyebrow labels —
-   background-attachment: fixed keeps all of them in lockstep as one
-   light sweeping right to left, visible only on the bronze-gold parts
-   of the page rather than across photos or white text. */
-animation: gold-accent-shimmer 12s ease-in-out infinite;
-}
-@media (prefers-reduced-motion: reduce) {
-  .hero h1 em,
-  .hero h1 em .cascade-word {
-    animation: none;
-  }
+/* Reads --shimmer-strength (written by js/shimmer.js, see base.css for
+   the full explanation) — same beam, same moment, as the wordmark and
+   both "Request a Quote" buttons, because it's driven by this element's
+   real screen position rather than a per-element animation. */
+filter: brightness(calc(1 + var(--shimmer-strength, 0) * 0.16)) saturate(calc(1 + var(--shimmer-strength, 0) * 0.10));
+text-shadow: 0 0 calc(var(--shimmer-strength, 0) * 8px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.55));
 }
 
 .hero-sub {
@@ -135,6 +124,8 @@ width: fit-content;
 font-family: var(--font-mono);
 font-size: 1.6rem;
 color: var(--gold);
+filter: brightness(calc(1 + var(--shimmer-strength, 0) * 0.16)) saturate(calc(1 + var(--shimmer-strength, 0) * 0.10));
+text-shadow: 0 0 calc(var(--shimmer-strength, 0) * 8px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.55));
 }
 .hero-stats .stat-label {
 font-family: var(--font-mono);
@@ -255,6 +246,8 @@ display: inline-flex;
 align-items: center;
 gap: 0.4em;
 margin-top: var(--space-2);
+filter: brightness(calc(1 + var(--shimmer-strength, 0) * 0.16)) saturate(calc(1 + var(--shimmer-strength, 0) * 0.10));
+text-shadow: 0 0 calc(var(--shimmer-strength, 0) * 8px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.55));
 }
 .pillar-link::after { content: '\2192'; transition: transform 0.2s; }
 .pillar-card:hover .pillar-link::after { transform: translateX(4px); }
@@ -287,7 +280,8 @@ color: var(--gold);
 font-size: 0.8rem;
 display: block;
 margin-bottom: 0.6em;
-text-shadow: 0 1px 4px rgba(0,0,0,0.75);
+filter: brightness(calc(1 + var(--shimmer-strength, 0) * 0.16)) saturate(calc(1 + var(--shimmer-strength, 0) * 0.10));
+text-shadow: 0 1px 4px rgba(0,0,0,0.75), 0 0 calc(var(--shimmer-strength, 0) * 8px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.55));
 }
 .process-step h4 {
 color: var(--limestone);

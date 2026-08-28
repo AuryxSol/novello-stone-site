@@ -32,6 +32,10 @@
   --gold-highlight: #D3B388;   /* satin metallic highlight */
   --gold-border:    rgba(180, 148, 110, 0.32);
   --gold-glow:      rgba(180, 148, 110, 0.14);
+  /* Warm champagne highlight used only by the bronze-gold shimmer sweep
+     (js/shimmer.js) — derived from --gold-highlight (#D3B388) so the glow
+     always matches the metallic palette, never a plain white streak. */
+  --shimmer-highlight-rgb: 211, 179, 136;
   --novello-metallic-gold: linear-gradient(135deg,
     #7D6347 0%, #947656 16%, #A5855F 32%, #C3A37B 48%,
     #D3B388 58%, #B4946E 72%, #947656 88%, #7D6347 100%);
@@ -45,6 +49,13 @@
   --slate-soft:     var(--gold-deep);
   --hairline:       rgba(180, 148, 110, 0.22); /* fine architectural bronze-gold line */
   --white:          #F3F0EA;
+
+  /* Live 0–1 value written every animation frame by js/shimmer.js onto
+     each [data-bronze-shimmer] element, based on that element's actual
+     distance from the sweeping beam. Defaults to 0 (no effect at all)
+     so every consuming rule below renders at its normal resting
+     appearance if JS hasn't run yet or fails to load. */
+  --shimmer-strength: 0;
 
   /* --- Type tokens --- */
   --font-display: 'Oswald', sans-serif;
@@ -128,34 +139,29 @@ a { color: inherit; text-decoration: none; }
   font-weight: 500;
   letter-spacing: 0.18em;
   text-transform: uppercase;
+  color: var(--gold);
   display: inline-flex;
   align-items: center;
   gap: 0.5em;
-  background-image: linear-gradient(var(--gold), var(--gold)), linear-gradient(100deg, transparent 44%, rgba(255,255,255,0.55) 50%, transparent 56%);
-  background-size: 100% 100%, 260% 100%;
-  background-repeat: no-repeat, no-repeat;
-  background-attachment: scroll, fixed;
-  background-position: 0 0, 160% 0;
-  background-blend-mode: normal, screen;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
-  animation: gold-accent-shimmer 12s ease-in-out infinite;
+  /* Bronze-gold shimmer (js/shimmer.js writes --shimmer-strength here as
+     the beam crosses this element's actual screen position). Some pages
+     override text-shadow on their own .eyebrow instance for legibility
+     over photos (see about.css/home.css/materials.css/story.css) — those
+     still get the brightness/saturation shimmer below, just without this
+     particular glow, since text-shadow doesn't merge across rules. */
+  filter: brightness(calc(1 + var(--shimmer-strength, 0) * 0.16)) saturate(calc(1 + var(--shimmer-strength, 0) * 0.10));
+  text-shadow: 0 0 calc(var(--shimmer-strength, 0) * 8px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.55));
 }
 
 .eyebrow::before {
   content: '';
   width: 18px;
   height: 1px;
+  background: var(--gold);
   display: inline-block;
-  background-image: linear-gradient(var(--gold), var(--gold)), linear-gradient(100deg, transparent 44%, rgba(255,255,255,0.55) 50%, transparent 56%);
-  background-size: 100% 100%, 260% 100%;
-  background-repeat: no-repeat, no-repeat;
-  background-attachment: scroll, fixed;
-  background-position: 0 0, 160% 0;
-  background-blend-mode: normal, screen;
-  animation: gold-accent-shimmer 12s ease-in-out infinite;
+  /* Inherits --shimmer-strength from .eyebrow (its originating element) */
+  filter: brightness(calc(1 + var(--shimmer-strength, 0) * 0.16)) saturate(calc(1 + var(--shimmer-strength, 0) * 0.10));
+  box-shadow: 0 0 calc(var(--shimmer-strength, 0) * 6px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.45));
 }
 
 .container {
@@ -190,21 +196,15 @@ section { padding: var(--space-6) 0; }
 }
 
 .btn-primary {
-  background-color: #A5855F;
-  background-image: linear-gradient(135deg, #947656 0%, #A5855F 28%, #C3A37B 52%, #B4946E 70%, #947656 100%), linear-gradient(100deg, transparent 44%, rgba(255,255,255,0.55) 50%, transparent 56%);
-  background-size: 100% 100%, 260% 100%;
-  background-repeat: no-repeat, no-repeat;
-  background-attachment: scroll, fixed;
-  background-position: 0 0, 160% 0;
-  background-blend-mode: normal, screen;
+  background: linear-gradient(135deg, #947656 0%, #A5855F 28%, #C3A37B 52%, #B4946E 70%, #947656 100%);
   border: 1px solid #B4946E;
   color: #0B0A09;
-  box-shadow: 0 8px 24px var(--gold-glow);
-  animation: gold-accent-shimmer 12s ease-in-out infinite;
+  box-shadow: 0 8px 24px var(--gold-glow), 0 0 calc(var(--shimmer-strength, 0) * 14px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.5));
+  filter: brightness(calc(1 + var(--shimmer-strength, 0) * 0.16)) saturate(calc(1 + var(--shimmer-strength, 0) * 0.10));
 }
 .btn-primary:hover {
-  filter: brightness(1.08);
-  box-shadow: 0 10px 30px rgba(180, 148, 110, 0.20);
+  filter: brightness(calc(1.08 + var(--shimmer-strength, 0) * 0.16)) saturate(calc(1 + var(--shimmer-strength, 0) * 0.10));
+  box-shadow: 0 10px 30px rgba(180, 148, 110, 0.20), 0 0 calc(var(--shimmer-strength, 0) * 14px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.5));
 }
 
 .btn-ghost-dark {
@@ -255,17 +255,13 @@ section { padding: var(--space-6) 0; }
 }
 .brand,
 .brand span {
-  background-image: linear-gradient(180deg, #D3B388 0%, #C3A37B 25%, #B4946E 48%, #A5855F 68%, #947656 84%, #7D6347 100%), linear-gradient(100deg, transparent 44%, rgba(255,255,255,0.55) 50%, transparent 56%);
-  background-size: 100% 100%, 260% 100%;
-  background-repeat: no-repeat, no-repeat;
-  background-attachment: scroll, fixed;
-  background-position: 0 0, 160% 0;
-  background-blend-mode: normal, screen;
+  background-image: linear-gradient(180deg, #D3B388 0%, #C3A37B 25%, #B4946E 48%, #A5855F 68%, #947656 84%, #7D6347 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
   color: transparent;
-  animation: gold-accent-shimmer 12s ease-in-out infinite;
+  filter: brightness(calc(1 + var(--shimmer-strength, 0) * 0.16)) saturate(calc(1 + var(--shimmer-strength, 0) * 0.10));
+  text-shadow: 0 0 calc(var(--shimmer-strength, 0) * 8px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.55));
 }
 .brand { display: inline-flex; align-items: center; gap: 0.75em; }
 .brand-mark {
@@ -273,39 +269,28 @@ section { padding: var(--space-6) 0; }
   height: 46px;
   display: block;
   object-fit: contain;
-  filter: drop-shadow(0 5px 7px rgba(0,0,0,0.42)) drop-shadow(0 0 12px rgba(180, 148, 110,0.10));
+  filter: drop-shadow(0 5px 7px rgba(0,0,0,0.42)) drop-shadow(0 0 12px rgba(180, 148, 110,0.10))
+    brightness(calc(1 + var(--shimmer-strength, 0) * 0.16)) saturate(calc(1 + var(--shimmer-strength, 0) * 0.10))
+    drop-shadow(0 0 calc(var(--shimmer-strength, 0) * 6px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.5)));
 }
 
-/* --- Shared bronze-gold shimmer ---
-   One soft band of light sweeps right to left, but only across elements
-   that are themselves bronze-gold — the wordmark, the hero heading, the
-   two "Request a Quote" buttons, and the eyebrow labels/accent lines.
-   Photos, white text, and the page background are untouched.
+/* --- Bronze-gold shimmer ---
+   A narrow, soft "studio spotlight" sweeps right to left once every
+   10–12s. The light itself is invisible — js/shimmer.js runs one
+   requestAnimationFrame loop that tracks a single beam position and,
+   every frame, measures each [data-bronze-shimmer] element's actual
+   distance from that beam (via getBoundingClientRect, in real screen
+   pixels — not DOM order, not per-element animation delays) and writes
+   the result as --shimmer-strength (0–1) directly on that element.
 
-   Each of those elements keeps its own normal gold background/gradient
-   as one background layer, with this shimmer highlight as a second
-   layer on top, combined via background-blend-mode: screen (brightens
-   only, never darkens). The shimmer layer uses
-   background-attachment: fixed, which makes its position/size resolve
-   against the viewport instead of the element's own box — so every
-   element, however small or wherever it sits on the page, moves through
-   the exact same keyframe in lockstep and reads as one single light
-   crossing the screen, not several separate animations.
-
-   12s per cycle: ~6s to sweep across, ~6s paused off-screen before it
-   loops — half the speed of the previous version. */
-@keyframes gold-accent-shimmer {
-  0%   { background-position: 0 0, 160% 0; }
-  50%  { background-position: 0 0, -60% 0; }
-  100% { background-position: 0 0, -60% 0; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .brand, .brand span,
-  .btn-primary, .nav-cta,
-  .eyebrow, .eyebrow::before {
-    animation: none;
-  }
-}
+   Every rule below only ever *reads* --shimmer-strength — it never sets
+   it — so this file has no knowledge of timing at all; it just says
+   "brighten/saturate/glow this much for however lit-up this element
+   currently is". That's what keeps every element in lockstep as one
+   light crossing the screen, rather than separate animations. See
+   js/shimmer.js for the beam math, easing, resize/visibility handling,
+   and prefers-reduced-motion fallback (a fixed, very subtle glow with
+   no travelling motion at all). */
 
 .nav-links {
   display: flex;
@@ -332,6 +317,11 @@ section { padding: var(--space-6) 0; }
   left: 0; bottom: 0;
   width: 100%; height: 2px;
   background: linear-gradient(90deg, #7D6347, #C3A37B, #7D6347);
+  /* Inherits --shimmer-strength from .nav-links a.active. The active
+     link's own (non-gold, limestone) text is untouched — only this
+     underline bar reacts. */
+  filter: brightness(calc(1 + var(--shimmer-strength, 0) * 0.16)) saturate(calc(1 + var(--shimmer-strength, 0) * 0.10));
+  box-shadow: 0 0 calc(var(--shimmer-strength, 0) * 6px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.45));
 }
 
 /* --- Materials dropdown (desktop) --- */
@@ -394,18 +384,14 @@ section { padding: var(--space-6) 0; }
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--basalt);
-  background-image: linear-gradient(var(--gold), var(--gold)), linear-gradient(100deg, transparent 44%, rgba(255,255,255,0.55) 50%, transparent 56%);
-  background-size: 100% 100%, 260% 100%;
-  background-repeat: no-repeat, no-repeat;
-  background-attachment: scroll, fixed;
-  background-position: 0 0, 160% 0;
-  background-blend-mode: normal, screen;
+  background: var(--gold);
   padding: 0.6em 1.3em;
   border-radius: var(--radius);
-  transition: background-image 0.2s;
-  animation: gold-accent-shimmer 12s ease-in-out infinite;
+  transition: background 0.2s;
+  filter: brightness(calc(1 + var(--shimmer-strength, 0) * 0.16)) saturate(calc(1 + var(--shimmer-strength, 0) * 0.10));
+  box-shadow: 0 0 calc(var(--shimmer-strength, 0) * 12px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.5));
 }
-.nav-cta:hover { background-image: linear-gradient(var(--gold-soft), var(--gold-soft)), linear-gradient(100deg, transparent 44%, rgba(255,255,255,0.55) 50%, transparent 56%); }
+.nav-cta:hover { background: var(--gold-soft); }
 
 .nav-toggle {
   display: none;
@@ -496,6 +482,8 @@ footer {
   background: var(--gold);
   transform: rotate(45deg);
   flex-shrink: 0;
+  filter: brightness(calc(1 + var(--shimmer-strength, 0) * 0.16)) saturate(calc(1 + var(--shimmer-strength, 0) * 0.10));
+  box-shadow: 0 0 calc(var(--shimmer-strength, 0) * 6px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.45));
 }
 .footer-grid p, .footer-grid a {
   font-size: 0.92rem;

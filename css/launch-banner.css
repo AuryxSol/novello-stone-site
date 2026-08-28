@@ -35,6 +35,11 @@
   width: 3px;
   background: linear-gradient(180deg, var(--gold-highlight, #D3B388), var(--gold-shadow, #7D6347));
   border-radius: 2px;
+  /* Inherits --shimmer-strength from .launch-card (marked purely so
+     this bar can read it — the card itself has no shimmer rule of its
+     own, so its charcoal body is untouched). */
+  filter: brightness(calc(1 + var(--shimmer-strength, 0) * 0.16)) saturate(calc(1 + var(--shimmer-strength, 0) * 0.10));
+  box-shadow: 0 0 calc(var(--shimmer-strength, 0) * 6px) rgba(var(--shimmer-highlight-rgb, 211, 179, 136), calc(var(--shimmer-strength, 0) * 0.45));
 }
 
 .launch-card-close {
@@ -60,6 +65,8 @@
   color: var(--gold-base, #A5855F);
   display: block;
   margin-bottom: 0.5em;
+  filter: brightness(calc(1 + var(--shimmer-strength, 0) * 0.16)) saturate(calc(1 + var(--shimmer-strength, 0) * 0.10));
+  text-shadow: 0 0 calc(var(--shimmer-strength, 0) * 8px) rgba(var(--shimmer-highlight-rgb, 211, 179, 136), calc(var(--shimmer-strength, 0) * 0.55));
 }
 
 .launch-card p {
@@ -70,7 +77,12 @@
   margin: 0 0 0.8em;
   padding-right: 0.6em;
 }
-.launch-card p strong { color: var(--gold-mid, #B4946E); font-weight: 600; }
+.launch-card p strong {
+  color: var(--gold-mid, #B4946E);
+  font-weight: 600;
+  filter: brightness(calc(1 + var(--shimmer-strength, 0) * 0.16)) saturate(calc(1 + var(--shimmer-strength, 0) * 0.10));
+  text-shadow: 0 0 calc(var(--shimmer-strength, 0) * 8px) rgba(var(--shimmer-highlight-rgb, 211, 179, 136), calc(var(--shimmer-strength, 0) * 0.55));
+}
 
 .launch-card a.launch-card-cta {
   font-family: var(--font-mono, monospace);
@@ -83,6 +95,8 @@
   align-items: center;
   gap: 0.4em;
   transition: color 0.2s ease;
+  filter: brightness(calc(1 + var(--shimmer-strength, 0) * 0.16)) saturate(calc(1 + var(--shimmer-strength, 0) * 0.10));
+  text-shadow: 0 0 calc(var(--shimmer-strength, 0) * 8px) rgba(var(--shimmer-highlight-rgb, 211, 179, 136), calc(var(--shimmer-strength, 0) * 0.55));
 }
 .launch-card a.launch-card-cta:hover { color: var(--gold-highlight, #D3B388); }
 .launch-card a.launch-card-cta::after { content: '\2192'; transition: transform 0.2s; }

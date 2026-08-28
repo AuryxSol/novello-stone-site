@@ -84,15 +84,7 @@
   transform: translateY(22px);
   animation: heroRise 0.9s cubic-bezier(.16,.84,.44,1) forwards;
 }
-.hero-content .eyebrow {
-  /* Runs the once-off entrance rise AND the ongoing gold shimmer
-     together — a plain animation-delay here wouldn't be enough, since
-     .hero-content > * above already claims the `animation` shorthand
-     for heroRise alone, which would otherwise block the eyebrow's
-     gold-accent-shimmer (defined in base.css) from ever running. */
-  animation: heroRise 0.9s cubic-bezier(.16,.84,.44,1) forwards, gold-accent-shimmer 12s ease-in-out infinite;
-  animation-delay: 0.15s, 0.15s;
-}
+.hero-content .eyebrow      { animation-delay: 0.15s; }
 .hero-content h1            { animation-delay: 0.30s; }
 .hero-content .hero-sub     { animation-delay: 0.50s; }
 .hero-content .hero-actions { animation-delay: 0.65s; }
