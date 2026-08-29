@@ -389,8 +389,8 @@
 
       function sweepDuration() {
         var width = document.documentElement.clientWidth || window.innerWidth;
-        var height = document.documentElement.clientHeight || window.innerHeight;
-        var travelDistance = width + TRAVEL_PADDING_PX * 2 + height * VERTICAL_LAG_PER_PX;
+        var pageHeight = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight);
+        var travelDistance = width + TRAVEL_PADDING_PX * 2 + pageHeight * VERTICAL_LAG_PER_PX;
         return (travelDistance / SPEED_PX_PER_SECOND) * 1000;
       }
 
@@ -426,8 +426,8 @@
         var cycleMs = sweepMs + PAUSE_MS;
         var cyclePosition = elapsed % cycleMs;
         var viewportWidth = document.documentElement.clientWidth || window.innerWidth;
-        var viewportHeight = document.documentElement.clientHeight || window.innerHeight;
-        var verticalLag = viewportHeight * VERTICAL_LAG_PER_PX;
+        var pageHeight = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight);
+        var verticalLag = pageHeight * VERTICAL_LAG_PER_PX;
         var travelDistance = viewportWidth + TRAVEL_PADDING_PX * 2 + verticalLag;
         var beamTopX = viewportWidth + TRAVEL_PADDING_PX * 10;
 
@@ -438,7 +438,7 @@
 
         targets.forEach(function (target) {
           var rect = target.getBoundingClientRect();
-          var targetY = Math.max(0, Math.min(viewportHeight, rect.top + rect.height / 2));
+          var targetY = rect.top + window.scrollY + rect.height / 2;
           var beamAtTargetY = beamTopX - targetY * VERTICAL_LAG_PER_PX;
           target.style.setProperty('--beam-x', (beamAtTargetY - rect.left).toFixed(2) + 'px');
         });
