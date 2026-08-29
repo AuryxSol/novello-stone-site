@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Novello Stone — Focused Chrome Beam Study</title>
+  <title>Novello Stone — Single Chrome Beam Study</title>
   <link rel="stylesheet" href="css/base.css">
   <style>
     :root {
@@ -141,11 +141,11 @@
     }
 
     .variant-b {
-      --beam-angle: 112deg;
+      --beam-angle: 105deg;
     }
 
     .variant-c {
-      --beam-angle: 119deg;
+      --beam-angle: 105deg;
     }
 
     .variant-heading {
@@ -298,7 +298,7 @@
 <body>
   <header class="proof-header">
     <div class="proof-header-inner">
-      <p class="proof-title">Novello Stone — Chrome Beam Study</p>
+      <p class="proof-title">Novello Stone — Single Chrome Beam Study</p>
       <span class="proof-status">Preview branch · production unchanged</span>
       <button class="replay-button" type="button">Replay sweep</button>
     </div>
@@ -306,20 +306,20 @@
 
   <main class="proof-stage">
     <section class="proof-intro">
-      <p class="proof-eyebrow">Three synchronized examples</p>
-      <h1>Focused light, shaped by the lettering.</h1>
+      <p class="proof-eyebrow">One continuous 15° beam</p>
+      <h1>One source of light, travelling through the page.</h1>
       <p>
-        All three use the approved Tailored Chrome width, move 10% faster, and share the same brighter
-        core and restrained travelling glow. Only the slash angle changes. Watch the beam follow each
-        bronze-gold letter, the N monogram and the button surface.
+        The top of one diagonal beam leads from left to right; its lower edge reaches each bronze-gold
+        feature progressively later. The approved Tailored Chrome width, brighter core and travelling
+        glow remain unchanged while the movement is increased by a further 10%.
       </p>
     </section>
 
     <div class="variant-list">
       <section class="variant variant-a">
         <div class="variant-heading">
-          <h2 class="variant-name">A · Gentle slash</h2>
-          <span class="variant-detail">15° · Tailored Chrome width</span>
+          <h2 class="variant-name">Upper accents</h2>
+          <span class="variant-detail">First contact · 15° beam</span>
         </div>
         <div class="variant-content">
           <div class="proof-brand">
@@ -336,8 +336,8 @@
 
       <section class="variant variant-b">
         <div class="variant-heading">
-          <h2 class="variant-name">B · Balanced slash</h2>
-          <span class="variant-detail">22° · Tailored Chrome width</span>
+          <h2 class="variant-name">Mid-page accents</h2>
+          <span class="variant-detail">Second contact · same beam</span>
         </div>
         <div class="variant-content">
           <div class="proof-brand">
@@ -354,8 +354,8 @@
 
       <section class="variant variant-c">
         <div class="variant-heading">
-          <h2 class="variant-name">C · Dramatic slash</h2>
-          <span class="variant-detail">29° · Tailored Chrome width</span>
+          <h2 class="variant-name">Lower accents</h2>
+          <span class="variant-detail">Last contact · same beam</span>
         </div>
         <div class="variant-content">
           <div class="proof-brand">
@@ -376,7 +376,9 @@
     (function () {
       'use strict';
 
-      var SPEED_PX_PER_SECOND = window.innerWidth <= 860 ? 99 : 126.5;
+      var SPEED_PX_PER_SECOND = window.innerWidth <= 860 ? 108.9 : 139.15;
+      var ANGLE_FROM_VERTICAL_DEG = 15;
+      var VERTICAL_LAG_PER_PX = Math.tan(ANGLE_FROM_VERTICAL_DEG * Math.PI / 180);
       var INITIAL_DELAY_MS = 750;
       var PAUSE_MS = 6500;
       var TRAVEL_PADDING_PX = window.innerWidth <= 860 ? 110 : 170;
@@ -387,7 +389,9 @@
 
       function sweepDuration() {
         var width = document.documentElement.clientWidth || window.innerWidth;
-        return ((width + TRAVEL_PADDING_PX * 2) / SPEED_PX_PER_SECOND) * 1000;
+        var height = document.documentElement.clientHeight || window.innerHeight;
+        var travelDistance = width + TRAVEL_PADDING_PX * 2 + height * VERTICAL_LAG_PER_PX;
+        return (travelDistance / SPEED_PX_PER_SECOND) * 1000;
       }
 
       function clearBeam() {
@@ -422,16 +426,21 @@
         var cycleMs = sweepMs + PAUSE_MS;
         var cyclePosition = elapsed % cycleMs;
         var viewportWidth = document.documentElement.clientWidth || window.innerWidth;
-        var beamX = viewportWidth + TRAVEL_PADDING_PX * 10;
+        var viewportHeight = document.documentElement.clientHeight || window.innerHeight;
+        var verticalLag = viewportHeight * VERTICAL_LAG_PER_PX;
+        var travelDistance = viewportWidth + TRAVEL_PADDING_PX * 2 + verticalLag;
+        var beamTopX = viewportWidth + TRAVEL_PADDING_PX * 10;
 
         if (cyclePosition <= sweepMs) {
           var progress = cyclePosition / sweepMs;
-          beamX = -TRAVEL_PADDING_PX + progress * (viewportWidth + TRAVEL_PADDING_PX * 2);
+          beamTopX = -TRAVEL_PADDING_PX + progress * travelDistance;
         }
 
         targets.forEach(function (target) {
           var rect = target.getBoundingClientRect();
-          target.style.setProperty('--beam-x', (beamX - rect.left).toFixed(2) + 'px');
+          var targetY = Math.max(0, Math.min(viewportHeight, rect.top + rect.height / 2));
+          var beamAtTargetY = beamTopX - targetY * VERTICAL_LAG_PER_PX;
+          target.style.setProperty('--beam-x', (beamAtTargetY - rect.left).toFixed(2) + 'px');
         });
 
         rafId = requestAnimationFrame(frame);
