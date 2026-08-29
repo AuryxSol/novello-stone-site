@@ -3,15 +3,16 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Novello Stone — Glyph Beam Staging Proof</title>
+  <title>Novello Stone — Focused Chrome Beam Study</title>
   <link rel="stylesheet" href="css/base.css">
   <style>
     :root {
       --proof-bronze-gradient: linear-gradient(180deg,
         #D3B388 0%, #C3A37B 25%, #B4946E 48%,
         #A5855F 68%, #947656 84%, #7D6347 100%);
-      --proof-beam-core: rgba(230, 199, 156, 0.44);
-      --proof-beam-shoulder: rgba(211, 179, 136, 0.18);
+      --beam-core: rgba(230, 199, 156, 0.44);
+      --beam-shoulder: rgba(211, 179, 136, 0.18);
+      --beam-shadow: rgba(71, 50, 31, 0.14);
     }
 
     * { box-sizing: border-box; }
@@ -21,21 +22,23 @@
       margin: 0;
       color: var(--limestone);
       background:
-        radial-gradient(circle at 28% -8%, rgba(180,148,110,0.10), transparent 34%),
+        radial-gradient(circle at 30% -10%, rgba(180,148,110,0.09), transparent 32%),
         #080807;
       overflow-x: hidden;
     }
 
-    .proof-nav {
-      height: 76px;
+    .proof-header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
       border-bottom: 1px solid rgba(180,148,110,0.16);
       background: rgba(8,8,7,0.94);
-      box-shadow: 0 8px 30px rgba(0,0,0,0.24);
+      backdrop-filter: blur(14px);
     }
 
-    .proof-nav-inner {
-      width: min(1400px, calc(100% - 8vw));
-      height: 100%;
+    .proof-header-inner {
+      width: min(1380px, calc(100% - 8vw));
+      min-height: 76px;
       margin: 0 auto;
       display: flex;
       align-items: center;
@@ -43,19 +46,157 @@
       gap: 2rem;
     }
 
+    .proof-title {
+      margin: 0;
+      color: var(--gold-light);
+      font-family: var(--font-wordmark);
+      font-size: 0.86rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .proof-status {
+      color: var(--travertine);
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .replay-button {
+      padding: 0.65rem 0.9rem;
+      border: 1px solid rgba(180,148,110,0.34);
+      border-radius: 2px;
+      color: var(--gold-light);
+      background: transparent;
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    .proof-stage {
+      width: min(1180px, calc(100% - 3rem));
+      margin: 0 auto;
+      padding: clamp(3.25rem, 7vw, 6rem) 0 6rem;
+    }
+
+    .proof-intro {
+      max-width: 760px;
+      margin-bottom: 3.25rem;
+    }
+
+    .proof-eyebrow {
+      margin: 0 0 1rem;
+      color: var(--gold-base);
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.17em;
+      text-transform: uppercase;
+    }
+
+    .proof-intro h1 {
+      margin: 0;
+      color: var(--limestone);
+      font-family: var(--font-headline);
+      font-size: clamp(2.8rem, 6vw, 5.2rem);
+      font-style: italic;
+      font-weight: 500;
+      line-height: 0.98;
+    }
+
+    .proof-intro p {
+      max-width: 680px;
+      margin: 1.35rem 0 0;
+      color: var(--travertine);
+      font-size: 0.94rem;
+      line-height: 1.65;
+    }
+
+    .variant-list {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .variant {
+      --core-half: 1px;
+      --shoulder-near: 4px;
+      --beam-outer: 7px;
+      --shadow-outer: 0px;
+      position: relative;
+      min-height: 190px;
+      padding: 1.6rem clamp(1.2rem, 3vw, 2.4rem);
+      border: 1px solid rgba(180,148,110,0.16);
+      background: linear-gradient(135deg, rgba(255,255,255,0.025), rgba(180,148,110,0.018));
+      overflow: hidden;
+    }
+
+    .variant-a {
+      --core-half: 0.5px;
+      --shoulder-near: 2.5px;
+      --beam-outer: 4px;
+    }
+
+    .variant-b {
+      --core-half: 1px;
+      --shoulder-near: 4px;
+      --beam-outer: 7px;
+    }
+
+    .variant-c {
+      --core-half: 1px;
+      --shoulder-near: 5px;
+      --beam-outer: 9px;
+      --shadow-outer: 12px;
+    }
+
+    .variant-heading {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1.35rem;
+    }
+
+    .variant-name {
+      margin: 0;
+      color: var(--gold-light);
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .variant-detail {
+      color: var(--travertine);
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.08em;
+      opacity: 0.72;
+    }
+
+    .variant-content {
+      display: grid;
+      grid-template-columns: minmax(210px, 0.85fr) minmax(300px, 1.6fr) auto;
+      align-items: center;
+      gap: clamp(1.4rem, 4vw, 3.5rem);
+    }
+
     .proof-brand {
       display: inline-flex;
       align-items: center;
-      gap: 0.75em;
+      gap: 0.7em;
       white-space: nowrap;
-      text-decoration: none;
     }
 
     .proof-mark {
       position: relative;
-      width: 46px;
-      height: 46px;
-      flex: 0 0 46px;
+      width: 42px;
+      height: 42px;
+      flex: 0 0 42px;
     }
 
     .proof-mark img {
@@ -67,34 +208,45 @@
               drop-shadow(0 0 12px rgba(180,148,110,0.10));
     }
 
+    .proof-mark-beam,
+    .proof-cta,
+    .proof-text {
+      --beam-layer: linear-gradient(90deg,
+        transparent calc(var(--beam-x, -999px) - var(--beam-outer)),
+        var(--beam-shoulder) calc(var(--beam-x, -999px) - var(--shoulder-near)),
+        var(--beam-core) calc(var(--beam-x, -999px) - var(--core-half)),
+        var(--beam-core) calc(var(--beam-x, -999px) + var(--core-half)),
+        var(--beam-shoulder) calc(var(--beam-x, -999px) + var(--shoulder-near)),
+        transparent calc(var(--beam-x, -999px) + var(--beam-outer)));
+    }
+
+    .variant-c .proof-mark-beam,
+    .variant-c .proof-cta,
+    .variant-c .proof-text {
+      --beam-layer: linear-gradient(90deg,
+        transparent calc(var(--beam-x, -999px) - var(--shadow-outer)),
+        var(--beam-shadow) calc(var(--beam-x, -999px) - var(--beam-outer)),
+        var(--beam-shoulder) calc(var(--beam-x, -999px) - var(--shoulder-near)),
+        var(--beam-core) calc(var(--beam-x, -999px) - var(--core-half)),
+        var(--beam-core) calc(var(--beam-x, -999px) + var(--core-half)),
+        var(--beam-shoulder) calc(var(--beam-x, -999px) + var(--shoulder-near)),
+        var(--beam-shadow) calc(var(--beam-x, -999px) + var(--beam-outer)),
+        transparent calc(var(--beam-x, -999px) + var(--shadow-outer)));
+    }
+
     .proof-mark-beam {
       position: absolute;
       inset: 0;
       pointer-events: none;
-      background: linear-gradient(90deg,
-        transparent calc(var(--beam-x, -999px) - 7px),
-        var(--proof-beam-shoulder) calc(var(--beam-x, -999px) - 4px),
-        var(--proof-beam-core) calc(var(--beam-x, -999px) - 1px),
-        var(--proof-beam-core) calc(var(--beam-x, -999px) + 1px),
-        var(--proof-beam-shoulder) calc(var(--beam-x, -999px) + 4px),
-        transparent calc(var(--beam-x, -999px) + 7px));
+      background: var(--beam-layer);
       -webkit-mask: url('img/novello-n-monogram.png') center / contain no-repeat;
       mask: url('img/novello-n-monogram.png') center / contain no-repeat;
     }
 
-    .proof-wordmark,
-    .proof-glyph {
+    .proof-text {
       color: transparent;
       -webkit-text-fill-color: transparent;
-      background-image:
-        linear-gradient(90deg,
-          transparent calc(var(--beam-x, -999px) - 7px),
-          var(--proof-beam-shoulder) calc(var(--beam-x, -999px) - 4px),
-          var(--proof-beam-core) calc(var(--beam-x, -999px) - 1px),
-          var(--proof-beam-core) calc(var(--beam-x, -999px) + 1px),
-          var(--proof-beam-shoulder) calc(var(--beam-x, -999px) + 4px),
-          transparent calc(var(--beam-x, -999px) + 7px)),
-        var(--proof-bronze-gradient);
+      background-image: var(--beam-layer), var(--proof-bronze-gradient);
       -webkit-background-clip: text;
       background-clip: text;
       background-repeat: no-repeat;
@@ -102,186 +254,168 @@
 
     .proof-wordmark {
       font-family: var(--font-wordmark);
-      font-size: 1.2rem;
+      font-size: 0.98rem;
       font-weight: 500;
-      letter-spacing: 0.22em;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
     }
 
-    .proof-links {
-      display: flex;
-      align-items: center;
-      gap: 2.5rem;
-      list-style: none;
+    .proof-headline {
       margin: 0;
-      padding: 0;
-    }
-
-    .proof-links a {
-      position: relative;
-      padding-bottom: 4px;
-      color: var(--limestone);
-      font-family: var(--font-body);
-      font-size: 0.82rem;
+      font-family: var(--font-headline);
+      font-size: clamp(2rem, 3.6vw, 3.45rem);
+      font-style: italic;
       font-weight: 500;
-      letter-spacing: 0.08em;
-      text-decoration: none;
-      text-transform: uppercase;
-      opacity: 0.78;
-    }
-
-    .proof-links a.active { opacity: 1; }
-
-    .proof-links a.active::after {
-      content: '';
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      height: 2px;
-      background:
-        linear-gradient(90deg,
-          transparent calc(var(--beam-x, -999px) - 7px),
-          var(--proof-beam-shoulder) calc(var(--beam-x, -999px) - 4px),
-          var(--proof-beam-core) calc(var(--beam-x, -999px) - 1px),
-          var(--proof-beam-core) calc(var(--beam-x, -999px) + 1px),
-          var(--proof-beam-shoulder) calc(var(--beam-x, -999px) + 4px),
-          transparent calc(var(--beam-x, -999px) + 7px)),
-        linear-gradient(90deg, #7D6347, #C3A37B, #7D6347);
+      line-height: 0.98;
     }
 
     .proof-cta {
       position: relative;
       isolation: isolate;
       overflow: hidden;
-      padding: 0.8rem 1.35rem;
+      padding: 0.78rem 1.15rem;
       border: 1px solid rgba(211,179,136,0.32);
       border-radius: 2px;
       color: #080807;
-      background: linear-gradient(135deg,
+      background-image: var(--beam-layer), linear-gradient(135deg,
         #947656 0%, #A5855F 28%, #C3A37B 52%,
         #B4946E 70%, #947656 100%);
+      background-repeat: no-repeat;
       font-family: var(--font-mono);
-      font-size: 0.75rem;
+      font-size: 0.68rem;
       font-weight: 500;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.11em;
       text-decoration: none;
       text-transform: uppercase;
+      white-space: nowrap;
     }
-
-    .proof-cta::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      z-index: -1;
-      pointer-events: none;
-      background: linear-gradient(90deg,
-        transparent calc(var(--beam-x, -999px) - 7px),
-        var(--proof-beam-shoulder) calc(var(--beam-x, -999px) - 4px),
-        var(--proof-beam-core) calc(var(--beam-x, -999px) - 1px),
-        var(--proof-beam-core) calc(var(--beam-x, -999px) + 1px),
-        var(--proof-beam-shoulder) calc(var(--beam-x, -999px) + 4px),
-        transparent calc(var(--beam-x, -999px) + 7px));
-    }
-
-    .proof-stage {
-      width: min(980px, calc(100% - 3rem));
-      margin: 0 auto;
-      padding: clamp(5rem, 12vh, 9rem) 0 6rem;
-    }
-
-    .proof-label {
-      margin-bottom: 1.5rem;
-      color: var(--gold-base);
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-    }
-
-    .proof-glyph {
-      display: inline-block;
-      max-width: 900px;
-      font-family: var(--font-headline);
-      font-size: clamp(3.2rem, 8vw, 7.2rem);
-      font-style: italic;
-      font-weight: 500;
-      line-height: 0.94;
-    }
-
-    .proof-note {
-      max-width: 650px;
-      margin-top: 2.5rem;
-      color: var(--travertine);
-      font-size: 0.92rem;
-      line-height: 1.6;
-    }
-
-    .proof-note strong { color: var(--gold-light); }
 
     @media (max-width: 860px) {
-      .proof-nav-inner { width: calc(100% - 2rem); }
-      .proof-links { display: none; }
-      .proof-wordmark { font-size: 0.94rem; }
-      .proof-mark { width: 40px; height: 40px; flex-basis: 40px; }
-      .proof-cta { padding: 0.7rem 0.85rem; font-size: 0.62rem; }
-      .proof-stage { width: calc(100% - 2rem); padding-top: 5rem; }
+      .proof-header-inner { width: calc(100% - 2rem); }
+      .proof-status { display: none; }
+      .proof-stage { width: calc(100% - 2rem); padding-top: 3rem; }
+      .variant { min-height: 0; }
+      .variant-content {
+        grid-template-columns: 1fr;
+        gap: 1.35rem;
+      }
+      .proof-headline { max-width: 620px; }
+      .proof-cta { justify-self: start; }
     }
 
     @media (prefers-reduced-motion: reduce) {
       [data-glyph-beam] { --beam-x: -999px !important; }
+      .replay-button { display: none; }
     }
   </style>
 </head>
 <body>
-  <header class="proof-nav">
-    <div class="proof-nav-inner">
-      <a class="proof-brand" href="#" aria-label="Novello Stone">
-        <span class="proof-mark" data-glyph-beam>
-          <img src="img/novello-n-monogram.png" alt="">
-          <span class="proof-mark-beam" aria-hidden="true"></span>
-        </span>
-        <span class="proof-wordmark" data-glyph-beam>NOVELLO STONE</span>
-      </a>
-
-      <ul class="proof-links" aria-label="Preview navigation">
-        <li><a class="active" data-glyph-beam href="#">Home</a></li>
-        <li><a href="#">Materials</a></li>
-        <li><a href="#">Our Story</a></li>
-        <li><a href="#">Contact</a></li>
-      </ul>
-
-      <a class="proof-cta" data-glyph-beam href="#">Request a Quote</a>
+  <header class="proof-header">
+    <div class="proof-header-inner">
+      <p class="proof-title">Novello Stone — Chrome Beam Study</p>
+      <span class="proof-status">Preview branch · production unchanged</span>
+      <button class="replay-button" type="button">Replay sweep</button>
     </div>
   </header>
 
   <main class="proof-stage">
-    <p class="proof-label">Staging proof — production unchanged</p>
-    <h1 class="proof-glyph" data-glyph-beam>Stone, shaped with intent.</h1>
-    <p class="proof-note">
-      The proposed beam is a <strong>2px warm-bronze core</strong> with restrained
-      5px shoulders. It is clipped inside the real glyph and monogram shapes,
-      keeps the approved bronze beneath it, and never paints the black background.
-    </p>
+    <section class="proof-intro">
+      <p class="proof-eyebrow">Three synchronized examples</p>
+      <h1>Focused light, shaped by the lettering.</h1>
+      <p>
+        All three move at the same measured reading pace and use the same peak colour and brightness.
+        Only the concentration and contrast profile change. Watch the line bend naturally around each
+        bronze-gold letter, the N monogram and the button surface.
+      </p>
+    </section>
+
+    <div class="variant-list">
+      <section class="variant variant-a">
+        <div class="variant-heading">
+          <h2 class="variant-name">A · Razor reflection</h2>
+          <span class="variant-detail">1px core · 2.5px shoulders</span>
+        </div>
+        <div class="variant-content">
+          <div class="proof-brand">
+            <span class="proof-mark" data-glyph-beam>
+              <img src="img/novello-n-monogram.png" alt="Novello N monogram">
+              <span class="proof-mark-beam" aria-hidden="true"></span>
+            </span>
+            <span class="proof-wordmark proof-text" data-glyph-beam>NOVELLO STONE</span>
+          </div>
+          <p class="proof-headline proof-text" data-glyph-beam>Stone, shaped with intent.</p>
+          <a class="proof-cta" data-glyph-beam href="#">Request a Quote</a>
+        </div>
+      </section>
+
+      <section class="variant variant-b">
+        <div class="variant-heading">
+          <h2 class="variant-name">B · Tailored chrome</h2>
+          <span class="variant-detail">2px core · 4px shoulders</span>
+        </div>
+        <div class="variant-content">
+          <div class="proof-brand">
+            <span class="proof-mark" data-glyph-beam>
+              <img src="img/novello-n-monogram.png" alt="Novello N monogram">
+              <span class="proof-mark-beam" aria-hidden="true"></span>
+            </span>
+            <span class="proof-wordmark proof-text" data-glyph-beam>NOVELLO STONE</span>
+          </div>
+          <p class="proof-headline proof-text" data-glyph-beam>Stone, shaped with intent.</p>
+          <a class="proof-cta" data-glyph-beam href="#">Request a Quote</a>
+        </div>
+      </section>
+
+      <section class="variant variant-c">
+        <div class="variant-heading">
+          <h2 class="variant-name">C · Sculpted chrome</h2>
+          <span class="variant-detail">2px core · contrast edges</span>
+        </div>
+        <div class="variant-content">
+          <div class="proof-brand">
+            <span class="proof-mark" data-glyph-beam>
+              <img src="img/novello-n-monogram.png" alt="Novello N monogram">
+              <span class="proof-mark-beam" aria-hidden="true"></span>
+            </span>
+            <span class="proof-wordmark proof-text" data-glyph-beam>NOVELLO STONE</span>
+          </div>
+          <p class="proof-headline proof-text" data-glyph-beam>Stone, shaped with intent.</p>
+          <a class="proof-cta" data-glyph-beam href="#">Request a Quote</a>
+        </div>
+      </section>
+    </div>
   </main>
 
   <script>
     (function () {
       'use strict';
 
-      var SWEEP_MS = window.innerWidth <= 860 ? 5200 : 6400;
-      var INITIAL_DELAY_MS = 900;
-      var PAUSE_MS = 8500;
-      var TRAVEL_PADDING_PX = window.innerWidth <= 860 ? 120 : 190;
+      var SPEED_PX_PER_SECOND = window.innerWidth <= 860 ? 90 : 115;
+      var INITIAL_DELAY_MS = 750;
+      var PAUSE_MS = 6500;
+      var TRAVEL_PADDING_PX = window.innerWidth <= 860 ? 110 : 170;
       var targets = Array.prototype.slice.call(document.querySelectorAll('[data-glyph-beam]'));
       var cycleStart = null;
       var rafId = null;
       var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
+      function sweepDuration() {
+        var width = document.documentElement.clientWidth || window.innerWidth;
+        return ((width + TRAVEL_PADDING_PX * 2) / SPEED_PX_PER_SECOND) * 1000;
+      }
+
       function clearBeam() {
         targets.forEach(function (target) {
           target.style.setProperty('--beam-x', '-999px');
         });
+      }
+
+      function restart() {
+        cycleStart = performance.now() + INITIAL_DELAY_MS;
+        clearBeam();
+        if (rafId === null && !reduceMotion.matches) {
+          rafId = requestAnimationFrame(frame);
+        }
       }
 
       function frame(now) {
@@ -298,13 +432,14 @@
           return;
         }
 
-        var cycleMs = SWEEP_MS + PAUSE_MS;
+        var sweepMs = sweepDuration();
+        var cycleMs = sweepMs + PAUSE_MS;
         var cyclePosition = elapsed % cycleMs;
         var viewportWidth = document.documentElement.clientWidth || window.innerWidth;
-        var beamX = TRAVEL_PADDING_PX * 100;
+        var beamX = viewportWidth + TRAVEL_PADDING_PX * 10;
 
-        if (cyclePosition <= SWEEP_MS) {
-          var progress = cyclePosition / SWEEP_MS;
+        if (cyclePosition <= sweepMs) {
+          var progress = cyclePosition / sweepMs;
           beamX = -TRAVEL_PADDING_PX + progress * (viewportWidth + TRAVEL_PADDING_PX * 2);
         }
 
@@ -316,11 +451,7 @@
         rafId = requestAnimationFrame(frame);
       }
 
-      function start() {
-        if (rafId !== null || reduceMotion.matches) return;
-        cycleStart = null;
-        rafId = requestAnimationFrame(frame);
-      }
+      document.querySelector('.replay-button').addEventListener('click', restart);
 
       document.addEventListener('visibilitychange', function () {
         if (document.hidden) {
@@ -328,19 +459,20 @@
           rafId = null;
           clearBeam();
         } else {
-          start();
+          restart();
         }
       });
 
       if (typeof reduceMotion.addEventListener === 'function') {
         reduceMotion.addEventListener('change', function () {
           clearBeam();
-          if (!reduceMotion.matches) start();
+          if (!reduceMotion.matches) restart();
         });
       }
 
+      window.addEventListener('resize', restart, { passive: true });
       clearBeam();
-      start();
+      restart();
     })();
   </script>
 </body>
