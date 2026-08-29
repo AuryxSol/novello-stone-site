@@ -10,9 +10,10 @@
       --proof-bronze-gradient: linear-gradient(180deg,
         #D3B388 0%, #C3A37B 25%, #B4946E 48%,
         #A5855F 68%, #947656 84%, #7D6347 100%);
-      --beam-core: rgba(230, 199, 156, 0.44);
-      --beam-shoulder: rgba(211, 179, 136, 0.18);
-      --beam-shadow: rgba(71, 50, 31, 0.14);
+      --beam-core: rgba(235, 206, 165, 0.51);
+      --beam-shoulder: rgba(215, 183, 141, 0.22);
+      --beam-glow: rgba(200, 164, 119, 0.10);
+      --beam-shadow: rgba(71, 50, 31, 0.12);
     }
 
     * { box-sizing: border-box; }
@@ -121,10 +122,12 @@
     }
 
     .variant {
+      --beam-angle: 112deg;
       --core-half: 1px;
       --shoulder-near: 4px;
       --beam-outer: 7px;
-      --shadow-outer: 0px;
+      --glow-near: 10px;
+      --glow-outer: 15px;
       position: relative;
       min-height: 190px;
       padding: 1.6rem clamp(1.2rem, 3vw, 2.4rem);
@@ -134,22 +137,15 @@
     }
 
     .variant-a {
-      --core-half: 0.5px;
-      --shoulder-near: 2.5px;
-      --beam-outer: 4px;
+      --beam-angle: 105deg;
     }
 
     .variant-b {
-      --core-half: 1px;
-      --shoulder-near: 4px;
-      --beam-outer: 7px;
+      --beam-angle: 112deg;
     }
 
     .variant-c {
-      --core-half: 1px;
-      --shoulder-near: 5px;
-      --beam-outer: 9px;
-      --shadow-outer: 12px;
+      --beam-angle: 119deg;
     }
 
     .variant-heading {
@@ -211,27 +207,17 @@
     .proof-mark-beam,
     .proof-cta,
     .proof-text {
-      --beam-layer: linear-gradient(90deg,
-        transparent calc(var(--beam-x, -999px) - var(--beam-outer)),
-        var(--beam-shoulder) calc(var(--beam-x, -999px) - var(--shoulder-near)),
-        var(--beam-core) calc(var(--beam-x, -999px) - var(--core-half)),
-        var(--beam-core) calc(var(--beam-x, -999px) + var(--core-half)),
-        var(--beam-shoulder) calc(var(--beam-x, -999px) + var(--shoulder-near)),
-        transparent calc(var(--beam-x, -999px) + var(--beam-outer)));
-    }
-
-    .variant-c .proof-mark-beam,
-    .variant-c .proof-cta,
-    .variant-c .proof-text {
-      --beam-layer: linear-gradient(90deg,
-        transparent calc(var(--beam-x, -999px) - var(--shadow-outer)),
+      --beam-layer: linear-gradient(var(--beam-angle),
+        transparent calc(var(--beam-x, -999px) - var(--glow-outer)),
+        var(--beam-glow) calc(var(--beam-x, -999px) - var(--glow-near)),
         var(--beam-shadow) calc(var(--beam-x, -999px) - var(--beam-outer)),
         var(--beam-shoulder) calc(var(--beam-x, -999px) - var(--shoulder-near)),
         var(--beam-core) calc(var(--beam-x, -999px) - var(--core-half)),
         var(--beam-core) calc(var(--beam-x, -999px) + var(--core-half)),
         var(--beam-shoulder) calc(var(--beam-x, -999px) + var(--shoulder-near)),
         var(--beam-shadow) calc(var(--beam-x, -999px) + var(--beam-outer)),
-        transparent calc(var(--beam-x, -999px) + var(--shadow-outer)));
+        var(--beam-glow) calc(var(--beam-x, -999px) + var(--glow-near)),
+        transparent calc(var(--beam-x, -999px) + var(--glow-outer)));
     }
 
     .proof-mark-beam {
@@ -323,8 +309,8 @@
       <p class="proof-eyebrow">Three synchronized examples</p>
       <h1>Focused light, shaped by the lettering.</h1>
       <p>
-        All three move at the same measured reading pace and use the same peak colour and brightness.
-        Only the concentration and contrast profile change. Watch the line bend naturally around each
+        All three use the approved Tailored Chrome width, move 10% faster, and share the same brighter
+        core and restrained travelling glow. Only the slash angle changes. Watch the beam follow each
         bronze-gold letter, the N monogram and the button surface.
       </p>
     </section>
@@ -332,8 +318,8 @@
     <div class="variant-list">
       <section class="variant variant-a">
         <div class="variant-heading">
-          <h2 class="variant-name">A · Razor reflection</h2>
-          <span class="variant-detail">1px core · 2.5px shoulders</span>
+          <h2 class="variant-name">A · Gentle slash</h2>
+          <span class="variant-detail">15° · Tailored Chrome width</span>
         </div>
         <div class="variant-content">
           <div class="proof-brand">
@@ -350,8 +336,8 @@
 
       <section class="variant variant-b">
         <div class="variant-heading">
-          <h2 class="variant-name">B · Tailored chrome</h2>
-          <span class="variant-detail">2px core · 4px shoulders</span>
+          <h2 class="variant-name">B · Balanced slash</h2>
+          <span class="variant-detail">22° · Tailored Chrome width</span>
         </div>
         <div class="variant-content">
           <div class="proof-brand">
@@ -368,8 +354,8 @@
 
       <section class="variant variant-c">
         <div class="variant-heading">
-          <h2 class="variant-name">C · Sculpted chrome</h2>
-          <span class="variant-detail">2px core · contrast edges</span>
+          <h2 class="variant-name">C · Dramatic slash</h2>
+          <span class="variant-detail">29° · Tailored Chrome width</span>
         </div>
         <div class="variant-content">
           <div class="proof-brand">
@@ -390,7 +376,7 @@
     (function () {
       'use strict';
 
-      var SPEED_PX_PER_SECOND = window.innerWidth <= 860 ? 90 : 115;
+      var SPEED_PX_PER_SECOND = window.innerWidth <= 860 ? 99 : 126.5;
       var INITIAL_DELAY_MS = 750;
       var PAUSE_MS = 6500;
       var TRAVEL_PADDING_PX = window.innerWidth <= 860 ? 110 : 170;
