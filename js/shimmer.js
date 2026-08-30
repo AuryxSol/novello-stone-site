@@ -1,143 +1,123 @@
 /* ===========================================================
-   NOVELLO STONE — Bronze-gold shimmer controller
+   NOVELLO STONE — Single bronze-gold chrome beam
    ===========================================================
-   A single global "beam" (an invisible position, never a visible
-   layer) travels left-to-right across the viewport on a timer. Every
-   frame, every registered bronze-gold element measures its own real
-   distance from that beam (via getBoundingClientRect — actual screen
-   position, not DOM order) and writes the result as a 0–1
-   --shimmer-strength custom property on itself. The CSS in base.css /
-   home.css / materials.css / contact.css / story.css / launch-banner.css
-   only ever *reads* that variable (brightness/saturation/glow) — this
-   file is the only place that ever *writes* it, and it writes real
-   position-based values, so every element lights up in perfect
-   lockstep as the same beam passes its own spot on screen: left-side
-   elements first, centre next, right-side last — with no independent
-   per-element animations to fall out of sync.
-
-   Nothing here touches layout, text, colours, hover/focus states, or
-   button dimensions — it only ever sets one CSS custom property.
+   One invisible 15-degree light axis moves left-to-right through the
+   whole document. Its top edge leads and its lower edge arrives later,
+   so bronze details do not all illuminate at once. CSS clips the beam
+   to approved bronze-gold glyphs, masks, fills and strokes only.
    =========================================================== */
 
 (function () {
   'use strict';
 
-  // Every genuinely bronze-gold element the shimmer is allowed to touch.
-  // Centralised here as the single source of truth — add a selector to
-  // extend the effect, nothing else needs to change. Elements that are
-  // gold only in a hover/active state are included here too (so
-  // --shimmer-strength keeps updating on them continuously); the base.css
-  // rules then decide whether that value is actually *read* at rest or
-  // only inside :hover/.active — the resting appearance of those
-  // elements is never touched.
+  if (window.__novelloChromeBeamInitialized) return;
+  window.__novelloChromeBeamInitialized = true;
+
   var SELECTORS = [
-    '.brand',                        // NOVELLO STONE wordmark
-    '.brand-mark',                   // N monogram
-    '.hero h1 em',                   // hero highlighted word ("stone")
-    '.btn-primary',                  // gold "Request a Quote" button (hero)
-    '.btn-ghost-dark',                // ghost button — gold only on hover
-    '.btn-ghost',                     // ghost button — gold only on hover
-    '.nav-cta',                      // gold "Request a Quote" button (nav)
-    '.eyebrow',                      // eyebrow labels sitewide (+ their ::before line)
-    '.nav-links a',                   // nav links — gold only on hover/.active underline
-    '.nav-dropdown-menu a',           // materials dropdown links — gold on hover/.active
-    '.mobile-menu-cta',               // mobile menu "Request a Quote" link
-    '.hero-stats .stat-value',       // hero "01 / 02 / 03" numbers
-    '.pillar-link',                  // "How we work →" links (+ their → arrow)
-    '.step-mono',                    // process-step / care-step numbers
-    '.brand-divider',                 // footer divider — parent, for its flanking lines
-    '.brand-divider .diamond',       // footer divider accent
-    '.gold-divider',                  // premium horizontal divider
-    '.faq-item summary',              // FAQ row — parent, for its +/- icon
-    '.material-es-card .mono',       // material page etch/stain labels
-    '.material-link-card .mono',     // material hub link-card labels
-    '.contact-detail .mono-label',   // contact page detail labels
-    '.contact-detail a',              // contact page detail links — gold only on hover
-    '.contact-person .mono-label',   // contact page team-card labels
-    '.contact-person a',              // contact page team links — gold only on hover
-    '.vcard-link',                   // contact page vCard link
-    '.footer-grid a',                 // footer links — gold only on hover
-    '.footer-social a',               // footer social icons — gold only on hover
-    '.launch-card',                  // "Coming soon" notice — marked only so its
-                                      // ::before accent bar can inherit the value;
-                                      // the card body itself has no shimmer rule
-    '.launch-card-eyebrow',          // notice "COMING SOON" label
-    '.launch-card p strong',         // notice bolded date
-    '.launch-card a.launch-card-cta' // notice "GET IN TOUCH →" link
+    '.brand',
+    '.brand-mark-wrap',
+    '.hero h1 em',
+    '.btn-primary',
+    '.btn-primary .chrome-button-label',
+    '.btn-ghost-dark',
+    '.btn-ghost',
+    '.nav-cta',
+    '.nav-cta .chrome-button-label',
+    '.eyebrow',
+    '.nav-links a',
+    '.nav-dropdown-menu a',
+    '.mobile-menu-cta',
+    '.hero-stats .stat-value',
+    '.pillar-link',
+    '.step-mono',
+    '.brand-divider',
+    '.brand-divider .diamond',
+    '.gold-divider',
+    '.faq-item summary',
+    '.material-es-card .mono',
+    '.material-link-card .mono',
+    '.contact-detail .mono-label',
+    '.contact-detail a',
+    '.contact-person .mono-label',
+    '.contact-person a',
+    '.vcard-link',
+    '.footer-grid a',
+    '.footer-social a',
+    '.launch-card',
+    '.launch-card-eyebrow',
+    '.launch-card p strong',
+    '.launch-card a.launch-card-cta'
   ];
 
-  // --- Timing & geometry: explicit, breakpoint-aware, in real pixels ---
-  // (never viewport-relative — a narrow phone and a wide desktop each
-  // get a beam sized and timed for that class of screen).
-  var MOBILE_BREAKPOINT = 860; // matches the site's existing nav breakpoint
-
-  // A compact, softly feathered band inspired by the moving highlight in
-  // ChatGPT's "Thinking" status. It remains broad enough to read as warm
-  // bronze illumination, never the thin specular line used by Version B.
-  // The high-intensity centre now spans roughly 2–3 letters in the desktop
-  // wordmark reference (about 60–70px), with a proportionate mobile width.
-  var DESKTOP_BEAM_RADIUS_PX = 75;
-  var MOBILE_BEAM_RADIUS_PX = 55;
-
-  // Preserve the previously approved off-screen travel path independently
-  // from the narrower focus width, so the sweep's speed and timing do not
-  // change when the beam radius changes.
-  var DESKTOP_TRAVEL_PADDING_PX = 190;
-  var MOBILE_TRAVEL_PADDING_PX = 120;
-
-  // Smooth, steady travel matching the visual pace of the "Thinking"
-  // shimmer. The existing rest interval is intentionally preserved so the
-  // website stays elegant instead of looking permanently busy.
-  var DESKTOP_SWEEP_MS = 6400;
-  var MOBILE_SWEEP_MS = 5200;
-
-  var INITIAL_DELAY_MS = 900;
-  var PAUSE_MS = 8500;         // rest between sweeps, within the 7–10s spec range
-
-  var FALLOFF_POWER = 1.15;    // soft shoulders like the "Thinking" shimmer
-  var STATIC_REDUCED_MOTION_STRENGTH = '0.22'; // fixed, very subtle glow — no travelling motion
+  var MOBILE_BREAKPOINT = 860;
+  var VIEWPORT_CROSS_MS = 1500;
+  var ANGLE_FROM_VERTICAL_DEG = 15;
+  var VERTICAL_LAG_PER_PX = Math.tan(ANGLE_FROM_VERTICAL_DEG * Math.PI / 180);
+  var DESKTOP_TRAVEL_PADDING_PX = 170;
+  var MOBILE_TRAVEL_PADDING_PX = 110;
+  var EDGE_FADE_PX = 15;
+  var INITIAL_DELAY_MS = 750;
+  var PAUSE_MS = 6500;
 
   var reduceMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-
   var elements = [];
+  var frameState = [];
   var rafId = null;
   var cycleStart = null;
-  var tabHidden = false;
-
-  // Cached per-breakpoint config, refreshed on resize/orientation change
-  // rather than read every animation frame.
-  var beamRadiusPx = DESKTOP_BEAM_RADIUS_PX;
+  var tabHidden = document.hidden;
   var travelPaddingPx = DESKTOP_TRAVEL_PADDING_PX;
-  var sweepDurationMs = DESKTOP_SWEEP_MS;
+  var sweepDurationMs = VIEWPORT_CROSS_MS;
   var cycleMs = sweepDurationMs + PAUSE_MS;
+  var travelDistancePx = 0;
+  var refreshTimer = null;
 
-  function refreshBreakpointConfig() {
-    var isMobile = (window.innerWidth || document.documentElement.clientWidth) <= MOBILE_BREAKPOINT;
-    beamRadiusPx = isMobile ? MOBILE_BEAM_RADIUS_PX : DESKTOP_BEAM_RADIUS_PX;
-    travelPaddingPx = isMobile ? MOBILE_TRAVEL_PADDING_PX : DESKTOP_TRAVEL_PADDING_PX;
-    sweepDurationMs = isMobile ? MOBILE_SWEEP_MS : DESKTOP_SWEEP_MS;
+  function viewportWidth() {
+    return document.documentElement.clientWidth || window.innerWidth;
+  }
+
+  function documentHeight() {
+    return Math.max(
+      document.documentElement.scrollHeight,
+      document.body ? document.body.scrollHeight : 0
+    );
+  }
+
+  function refreshGeometry() {
+    var width = viewportWidth();
+    var height = documentHeight();
+    travelPaddingPx = width <= MOBILE_BREAKPOINT
+      ? MOBILE_TRAVEL_PADDING_PX
+      : DESKTOP_TRAVEL_PADDING_PX;
+
+    var pixelsPerSecond = width / (VIEWPORT_CROSS_MS / 1000);
+    travelDistancePx = width + travelPaddingPx * 2 + height * VERTICAL_LAG_PER_PX;
+    sweepDurationMs = (travelDistancePx / pixelsPerSecond) * 1000;
     cycleMs = sweepDurationMs + PAUSE_MS;
   }
 
   function collectElements() {
     var found = [];
     var seen = new Set();
+
     for (var i = 0; i < SELECTORS.length; i++) {
       var matches = document.querySelectorAll(SELECTORS[i]);
       for (var j = 0; j < matches.length; j++) {
-        if (!seen.has(matches[j])) {
-          seen.add(matches[j]);
-          found.push(matches[j]);
-          matches[j].setAttribute('data-bronze-shimmer', '');
-        }
+        if (seen.has(matches[j])) continue;
+        seen.add(matches[j]);
+        matches[j].setAttribute('data-bronze-shimmer', '');
+        found.push(matches[j]);
       }
     }
+
     elements = found;
+    frameState = new Array(elements.length);
+    refreshGeometry();
   }
 
-  function setAllStrength(value) {
+  function setAllStatic() {
     for (var i = 0; i < elements.length; i++) {
-      elements[i].style.setProperty('--shimmer-strength', value);
+      elements[i].style.setProperty('--shimmer-x', '-999px');
+      elements[i].style.setProperty('--shimmer-strength', '0');
     }
   }
 
@@ -146,106 +126,126 @@
       rafId = null;
       return;
     }
-    if (cycleStart === null) cycleStart = now + INITIAL_DELAY_MS;
 
+    if (cycleStart === null) cycleStart = now + INITIAL_DELAY_MS;
     var elapsed = now - cycleStart;
+
     if (elapsed < 0) {
       rafId = requestAnimationFrame(frame);
       return;
     }
 
-    var cyclePos = elapsed % cycleMs;
-    var vw = document.documentElement.clientWidth || window.innerWidth;
+    var cyclePosition = elapsed % cycleMs;
+    var beamTopX = viewportWidth() + travelPaddingPx * 10;
+    var active = cyclePosition <= sweepDurationMs;
 
-    var beamX;
-    if (cyclePos <= sweepDurationMs) {
-      var t = cyclePos / sweepDurationMs;
-      // Constant-speed left-to-right travel, matching the calm running motion
-      // of the ChatGPT "Thinking" shimmer. The beam starts and ends fully
-      // outside the viewport, so the visible movement never pops or resets.
-      // Travels along the previously approved off-screen path. Focus width
-      // is deliberately independent, so this geometry and speed stay fixed.
-      // Travels from (-padding) to (100vw + padding), i.e. fully off-screen
-      // left to fully off-screen right — the beam always fully
-      // clears the viewport before the pause begins.
-      beamX = -travelPaddingPx + t * (vw + travelPaddingPx * 2);
-    } else {
-      beamX = travelPaddingPx * 100; // parked far off-screen during the pause
+    if (active) {
+      var progress = cyclePosition / sweepDurationMs;
+      beamTopX = -travelPaddingPx + progress * travelDistancePx;
     }
 
+    var scrollY = window.scrollY || window.pageYOffset || 0;
+
+    /* Read every layout value first, then perform all style writes. */
     for (var i = 0; i < elements.length; i++) {
-      var el = elements[i];
-      var rect = el.getBoundingClientRect();
-      if (rect.width === 0 && rect.height === 0) continue; // not rendered (e.g. nav-cta hidden on mobile)
-      var centerX = rect.left + rect.width / 2;
-      var raw = 1 - Math.abs(centerX - beamX) / beamRadiusPx;
-      var strength = raw > 0 ? Math.pow(raw, FALLOFF_POWER) : 0;
-      el.style.setProperty('--shimmer-strength', strength.toFixed(3));
+      var rect = elements[i].getBoundingClientRect();
+      if (rect.width === 0 && rect.height === 0) {
+        frameState[i] = null;
+        continue;
+      }
+
+      var targetPageY = rect.top + scrollY + rect.height / 2;
+      var beamAtTargetY = beamTopX - targetPageY * VERTICAL_LAG_PER_PX;
+      var localX = beamAtTargetY - rect.left;
+      var outsideDistance = 0;
+
+      if (localX < 0) outsideDistance = -localX;
+      else if (localX > rect.width) outsideDistance = localX - rect.width;
+
+      frameState[i] = {
+        x: localX.toFixed(2) + 'px',
+        strength: active
+          ? Math.max(0, Math.min(1, 1 - outsideDistance / EDGE_FADE_PX)).toFixed(3)
+          : '0'
+      };
+    }
+
+    for (var k = 0; k < elements.length; k++) {
+      if (!frameState[k]) continue;
+      elements[k].style.setProperty('--shimmer-x', frameState[k].x);
+      elements[k].style.setProperty('--shimmer-strength', frameState[k].strength);
     }
 
     rafId = requestAnimationFrame(frame);
   }
 
   function start() {
-    if (rafId !== null) return; // never run two loops at once
+    if (rafId !== null || tabHidden || reduceMotionQuery.matches) return;
     cycleStart = null;
     rafId = requestAnimationFrame(frame);
   }
 
   function stop() {
-    if (rafId !== null) {
-      cancelAnimationFrame(rafId);
-      rafId = null;
-    }
+    if (rafId !== null) cancelAnimationFrame(rafId);
+    rafId = null;
   }
 
-  function applyReducedMotionState() {
-    if (reduceMotionQuery.matches) {
-      stop();
-      setAllStrength(STATIC_REDUCED_MOTION_STRENGTH);
-    } else {
-      setAllStrength('0');
-      start();
-    }
+  function restart() {
+    stop();
+    setAllStatic();
+    refreshGeometry();
+    start();
+  }
+
+  function applyMotionPreference() {
+    setAllStatic();
+    if (reduceMotionQuery.matches) stop();
+    else restart();
+  }
+
+  function scheduleRefresh() {
+    clearTimeout(refreshTimer);
+    refreshTimer = setTimeout(function () {
+      collectElements();
+      restart();
+    }, 150);
   }
 
   function init() {
-    refreshBreakpointConfig();
     collectElements();
-    applyReducedMotionState();
+    setAllStatic();
+    applyMotionPreference();
+
+    var observer = new MutationObserver(scheduleRefresh);
+    observer.observe(document.body, { childList: true, subtree: true });
   }
 
   document.addEventListener('visibilitychange', function () {
     tabHidden = document.hidden;
-    if (!tabHidden && !reduceMotionQuery.matches) {
-      cycleStart = null; // resync cleanly rather than jumping ahead by the hidden duration
-      start();
+    if (tabHidden) {
+      stop();
+      setAllStatic();
+    } else {
+      restart();
     }
   });
 
-  var recalcTimer = null;
-  function scheduleRecollect() {
-    clearTimeout(recalcTimer);
-    recalcTimer = setTimeout(function () {
-      refreshBreakpointConfig();
-      collectElements();
-    }, 150);
-  }
-  window.addEventListener('resize', scheduleRecollect);
-  window.addEventListener('orientationchange', scheduleRecollect);
-  window.addEventListener('load', collectElements);
+  window.addEventListener('resize', scheduleRefresh, { passive: true });
+  window.addEventListener('orientationchange', scheduleRefresh, { passive: true });
+  window.addEventListener('load', scheduleRefresh, { once: true });
+
   if (document.fonts && document.fonts.ready) {
-    document.fonts.ready.then(collectElements);
+    document.fonts.ready.then(scheduleRefresh);
   }
 
   if (typeof reduceMotionQuery.addEventListener === 'function') {
-    reduceMotionQuery.addEventListener('change', applyReducedMotionState);
+    reduceMotionQuery.addEventListener('change', applyMotionPreference);
   } else if (typeof reduceMotionQuery.addListener === 'function') {
-    reduceMotionQuery.addListener(applyReducedMotionState); // older Safari
+    reduceMotionQuery.addListener(applyMotionPreference);
   }
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
+    document.addEventListener('DOMContentLoaded', init, { once: true });
   } else {
     init();
   }

@@ -1,9 +1,15 @@
 // Shared nav + footer, injected on every page so they stay identical
 // without needing a build step. `data-page` on <body> sets active nav link.
 
-// Load the bronze-gold shimmer controller on every page from this one
-// shared file, so no individual HTML page needs its own <script> tag for
-// it. Guarded against double-injection in case layout.js ever runs twice.
+// Load the approved chrome-beam rendering layer and controller once on
+// every page. Keeping both in shared layout avoids page-by-page drift.
+if (!document.querySelector('link[href="css/chrome-beam.css"]')) {
+  const chromeBeamStyles = document.createElement('link');
+  chromeBeamStyles.rel = 'stylesheet';
+  chromeBeamStyles.href = 'css/chrome-beam.css';
+  document.head.appendChild(chromeBeamStyles);
+}
+
 if (!document.querySelector('script[src="js/shimmer.js"]')) {
   const shimmerScript = document.createElement('script');
   shimmerScript.src = 'js/shimmer.js';
@@ -18,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const navHTML = `
     <nav class="site-nav">
       <div class="container">
-        <a href="index.html" class="brand"><img src="img/novello-n-monogram.png" alt="" class="brand-mark">NOVELLO <span>STONE</span></a>
+        <a href="index.html" class="brand"><span class="brand-mark-wrap"><img src="img/novello-n-monogram.png" alt="" class="brand-mark"><span class="brand-mark-reflection" aria-hidden="true"></span></span>NOVELLO <span>STONE</span></a>
         <ul class="nav-links">
           <li><a href="index.html" class="${activePage === 'home' ? 'active' : ''}">Home</a></li>
           <li class="nav-dropdown">
@@ -34,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <li><a href="our-story.html" class="${activePage === 'our-story' ? 'active' : ''}">Our Story</a></li>
           <li><a href="contact.html" class="${activePage === 'contact' ? 'active' : ''}">Contact</a></li>
         </ul>
-        <a href="contact.html" class="nav-cta">Request a Quote</a>
+        <a href="contact.html" class="nav-cta"><span class="chrome-button-label">Request a Quote</span></a>
         <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">
           <span></span><span></span><span></span>
         </button>
