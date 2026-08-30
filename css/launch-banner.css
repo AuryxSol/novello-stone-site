@@ -13,7 +13,7 @@
   z-index: 250;
   max-width: 340px;
   background: linear-gradient(155deg, rgba(23,21,19,0.97), rgba(8,8,7,0.98));
-  border: 1px solid rgba(180, 148, 110, 0.35);
+  border: 1px solid rgba(185, 151, 95, 0.35);
   border-radius: 10px;
   padding: 1.1rem 1.2rem 1.1rem 1.3rem;
   box-shadow: 0 16px 40px rgba(0,0,0,0.45);
@@ -33,13 +33,13 @@
   position: absolute;
   left: 0; top: 10px; bottom: 10px;
   width: 3px;
-  background: linear-gradient(180deg, var(--gold-highlight, #D3B388), var(--gold-shadow, #7D6347));
+  background: linear-gradient(180deg, var(--gold-highlight, #F1D9B7), var(--gold-shadow, #3F2E1B));
   border-radius: 2px;
   /* Inherits --shimmer-strength from .launch-card (marked purely so
      this bar can read it — the card itself has no shimmer rule of its
      own, so its charcoal body is untouched). */
   filter: brightness(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-brightness-lift, 0.18))) saturate(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-saturation-lift, 0.11)));
-  box-shadow: 0 0 calc(var(--shimmer-strength, 0) * 7px) rgba(var(--shimmer-highlight-rgb, 230, 199, 156), calc(var(--shimmer-strength, 0) * 0.50));
+  box-shadow: 0 0 calc(var(--shimmer-strength, 0) * 7px) rgba(var(--shimmer-highlight-rgb, 241, 217, 183), calc(var(--shimmer-strength, 0) * 0.50));
 }
 
 .launch-card-close {
@@ -62,11 +62,11 @@
   font-size: 0.68rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--gold-base, #A5855F);
+  color: var(--gold-base, #A5833F);
   display: block;
   margin-bottom: 0.5em;
   filter: brightness(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-brightness-lift, 0.18))) saturate(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-saturation-lift, 0.11)));
-  text-shadow: 0 0 calc(var(--shimmer-strength, 0) * 9px) rgba(var(--shimmer-highlight-rgb, 230, 199, 156), calc(var(--shimmer-strength, 0) * 0.60));
+  text-shadow: 0 0 calc(var(--shimmer-strength, 0) * 9px) rgba(var(--shimmer-highlight-rgb, 241, 217, 183), calc(var(--shimmer-strength, 0) * 0.60));
 }
 
 .launch-card p {
@@ -78,10 +78,10 @@
   padding-right: 0.6em;
 }
 .launch-card p strong {
-  color: var(--gold-mid, #B4946E);
+  color: var(--gold-mid, #B9975F);
   font-weight: 600;
   filter: brightness(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-brightness-lift, 0.18))) saturate(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-saturation-lift, 0.11)));
-  text-shadow: 0 0 calc(var(--shimmer-strength, 0) * 9px) rgba(var(--shimmer-highlight-rgb, 230, 199, 156), calc(var(--shimmer-strength, 0) * 0.60));
+  text-shadow: 0 0 calc(var(--shimmer-strength, 0) * 9px) rgba(var(--shimmer-highlight-rgb, 241, 217, 183), calc(var(--shimmer-strength, 0) * 0.60));
 }
 
 .launch-card a.launch-card-cta {
@@ -89,16 +89,16 @@
   font-size: 0.75rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--gold-base, #A5855F);
+  color: var(--gold-base, #A5833F);
   text-decoration: none;
   display: inline-flex;
   align-items: center;
   gap: 0.4em;
   transition: color 0.2s ease;
   filter: brightness(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-brightness-lift, 0.18))) saturate(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-saturation-lift, 0.11)));
-  text-shadow: 0 0 calc(var(--shimmer-strength, 0) * 9px) rgba(var(--shimmer-highlight-rgb, 230, 199, 156), calc(var(--shimmer-strength, 0) * 0.60));
+  text-shadow: 0 0 calc(var(--shimmer-strength, 0) * 9px) rgba(var(--shimmer-highlight-rgb, 241, 217, 183), calc(var(--shimmer-strength, 0) * 0.60));
 }
-.launch-card a.launch-card-cta:hover { color: var(--gold-highlight, #D3B388); }
+.launch-card a.launch-card-cta:hover { color: var(--gold-highlight, #F1D9B7); }
 .launch-card a.launch-card-cta::after { content: '\2192'; transition: transform 0.2s; }
 .launch-card a.launch-card-cta:hover::after { transform: translateX(3px); }
 

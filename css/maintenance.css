@@ -40,7 +40,7 @@
   transition: border-color 0.25s ease, box-shadow 0.25s ease;
 }
 .scenario-card:hover {
-  border-color: rgba(180, 148, 110, 0.46);
+  border-color: rgba(185, 151, 95, 0.46);
   box-shadow: 0 18px 50px rgba(0,0,0,0.34), 0 0 26px var(--gold-glow);
 }
 .scenario-card .mono { color: var(--gold); font-size: 0.78rem; }

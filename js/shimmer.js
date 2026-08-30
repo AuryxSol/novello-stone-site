@@ -13,36 +13,18 @@
   if (window.__novelloChromeBeamInitialized) return;
   window.__novelloChromeBeamInitialized = true;
 
+  /* Strict visual allow-list approved from the August review frames.
+     Small labels, numbers, contact details, arrows, dividers and footer
+     accents deliberately stay static even when they use a bronze colour. */
   var SELECTORS = [
     '.brand',
     '.brand-mark-wrap',
     '.hero h1 em',
+    '.nav-links > li > a.active',
     '.btn-primary',
     '.btn-primary .chrome-button-label',
-    '.btn-ghost-dark',
-    '.btn-ghost',
     '.nav-cta',
     '.nav-cta .chrome-button-label',
-    '.eyebrow',
-    '.nav-links a',
-    '.nav-dropdown-menu a',
-    '.mobile-menu-cta',
-    '.hero-stats .stat-value',
-    '.pillar-link',
-    '.step-mono',
-    '.brand-divider',
-    '.brand-divider .diamond',
-    '.gold-divider',
-    '.faq-item summary',
-    '.material-es-card .mono',
-    '.material-link-card .mono',
-    '.contact-detail .mono-label',
-    '.contact-detail a',
-    '.contact-person .mono-label',
-    '.contact-person a',
-    '.vcard-link',
-    '.footer-grid a',
-    '.footer-social a',
     '.launch-card',
     '.launch-card-eyebrow',
     '.launch-card p strong',
@@ -50,7 +32,9 @@
   ];
 
   var MOBILE_BREAKPOINT = 860;
-  var VIEWPORT_CROSS_MS = 1500;
+  /* Slow enough to read the beam travelling through individual glyphs,
+     while still clearing the viewport like a premium badge reflection. */
+  var VIEWPORT_CROSS_MS = 3200;
   var ANGLE_FROM_VERTICAL_DEG = 15;
   var VERTICAL_LAG_PER_PX = Math.tan(ANGLE_FROM_VERTICAL_DEG * Math.PI / 180);
   var DESKTOP_TRAVEL_PADDING_PX = 170;
