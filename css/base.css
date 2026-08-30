@@ -90,10 +90,11 @@
   --space-6: 6.5rem;
 
   /* --- Layout --- */
-  /* Fluid on large screens: holds at 1180px up to laptop widths, then
-     grows gently toward 1400px on wide desktop/ultrawide monitors so the
-     page doesn't read as a narrow column stranded in empty space. */
-  --max-width: clamp(1180px, 74vw + 260px, 1400px);
+  /* The page canvas is genuinely fluid. Responsive gutters preserve a
+     deliberate edge on phones and tablets, then grow gently on desktop
+     without trapping the composition inside a fixed-width centre column. */
+  --max-width: none;
+  --container-gutter: clamp(1rem, 4vw, 5rem);
   --radius: 2px; /* near-zero radius — precision, not softness */
 }
 
@@ -182,9 +183,10 @@ a { color: inherit; text-decoration: none; }
 }
 
 .container {
+  width: 100%;
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: 0 var(--space-3);
+  padding: 0 var(--container-gutter);
 }
 
 section { padding: var(--space-6) 0; }

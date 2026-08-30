@@ -307,7 +307,9 @@
   mask-size: contain;
   opacity: 1;
   mix-blend-mode: screen;
-  filter: brightness(1.28) contrast(1.08);
+  /* Beam-only lift: transparent between passes, but unmistakable when the
+     shared strip crosses the narrow alpha silhouette of the N. */
+  filter: brightness(1.42) contrast(1.10);
 }
 
 /* Gold button fill, bright edge pickup, and recessed engraved label. */

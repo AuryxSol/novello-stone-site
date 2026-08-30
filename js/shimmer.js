@@ -18,7 +18,7 @@
      accents deliberately stay static even when they use a bronze colour. */
   var SELECTORS = [
     '.brand',
-    '.brand-mark-wrap',
+    '.brand > span:not(.brand-mark-wrap)',
     '.hero h1 em',
     '.nav-links > li > a.active',
     '.btn-primary',
@@ -32,9 +32,12 @@
   ];
 
   var MOBILE_BREAKPOINT = 860;
-  /* Slow enough to read the beam travelling through individual glyphs,
-     while still clearing the viewport like a premium badge reflection. */
-  var VIEWPORT_CROSS_MS = 3200;
+  /* Keep the approved phone/tablet pace, then lengthen the crossing time
+     progressively as the viewport grows. A 1920px display now takes 4.4s
+     across its visible width instead of accelerating to 600px/s. */
+  var COMPACT_VIEWPORT_CROSS_MS = 3200;
+  var WIDE_VIEWPORT_CROSS_MS = 4400;
+  var WIDE_VIEWPORT_REFERENCE_PX = 1920;
   var ANGLE_FROM_VERTICAL_DEG = 15;
   var VERTICAL_LAG_PER_PX = Math.tan(ANGLE_FROM_VERTICAL_DEG * Math.PI / 180);
   var DESKTOP_TRAVEL_PADDING_PX = 170;
@@ -50,7 +53,7 @@
   var cycleStart = null;
   var tabHidden = document.hidden;
   var travelPaddingPx = DESKTOP_TRAVEL_PADDING_PX;
-  var sweepDurationMs = VIEWPORT_CROSS_MS;
+  var sweepDurationMs = COMPACT_VIEWPORT_CROSS_MS;
   var cycleMs = sweepDurationMs + PAUSE_MS;
   var travelDistancePx = 0;
   var refreshTimer = null;
@@ -66,6 +69,19 @@
     );
   }
 
+  function viewportCrossDuration(width) {
+    if (width <= MOBILE_BREAKPOINT) return COMPACT_VIEWPORT_CROSS_MS;
+
+    var responsiveRange = WIDE_VIEWPORT_REFERENCE_PX - MOBILE_BREAKPOINT;
+    var widthProgress = Math.max(0, Math.min(
+      1,
+      (width - MOBILE_BREAKPOINT) / responsiveRange
+    ));
+
+    return COMPACT_VIEWPORT_CROSS_MS
+      + (WIDE_VIEWPORT_CROSS_MS - COMPACT_VIEWPORT_CROSS_MS) * widthProgress;
+  }
+
   function refreshGeometry() {
     var width = viewportWidth();
     var height = documentHeight();
@@ -73,7 +89,8 @@
       ? MOBILE_TRAVEL_PADDING_PX
       : DESKTOP_TRAVEL_PADDING_PX;
 
-    var pixelsPerSecond = width / (VIEWPORT_CROSS_MS / 1000);
+    var viewportCrossMs = viewportCrossDuration(width);
+    var pixelsPerSecond = width / (viewportCrossMs / 1000);
     travelDistancePx = width + travelPaddingPx * 2 + height * VERTICAL_LAG_PER_PX;
     sweepDurationMs = (travelDistancePx / pixelsPerSecond) * 1000;
     cycleMs = sweepDurationMs + PAUSE_MS;
@@ -91,6 +108,16 @@
         matches[j].setAttribute('data-bronze-shimmer', '');
         found.push(matches[j]);
       }
+    }
+
+    /* The N is a nested alpha mask, not a second independent light target.
+       It inherits the brand's beam coordinate so one uninterrupted strip
+       enters the monogram and continues through the complete wordmark. */
+    var brandMarks = document.querySelectorAll(
+      '.brand[data-bronze-shimmer] .brand-mark-wrap'
+    );
+    for (var k = 0; k < brandMarks.length; k++) {
+      brandMarks[k].setAttribute('data-bronze-shimmer', '');
     }
 
     elements = found;
