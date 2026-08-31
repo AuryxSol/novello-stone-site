@@ -62,7 +62,7 @@
   font-size: 0.68rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--gold-base, #A5833F);
+  color: var(--gold-base, #A58B3F);
   display: block;
   margin-bottom: 0.5em;
   filter: brightness(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-brightness-lift, 0.18))) saturate(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-saturation-lift, 0.11)));
@@ -89,7 +89,7 @@
   font-size: 0.75rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--gold-base, #A5833F);
+  color: var(--gold-base, #A58B3F);
   text-decoration: none;
   display: inline-flex;
   align-items: center;

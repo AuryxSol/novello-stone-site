@@ -12,7 +12,7 @@
      one authoritative palette while the beam keeps its strict allow-list. */
   --novello-bronze-shadow: #3F2E1B;
   --novello-bronze-deep: #8C6437;
-  --novello-bronze-base: #A5833F;
+  --novello-bronze-base: #A58B3F;
   --novello-bronze-mid: #B9975F;
   --novello-bronze-light: #D2B38C;
   --novello-bronze-highlight: #F1D9B7;
@@ -20,7 +20,30 @@
     #F1D9B7 0%,
     #D2B38C 18%,
     #B9975F 42%,
-    #A5833F 60%,
+    #A58B3F 60%,
+    #8C6437 82%,
+    #3F2E1B 100%);
+  /* A permanent satin-polished light face. The travelling beam is layered
+     above this, so bronze-gold elements still read as metal between passes. */
+  --novello-bronze-resting-specular: linear-gradient(180deg,
+    rgba(255, 250, 238, 0.72) 0%,
+    rgba(241, 217, 183, 0.34) 10%,
+    rgba(241, 217, 183, 0.08) 25%,
+    transparent 43%,
+    rgba(63, 46, 27, 0.10) 72%,
+    rgba(20, 12, 8, 0.38) 100%);
+  --novello-bronze-line-gradient: linear-gradient(90deg,
+    #F1D9B7 0%,
+    #D2B38C 18%,
+    #B9975F 42%,
+    #A58B3F 60%,
+    #8C6437 82%,
+    #3F2E1B 100%);
+  --novello-bronze-line-gradient-vertical: linear-gradient(180deg,
+    #F1D9B7 0%,
+    #D2B38C 18%,
+    #B9975F 42%,
+    #A58B3F 60%,
     #8C6437 82%,
     #3F2E1B 100%);
   --gold-border: rgba(185, 151, 95, 0.32);
@@ -79,12 +102,16 @@
   .placeholder-label .tag,
   .mobile-menu a.mobile-menu-cta,
   .value-card .mono,
-  .about-stat .stat-value,
+  .about-stat .stat-num,
   .how-we-work-step .step-mono,
   .scenario-card .mono,
-  .visit-callout strong
+  .visit-callout strong,
+  .service-list li::before,
+  .faq-item summary::after
 ) {
-  background-image: var(--novello-bronze-metallic-gradient);
+  background-image:
+    var(--novello-bronze-resting-specular),
+    var(--novello-bronze-metallic-gradient);
   background-repeat: no-repeat;
   -webkit-background-clip: text;
   background-clip: text;
@@ -92,6 +119,40 @@
   color: transparent;
   text-shadow: none;
   filter: drop-shadow(0 0 0.45px rgba(20, 12, 8, 0.58));
+}
+
+/* Decorative bronze rules use the same six master swatches as the N.
+   Structural card borders remain restrained hairlines; only intentional
+   brand accents receive the full polished-metal colour travel. */
+:is(
+  .eyebrow::before,
+  .brand-divider::before,
+  .brand-divider::after,
+  .hr,
+  .gold-divider,
+  .scroll-progress,
+  .nav-links a.active::after
+) {
+  background: var(--novello-bronze-line-gradient);
+}
+
+.brand-divider .diamond {
+  background: var(--novello-bronze-line-gradient);
+}
+
+:is(
+  .process-step,
+  .story-process-step,
+  .story-value,
+  .how-we-work-step,
+  .material-care-item,
+  .contact-person,
+  .story-fleet-quote,
+  .fleet-story,
+  .note-box
+) {
+  border-left-color: transparent;
+  border-image: var(--novello-bronze-line-gradient-vertical) 1;
 }
 
 [data-bronze-shimmer] {
@@ -192,6 +253,7 @@
   background-image:
     var(--novello-text-sparkles),
     var(--novello-specular-reflection),
+    var(--novello-bronze-resting-specular),
     var(--novello-bronze-badge-face);
   -webkit-background-clip: text;
   background-clip: text;
@@ -243,6 +305,7 @@
   background-image:
     var(--novello-text-sparkles),
     var(--novello-specular-reflection),
+    var(--novello-bronze-resting-specular),
     var(--novello-bronze-badge-face);
   -webkit-background-clip: text;
   background-clip: text;
@@ -323,7 +386,7 @@
       #F1D9B7 0%,
       #D2B38C 18%,
       #B9975F 42%,
-      #A5833F 60%,
+      #A58B3F 60%,
       #8C6437 82%,
       #3F2E1B 100%);
   border-color: #3F2E1B;

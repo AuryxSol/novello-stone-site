@@ -29,7 +29,7 @@
      stay defined as aliases so every existing component remains in sync. */
   --novello-bronze-shadow:    #3F2E1B;   /* darkest bronze — deepest shading */
   --novello-bronze-deep:      #8C6437;
-  --novello-bronze-base:      #A5833F;   /* solid fallback — small UI, icons, borders */
+  --novello-bronze-base:      #A58B3F;   /* solid fallback — small UI, icons, borders */
   --novello-bronze-mid:       #B9975F;   /* hover-lighten, active states */
   --novello-bronze-light:     #D2B38C;
   --novello-bronze-highlight: #F1D9B7;   /* satin metallic highlight — resting state only */
@@ -37,7 +37,7 @@
      hero highlighted word, and any future gradient-text use) — one
      shared gradient so nothing drifts to a different tonal curve. */
   --novello-bronze-metallic-gradient: linear-gradient(180deg,
-    #F1D9B7 0%, #D2B38C 18%, #B9975F 42%, #A5833F 60%, #8C6437 82%, #3F2E1B 100%);
+    #F1D9B7 0%, #D2B38C 18%, #B9975F 42%, #A58B3F 60%, #8C6437 82%, #3F2E1B 100%);
 
   --gold-shadow:    var(--novello-bronze-shadow);
   --gold-deep:      var(--novello-bronze-deep);
@@ -215,7 +215,7 @@ section { padding: var(--space-6) 0; }
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #8C6437 0%, #A5833F 28%, #D2B38C 52%, #B9975F 70%, #8C6437 100%);
+  background: linear-gradient(135deg, #8C6437 0%, #A58B3F 28%, #D2B38C 52%, #B9975F 70%, #8C6437 100%);
   border: 1px solid #B9975F;
   color: #0B0A09;
   box-shadow: 0 8px 24px var(--gold-glow), 0 0 calc(var(--shimmer-strength, 0) * 15px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.55));
