@@ -29,15 +29,15 @@
   box-shadow: 0 24px 70px rgba(0, 0, 0, 0.28), 0 0 34px rgba(185, 151, 95, 0.04);
 }
 .story-name-block::after {
-  content: 'N';
+  content: '';
   position: absolute;
   z-index: -1;
-  right: -0.04em;
-  bottom: -0.48em;
-  font-family: var(--font-wordmark);
-  font-size: clamp(16rem, 31vw, 38rem);
-  line-height: 1;
-  color: rgba(185, 151, 95, 0.035);
+  right: -3%;
+  bottom: -22%;
+  width: clamp(16rem, 31vw, 38rem);
+  aspect-ratio: 1;
+  background: url('../img/novello-n-monogram.png') center / contain no-repeat;
+  opacity: 0.035;
   pointer-events: none;
 }
 .story-name-heading {
