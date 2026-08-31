@@ -7,14 +7,117 @@
 
 @import url('./about.css');
 
-.story-name-block {
-  max-width: 640px;
-  margin: var(--space-5) auto 0;
-  padding-top: var(--space-4);
-  border-top: 1px solid var(--hairline);
+/* ===== WHY NOVELLO? — origin story ===== */
+.story-name-shell {
+  margin-top: var(--space-6);
 }
-.story-name-block h2 { margin: var(--space-2) 0 var(--space-2); }
-.story-name-block p { color: var(--travertine); }
+.story-name-block {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: minmax(240px, 0.68fr) minmax(0, 1fr);
+  gap: clamp(2.5rem, 6vw, 7rem);
+  max-width: none;
+  margin: 0;
+  padding: clamp(2.5rem, 5vw, 5.5rem);
+  border: 1px solid var(--hairline);
+  border-radius: 6px;
+  background:
+    linear-gradient(135deg, rgba(34, 29, 23, 0.96), rgba(8, 8, 7, 0.98)),
+    var(--basalt-soft);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.28), 0 0 34px rgba(185, 151, 95, 0.04);
+}
+.story-name-block::after {
+  content: 'N';
+  position: absolute;
+  z-index: -1;
+  right: -0.04em;
+  bottom: -0.48em;
+  font-family: var(--font-wordmark);
+  font-size: clamp(16rem, 31vw, 38rem);
+  line-height: 1;
+  color: rgba(185, 151, 95, 0.035);
+  pointer-events: none;
+}
+.story-name-heading {
+  max-width: 480px;
+}
+.story-name-heading h2 {
+  margin: var(--space-2) 0 var(--space-3);
+  font-size: clamp(2.7rem, 5.5vw, 5.4rem);
+  line-height: 0.96;
+}
+.story-name-intro {
+  max-width: 440px;
+  font-family: var(--font-headline);
+  font-size: clamp(1.3rem, 2vw, 1.75rem);
+  font-style: italic;
+  line-height: 1.25;
+  color: var(--gold-light);
+}
+.story-name-copy {
+  max-width: 720px;
+}
+.story-name-copy p {
+  color: var(--text-body);
+  line-height: 1.55;
+}
+.story-name-copy p + p {
+  margin-top: 1.15rem;
+}
+.story-name-quote {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: clamp(1.75rem, 3vw, 2.75rem) 0;
+  border-top: 1px solid var(--hairline);
+  border-bottom: 1px solid var(--hairline);
+  font-family: var(--font-headline);
+  font-size: clamp(1.55rem, 3vw, 2.55rem);
+  font-style: italic;
+  line-height: 1.2;
+  color: var(--limestone);
+}
+.story-name-path {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(1.5rem, 4vw, 4rem);
+}
+.story-name-stage {
+  padding-top: var(--space-2);
+  border-top: 1px solid rgba(185, 151, 95, 0.28);
+}
+.story-name-stage .step-mono {
+  display: block;
+  margin-bottom: 0.7rem;
+  color: var(--gold);
+  font-size: 0.76rem;
+}
+.story-name-stage h3 {
+  margin-bottom: 0.65rem;
+  font-size: 1rem;
+}
+.story-name-stage p {
+  max-width: 34rem;
+  color: var(--travertine);
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+@media (max-width: 860px) {
+  .story-name-shell { margin-top: var(--space-5); }
+  .story-name-block {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+  .story-name-heading,
+  .story-name-copy { max-width: 680px; }
+}
+@media (max-width: 680px) {
+  .story-name-path { grid-template-columns: 1fr; }
+  .story-name-block { border-radius: 3px; }
+}
 
 /* ===== INTRO TYPOGRAPHY & TEXT / IMAGE RHYTHM ===== */
 /* The page reuses the About layout primitives, then narrows and tightens
