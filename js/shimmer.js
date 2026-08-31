@@ -18,6 +18,7 @@
      accents deliberately stay static even when they use a bronze colour. */
   var SELECTORS = [
     '.brand',
+    '.brand-mark-wrap',
     '.brand > span:not(.brand-mark-wrap)',
     '.hero h1 em',
     '.nav-links > li > a.active',
@@ -32,11 +33,11 @@
   ];
 
   var MOBILE_BREAKPOINT = 860;
-  /* Keep the approved phone/tablet pace, then lengthen the crossing time
-     progressively as the viewport grows. A 1920px display now takes 4.4s
-     across its visible width instead of accelerating to 600px/s. */
-  var COMPACT_VIEWPORT_CROSS_MS = 3200;
-  var WIDE_VIEWPORT_CROSS_MS = 4400;
+  /* Restore the approved slow luxury cadence. Phone/tablet views take 5.2s
+     across the visible width and large displays progressively lengthen to
+     6.4s, preserving one calm beam speed at every responsive breakpoint. */
+  var COMPACT_VIEWPORT_CROSS_MS = 5200;
+  var WIDE_VIEWPORT_CROSS_MS = 6400;
   var WIDE_VIEWPORT_REFERENCE_PX = 1920;
   var ANGLE_FROM_VERTICAL_DEG = 15;
   var VERTICAL_LAG_PER_PX = Math.tan(ANGLE_FROM_VERTICAL_DEG * Math.PI / 180);
@@ -110,16 +111,9 @@
       }
     }
 
-    /* The N is a nested alpha mask, not a second independent light target.
-       It inherits the brand's beam coordinate so one uninterrupted strip
-       enters the monogram and continues through the complete wordmark. */
-    var brandMarks = document.querySelectorAll(
-      '.brand[data-bronze-shimmer] .brand-mark-wrap'
-    );
-    for (var k = 0; k < brandMarks.length; k++) {
-      brandMarks[k].setAttribute('data-bronze-shimmer', '');
-    }
-
+    /* The N remains part of the same global beam, but is measured as its own
+       alpha-masked surface. This gives the reflection a correct local X
+       coordinate instead of inheriting the wider wordmark coordinate. */
     elements = found;
     frameState = new Array(elements.length);
     refreshGeometry();
