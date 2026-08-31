@@ -5,6 +5,8 @@
    as part of the family, not a bolted-on new template.
    =========================================================== */
 
+@import url('./about.css');
+
 .story-name-block {
   max-width: 640px;
   margin: var(--space-5) auto 0;
@@ -13,8 +15,6 @@
 }
 .story-name-block h2 { margin: var(--space-2) 0 var(--space-2); }
 .story-name-block p { color: var(--travertine); }
-
-@import url('./about.css');
 
 /* ===== INTRO TYPOGRAPHY & TEXT / IMAGE RHYTHM ===== */
 /* The page reuses the About layout primitives, then narrows and tightens
