@@ -177,18 +177,18 @@
   --novello-shadow-alpha: 0.08;
 }
 
-/* The N has only about 28 visible pixels inside its 46px image box. Its
-   independent core is deliberately broader so the strip can be followed
-   across the actual alpha silhouette instead of vanishing between frames. */
+/* The enlarged N has a narrow visible alpha silhouette inside its image box.
+   Give it a broader, direct metallic strip so the same brand coordinate is
+   unmistakable across N -> NOVELLO -> STONE without creating a second beam. */
 .brand-mark-wrap[data-bronze-shimmer] {
-  --novello-hot-core-half: 3.2px;
-  --novello-core-half: 7px;
-  --novello-shoulder-near: 12.5px;
-  --novello-beam-outer: 17.5px;
-  --novello-glow-near: 20px;
-  --novello-glow-outer: 23px;
-  --novello-core-alpha: 0.96;
-  --novello-shoulder-alpha: 0.46;
+  --novello-hot-core-half: 4.2px;
+  --novello-core-half: 9.5px;
+  --novello-shoulder-near: 16px;
+  --novello-beam-outer: 21px;
+  --novello-glow-near: 24px;
+  --novello-glow-outer: 28px;
+  --novello-core-alpha: 0.98;
+  --novello-shoulder-alpha: 0.52;
 }
 
 /* Raised metallic lettering that is bronze at rest. */
@@ -265,8 +265,8 @@
 .brand .brand-mark-wrap {
   position: relative;
   display: inline-block;
-  width: 52px;
-  height: 52px;
+  width: 60px;
+  height: 60px;
   flex-shrink: 0;
   background: none;
   -webkit-text-fill-color: initial;
@@ -288,7 +288,19 @@
   inset: 0;
   pointer-events: none;
   z-index: 2;
-  background-image: var(--novello-specular-reflection);
+  background-image: linear-gradient(
+    var(--novello-specular-angle),
+    transparent calc(var(--shimmer-x) - 28px),
+    rgba(210, 174, 130, calc(var(--shimmer-strength) * 0.16)) calc(var(--shimmer-x) - 22px),
+    rgba(235, 203, 161, calc(var(--shimmer-strength) * 0.38)) calc(var(--shimmer-x) - 16px),
+    rgba(255, 239, 215, calc(var(--shimmer-strength) * 0.78)) calc(var(--shimmer-x) - 8px),
+    rgba(255, 255, 252, calc(var(--shimmer-strength) * 1)) calc(var(--shimmer-x) - 3.2px),
+    rgba(255, 255, 252, calc(var(--shimmer-strength) * 1)) calc(var(--shimmer-x) + 3.2px),
+    rgba(255, 239, 215, calc(var(--shimmer-strength) * 0.78)) calc(var(--shimmer-x) + 8px),
+    rgba(235, 203, 161, calc(var(--shimmer-strength) * 0.38)) calc(var(--shimmer-x) + 16px),
+    rgba(210, 174, 130, calc(var(--shimmer-strength) * 0.16)) calc(var(--shimmer-x) + 22px),
+    transparent calc(var(--shimmer-x) + 28px)
+  );
   background-repeat: no-repeat;
   background-position: center;
   background-size: 100% 100%;
@@ -306,10 +318,10 @@
   mask-position: center;
   mask-size: contain;
   opacity: 1;
-  mix-blend-mode: screen;
-  /* Beam-only lift: transparent between passes, but unmistakable when the
-     shared strip crosses the narrow alpha silhouette of the N. */
-  filter: brightness(1.42) contrast(1.10);
+  mix-blend-mode: normal;
+  /* Direct warm-white metallic reflection: fully transparent between passes,
+     but unmistakable when the shared strip crosses the N's alpha silhouette. */
+  filter: none;
 }
 
 /* Gold button fill, bright edge pickup, and recessed engraved label. */
@@ -433,8 +445,8 @@
   }
 
   .brand .brand-mark-wrap {
-    width: 48px;
-    height: 48px;
+    width: 55px;
+    height: 55px;
   }
 }
 
