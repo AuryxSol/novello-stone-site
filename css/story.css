@@ -14,6 +14,50 @@
 .story-name-block h2 { margin: var(--space-2) 0 var(--space-2); }
 .story-name-block p { color: var(--travertine); }
 
+@import url('./about.css');
+
+/* ===== INTRO TYPOGRAPHY & TEXT / IMAGE RHYTHM ===== */
+/* The page reuses the About layout primitives, then narrows and tightens
+   the story copy so it reads as an editorial introduction. */
+.about-intro > .container:first-child {
+  grid-template-columns: minmax(0, 0.95fr) minmax(360px, 0.85fr);
+  gap: clamp(3rem, 6vw, 6rem);
+  align-items: start;
+}
+.about-intro > .container:first-child > div:first-child {
+  max-width: 680px;
+}
+.about-intro > .container:first-child p {
+  line-height: 1.44;
+}
+.about-intro > .container:first-child > div:first-child > p + p {
+  margin-top: 0.8rem;
+}
+.about-intro > .container:first-child .lead {
+  font-size: 1.08rem;
+  line-height: 1.42;
+  margin-bottom: 0;
+}
+.about-intro > .container:nth-child(2) {
+  display: block;
+}
+.about-visual {
+  margin-top: 0.5rem;
+}
+
+@media (max-width: 860px) {
+  .about-intro > .container:first-child {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .about-intro > .container:first-child > div:first-child {
+    max-width: 640px;
+  }
+  .about-visual {
+    margin-top: 0.75rem;
+  }
+}
+
 /* ===== HOW WE WORK (values) ===== */
 /* Background photo + light handled by .stone-section (see our-story.html) */
 .story-values-section { color: var(--limestone); }
