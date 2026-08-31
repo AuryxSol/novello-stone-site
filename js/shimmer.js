@@ -18,8 +18,7 @@
      accents deliberately stay static even when they use a bronze colour. */
   var SELECTORS = [
     '.brand',
-    '.brand-mark-wrap',
-    '.brand > span:not(.brand-mark-wrap)',
+    '.brand-wordmark',
     '.hero h1 em',
     '.nav-links > li > a.active',
     '.btn-primary',
@@ -46,9 +45,16 @@
   var EDGE_FADE_PX = 15;
   var INITIAL_DELAY_MS = 750;
   var PAUSE_MS = 6500;
+  /* The N is much narrower than the wordmark, so a literal viewport-speed
+     pass is easy to miss. Map its reflection across the approaching section
+     of the same global beam and finish exactly as the strip reaches NOVELLO. */
+  var MARK_SOURCE_START_X = -110;
+  var MARK_SOURCE_END_X = 74;
+  var MARK_BEAM_PADDING_PX = 18;
 
   var reduceMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
   var elements = [];
+  var brandMarks = [];
   var frameState = [];
   var rafId = null;
   var cycleStart = null;
@@ -111,10 +117,25 @@
       }
     }
 
-    /* The N remains part of the same global beam, but is measured as its own
-       alpha-masked surface. This gives the reflection a correct local X
-       coordinate instead of inheriting the wider wordmark coordinate. */
+    /* Keep the N on the brand's physical beam coordinate, but give its narrow
+       alpha silhouette enough dwell time for the reflection to be visible. */
+    var markNodes = document.querySelectorAll(
+      '.brand[data-bronze-shimmer] .brand-mark-wrap'
+    );
+    var markRecords = [];
+    for (var k = 0; k < markNodes.length; k++) {
+      var mark = markNodes[k];
+      var brand = mark.closest('.brand');
+      mark.setAttribute('data-bronze-shimmer', '');
+      markRecords.push({
+        element: mark,
+        sourceIndex: found.indexOf(brand),
+        width: mark.getBoundingClientRect().width
+      });
+    }
+
     elements = found;
+    brandMarks = markRecords;
     frameState = new Array(elements.length);
     refreshGeometry();
   }
@@ -123,6 +144,10 @@
     for (var i = 0; i < elements.length; i++) {
       elements[i].style.setProperty('--shimmer-x', '-999px');
       elements[i].style.setProperty('--shimmer-strength', '0');
+    }
+    for (var j = 0; j < brandMarks.length; j++) {
+      brandMarks[j].element.style.setProperty('--mark-shimmer-x', '-999px');
+      brandMarks[j].element.style.setProperty('--mark-shimmer-strength', '0');
     }
   }
 
@@ -168,6 +193,7 @@
       else if (localX > rect.width) outsideDistance = localX - rect.width;
 
       frameState[i] = {
+        xNumber: localX,
         x: localX.toFixed(2) + 'px',
         strength: active
           ? Math.max(0, Math.min(1, 1 - outsideDistance / EDGE_FADE_PX)).toFixed(3)
@@ -179,6 +205,37 @@
       if (!frameState[k]) continue;
       elements[k].style.setProperty('--shimmer-x', frameState[k].x);
       elements[k].style.setProperty('--shimmer-strength', frameState[k].strength);
+    }
+
+    /* One beam, one pass: the source position comes from the complete brand.
+       Only the tiny N surface is time-expanded; it still completes before the
+       same strip enters the first NOVELLO glyph. */
+    for (var m = 0; m < brandMarks.length; m++) {
+      var record = brandMarks[m];
+      var source = frameState[record.sourceIndex];
+      if (!source || !active) {
+        record.element.style.setProperty('--mark-shimmer-x', '-999px');
+        record.element.style.setProperty('--mark-shimmer-strength', '0');
+        continue;
+      }
+
+      var markProgress = Math.max(0, Math.min(
+        1,
+        (source.xNumber - MARK_SOURCE_START_X)
+          / (MARK_SOURCE_END_X - MARK_SOURCE_START_X)
+      ));
+      var markX = -MARK_BEAM_PADDING_PX
+        + markProgress * (record.width + MARK_BEAM_PADDING_PX * 2);
+      var markOutsideDistance = 0;
+      if (markX < 0) markOutsideDistance = -markX;
+      else if (markX > record.width) markOutsideDistance = markX - record.width;
+      var markStrength = Math.max(
+        0,
+        Math.min(1, 1 - markOutsideDistance / EDGE_FADE_PX)
+      );
+
+      record.element.style.setProperty('--mark-shimmer-x', markX.toFixed(2) + 'px');
+      record.element.style.setProperty('--mark-shimmer-strength', markStrength.toFixed(3));
     }
 
     rafId = requestAnimationFrame(frame);
