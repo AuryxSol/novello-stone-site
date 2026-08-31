@@ -13,9 +13,9 @@
   if (window.__novelloChromeBeamInitialized) return;
   window.__novelloChromeBeamInitialized = true;
 
-  /* Strict visual allow-list approved from the August review frames.
-     Small labels, numbers, contact details, arrows, dividers and footer
-     accents deliberately stay static even when they use a bronze colour. */
+  /* Complete bronze-material registry. Every intentional bronze face shares
+     one document-space light, so labels, numbers, arrows and raised rules
+     react like parts machined from the same piece of metal. */
   var SELECTORS = [
     '.brand',
     '.brand-wordmark',
@@ -28,7 +28,51 @@
     '.launch-card',
     '.launch-card-eyebrow',
     '.launch-card p strong',
-    '.launch-card a.launch-card-cta'
+    '.launch-card a.launch-card-cta',
+    '.eyebrow',
+    '.hero-stats .stat-value',
+    '.pillar-link',
+    '.process-step .step-mono',
+    '.story-process-step .step-mono',
+    '.material-es-card .mono',
+    '.material-care-item .step-mono',
+    '.material-link-card .mono',
+    '.material-qa-item h4',
+    '.contact-detail .mono-label',
+    '.contact-person .mono-label',
+    '.vcard-link',
+    '.story-pricing-item h4',
+    '.placeholder-label .tag',
+    '.mobile-menu a.mobile-menu-cta',
+    '.value-card .mono',
+    '.about-stat .stat-num',
+    '.how-we-work-step .step-mono',
+    '.scenario-card .mono',
+    '.visit-callout strong',
+    '.service-list li',
+    '.faq-item summary',
+    '.brand-divider',
+    '.hr',
+    '.gold-divider',
+    '.scroll-progress',
+    '.process-step',
+    '.story-process-step',
+    '.story-value',
+    '.how-we-work-step',
+    '.material-care-item',
+    '.contact-person',
+    '.story-fleet-quote',
+    '.fleet-story',
+    '.note-box',
+    '.nav-links a',
+    '.nav-dropdown-menu a',
+    '.footer-grid a',
+    '.footer-social a',
+    '.contact-detail a',
+    '.contact-person a',
+    '.inline-link',
+    '.btn-ghost-dark',
+    '.btn-ghost'
   ];
 
   var MOBILE_BREAKPOINT = 860;
