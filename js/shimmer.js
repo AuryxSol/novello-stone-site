@@ -13,12 +13,12 @@
   if (window.__novelloChromeBeamInitialized) return;
   window.__novelloChromeBeamInitialized = true;
 
-  /* Strict visual allow-list approved from the August review frames.
-     Small labels, numbers, contact details, arrows, dividers and footer
-     accents deliberately stay static even when they use a bronze colour. */
+  /* Complete bronze-material registry. Every intentional bronze face shares
+     one document-space light, so labels, numbers, arrows and raised rules
+     react like parts machined from the same piece of metal. */
   var SELECTORS = [
     '.brand',
-    '.brand > span:not(.brand-mark-wrap)',
+    '.brand-wordmark',
     '.hero h1 em',
     '.nav-links > li > a.active',
     '.btn-primary',
@@ -28,15 +28,59 @@
     '.launch-card',
     '.launch-card-eyebrow',
     '.launch-card p strong',
-    '.launch-card a.launch-card-cta'
+    '.launch-card a.launch-card-cta',
+    '.eyebrow',
+    '.hero-stats .stat-value',
+    '.pillar-link',
+    '.process-step .step-mono',
+    '.story-process-step .step-mono',
+    '.material-es-card .mono',
+    '.material-care-item .step-mono',
+    '.material-link-card .mono',
+    '.material-qa-item h4',
+    '.contact-detail .mono-label',
+    '.contact-person .mono-label',
+    '.vcard-link',
+    '.story-pricing-item h4',
+    '.placeholder-label .tag',
+    '.mobile-menu a.mobile-menu-cta',
+    '.value-card .mono',
+    '.about-stat .stat-num',
+    '.how-we-work-step .step-mono',
+    '.scenario-card .mono',
+    '.visit-callout strong',
+    '.service-list li',
+    '.faq-item summary',
+    '.brand-divider',
+    '.hr',
+    '.gold-divider',
+    '.scroll-progress',
+    '.process-step',
+    '.story-process-step',
+    '.story-value',
+    '.how-we-work-step',
+    '.material-care-item',
+    '.contact-person',
+    '.story-fleet-quote',
+    '.fleet-story',
+    '.note-box',
+    '.nav-links a',
+    '.nav-dropdown-menu a',
+    '.footer-grid a',
+    '.footer-social a',
+    '.contact-detail a',
+    '.contact-person a',
+    '.inline-link',
+    '.btn-ghost-dark',
+    '.btn-ghost'
   ];
 
   var MOBILE_BREAKPOINT = 860;
-  /* Keep the approved phone/tablet pace, then lengthen the crossing time
-     progressively as the viewport grows. A 1920px display now takes 4.4s
-     across its visible width instead of accelerating to 600px/s. */
-  var COMPACT_VIEWPORT_CROSS_MS = 3200;
-  var WIDE_VIEWPORT_CROSS_MS = 4400;
+  /* Restore the approved slow luxury cadence. Phone/tablet views take 5.2s
+     across the visible width and large displays progressively lengthen to
+     6.4s, preserving one calm beam speed at every responsive breakpoint. */
+  var COMPACT_VIEWPORT_CROSS_MS = 5200;
+  var WIDE_VIEWPORT_CROSS_MS = 6400;
   var WIDE_VIEWPORT_REFERENCE_PX = 1920;
   var ANGLE_FROM_VERTICAL_DEG = 15;
   var VERTICAL_LAG_PER_PX = Math.tan(ANGLE_FROM_VERTICAL_DEG * Math.PI / 180);
@@ -45,9 +89,16 @@
   var EDGE_FADE_PX = 15;
   var INITIAL_DELAY_MS = 750;
   var PAUSE_MS = 6500;
+  /* The N is much narrower than the wordmark, so a literal viewport-speed
+     pass is easy to miss. Map its reflection across the approaching section
+     of the same global beam and finish exactly as the strip reaches NOVELLO. */
+  var MARK_SOURCE_START_X = -110;
+  var MARK_SOURCE_END_X = 74;
+  var MARK_BEAM_PADDING_PX = 18;
 
   var reduceMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
   var elements = [];
+  var brandMarks = [];
   var frameState = [];
   var rafId = null;
   var cycleStart = null;
@@ -110,17 +161,25 @@
       }
     }
 
-    /* The N is a nested alpha mask, not a second independent light target.
-       It inherits the brand's beam coordinate so one uninterrupted strip
-       enters the monogram and continues through the complete wordmark. */
-    var brandMarks = document.querySelectorAll(
+    /* Keep the N on the brand's physical beam coordinate, but give its narrow
+       alpha silhouette enough dwell time for the reflection to be visible. */
+    var markNodes = document.querySelectorAll(
       '.brand[data-bronze-shimmer] .brand-mark-wrap'
     );
-    for (var k = 0; k < brandMarks.length; k++) {
-      brandMarks[k].setAttribute('data-bronze-shimmer', '');
+    var markRecords = [];
+    for (var k = 0; k < markNodes.length; k++) {
+      var mark = markNodes[k];
+      var brand = mark.closest('.brand');
+      mark.setAttribute('data-bronze-shimmer', '');
+      markRecords.push({
+        element: mark,
+        sourceIndex: found.indexOf(brand),
+        width: mark.getBoundingClientRect().width
+      });
     }
 
     elements = found;
+    brandMarks = markRecords;
     frameState = new Array(elements.length);
     refreshGeometry();
   }
@@ -129,6 +188,10 @@
     for (var i = 0; i < elements.length; i++) {
       elements[i].style.setProperty('--shimmer-x', '-999px');
       elements[i].style.setProperty('--shimmer-strength', '0');
+    }
+    for (var j = 0; j < brandMarks.length; j++) {
+      brandMarks[j].element.style.setProperty('--mark-shimmer-x', '-999px');
+      brandMarks[j].element.style.setProperty('--mark-shimmer-strength', '0');
     }
   }
 
@@ -174,6 +237,7 @@
       else if (localX > rect.width) outsideDistance = localX - rect.width;
 
       frameState[i] = {
+        xNumber: localX,
         x: localX.toFixed(2) + 'px',
         strength: active
           ? Math.max(0, Math.min(1, 1 - outsideDistance / EDGE_FADE_PX)).toFixed(3)
@@ -185,6 +249,37 @@
       if (!frameState[k]) continue;
       elements[k].style.setProperty('--shimmer-x', frameState[k].x);
       elements[k].style.setProperty('--shimmer-strength', frameState[k].strength);
+    }
+
+    /* One beam, one pass: the source position comes from the complete brand.
+       Only the tiny N surface is time-expanded; it still completes before the
+       same strip enters the first NOVELLO glyph. */
+    for (var m = 0; m < brandMarks.length; m++) {
+      var record = brandMarks[m];
+      var source = frameState[record.sourceIndex];
+      if (!source || !active) {
+        record.element.style.setProperty('--mark-shimmer-x', '-999px');
+        record.element.style.setProperty('--mark-shimmer-strength', '0');
+        continue;
+      }
+
+      var markProgress = Math.max(0, Math.min(
+        1,
+        (source.xNumber - MARK_SOURCE_START_X)
+          / (MARK_SOURCE_END_X - MARK_SOURCE_START_X)
+      ));
+      var markX = -MARK_BEAM_PADDING_PX
+        + markProgress * (record.width + MARK_BEAM_PADDING_PX * 2);
+      var markOutsideDistance = 0;
+      if (markX < 0) markOutsideDistance = -markX;
+      else if (markX > record.width) markOutsideDistance = markX - record.width;
+      var markStrength = Math.max(
+        0,
+        Math.min(1, 1 - markOutsideDistance / EDGE_FADE_PX)
+      );
+
+      record.element.style.setProperty('--mark-shimmer-x', markX.toFixed(2) + 'px');
+      record.element.style.setProperty('--mark-shimmer-strength', markStrength.toFixed(3));
     }
 
     rafId = requestAnimationFrame(frame);

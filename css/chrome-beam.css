@@ -2,17 +2,16 @@
    NOVELLO STONE — approved single chrome-beam rendering
    Loaded after the existing page styles. It supplies the approved award-
    gold palette and changes how the travelling light is painted; layout,
-   typography, white/body text, content and the strict shimmer allow-list
-   stay intact.
+   typography, white/body text and content stay intact.
    =========================================================== */
 
 :root {
   /* Exact official Novello N reference swatches. These override the legacy
      aliases through base.css, so every existing bronze-gold accent inherits
-     one authoritative palette while the beam keeps its strict allow-list. */
+     one authoritative palette and one shared reflection model. */
   --novello-bronze-shadow: #3F2E1B;
   --novello-bronze-deep: #8C6437;
-  --novello-bronze-base: #A5833F;
+  --novello-bronze-base: #A58B3F;
   --novello-bronze-mid: #B9975F;
   --novello-bronze-light: #D2B38C;
   --novello-bronze-highlight: #F1D9B7;
@@ -20,7 +19,34 @@
     #F1D9B7 0%,
     #D2B38C 18%,
     #B9975F 42%,
-    #A5833F 60%,
+    #A58B3F 60%,
+    #8C6437 82%,
+    #3F2E1B 100%);
+  /* One smooth brushed-gold face: a broad studio reflection over the exact
+     approved N swatches, with no hard mid-face seam or decorative stripe. */
+  --novello-bronze-resting-specular:
+    radial-gradient(ellipse 170% 115% at 50% -34%,
+      rgba(255, 253, 247, 0.82) 0%,
+      rgba(241, 217, 183, 0.38) 32%,
+      transparent 68%),
+    linear-gradient(180deg,
+      transparent 0%,
+      rgba(140, 100, 55, 0.08) 68%,
+      rgba(20, 12, 8, 0.44) 100%);
+  /* Horizontal rules are tiny raised faces, not colour ramps along their
+     length. Vertical accents use the same swatches rotated through 90deg. */
+  --novello-bronze-line-gradient: linear-gradient(180deg,
+    #F1D9B7 0%,
+    #D2B38C 18%,
+    #B9975F 42%,
+    #A58B3F 60%,
+    #8C6437 82%,
+    #3F2E1B 100%);
+  --novello-bronze-line-gradient-vertical: linear-gradient(90deg,
+    #F1D9B7 0%,
+    #D2B38C 18%,
+    #B9975F 42%,
+    #A58B3F 60%,
     #8C6437 82%,
     #3F2E1B 100%);
   --gold-border: rgba(185, 151, 95, 0.32);
@@ -29,32 +55,12 @@
   --shimmer-highlight-rgb: 241, 217, 183;
   --shimmer-x: -999px;
   --shimmer-strength: 0;
-  --novello-specular-angle: 105deg;
-  --novello-hot-core-half: 0.55px;
-  --novello-core-half: 2.2px;
-  --novello-shoulder-near: 6.5px;
-  --novello-beam-outer: 11px;
-  --novello-glow-near: 16px;
-  --novello-glow-outer: 22px;
-  --novello-hot-core-rgb: 255, 250, 238;
-  --novello-hot-core-alpha: 0.97;
-  --novello-core-rgb: 244, 218, 178;
-  --novello-core-alpha: 0.66;
-  --novello-shoulder-rgb: 222, 190, 148;
-  --novello-shoulder-alpha: 0.28;
-  --novello-glow-rgb: 206, 169, 122;
-  /* No diffuse halo. Width comes from the clipped metallic shoulders,
-     so the reflection disappears completely between sweeps. */
-  --novello-glow-alpha: 0;
-  --novello-shadow-rgb: 71, 50, 31;
-  --novello-shadow-alpha: 0.12;
-  --novello-sparkle-core-rgb: 255, 248, 232;
-  --novello-sparkle-core-alpha: 0.96;
-  --novello-sparkle-edge-rgb: 227, 195, 150;
-  --novello-sparkle-edge-alpha: 0.54;
   /* Rounded jewellery face: pale gold crown, bronze recessed edge and a
      second reflected gold band. No blurred gold is painted outside it. */
   --novello-bronze-badge-face: var(--novello-bronze-metallic-gradient);
+  --novello-bronze-text-depth:
+    drop-shadow(0 1.1px 0.7px rgba(63, 46, 27, 0.72))
+    drop-shadow(0 2.2px 1.6px rgba(0, 0, 0, 0.44));
 }
 
 /* Give every existing bronze-gold text face the same front-on metal depth:
@@ -79,126 +85,246 @@
   .placeholder-label .tag,
   .mobile-menu a.mobile-menu-cta,
   .value-card .mono,
-  .about-stat .stat-value,
+  .about-stat .stat-num,
   .how-we-work-step .step-mono,
   .scenario-card .mono,
-  .visit-callout strong
+  .visit-callout strong,
+  .service-list li::before,
+  .faq-item summary::after
 ) {
-  background-image: var(--novello-bronze-metallic-gradient);
+  background-image:
+    var(--novello-bronze-resting-specular),
+    var(--novello-bronze-metallic-gradient);
   background-repeat: no-repeat;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
   color: transparent;
   text-shadow: none;
-  filter: drop-shadow(0 0 0.45px rgba(20, 12, 8, 0.58));
+  filter: var(--novello-bronze-text-depth);
+}
+
+/* Decorative bronze rules use the same six master swatches as the N.
+   Structural card borders remain restrained hairlines; only intentional
+   brand accents receive the full polished-metal colour travel. */
+:is(
+  .eyebrow::before,
+  .brand-divider::before,
+  .brand-divider::after,
+  .hr,
+  .gold-divider,
+  .scroll-progress,
+  .nav-links a.active::after
+) {
+  background: var(--novello-bronze-line-gradient);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 253, 247, 0.26),
+    0 1px 0.8px rgba(0, 0, 0, 0.48);
+  filter: none;
+}
+
+.brand-divider .diamond {
+  background: var(--novello-bronze-line-gradient);
+  box-shadow:
+    inset 1px 1px 0 rgba(255, 253, 247, 0.30),
+    1px 2px 1px rgba(0, 0, 0, 0.54);
+  filter: none;
+}
+
+:is(
+  .process-step,
+  .story-process-step,
+  .story-value,
+  .how-we-work-step,
+  .material-care-item,
+  .contact-person,
+  .story-fleet-quote,
+  .fleet-story,
+  .note-box
+) {
+  position: relative;
+  border-left-color: transparent;
+  border-image: none;
+}
+
+:is(
+  .process-step,
+  .story-process-step,
+  .story-value,
+  .how-we-work-step,
+  .material-care-item,
+  .contact-person,
+  .story-fleet-quote,
+  .fleet-story,
+  .note-box
+)::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -1px;
+  width: 2px;
+  pointer-events: none;
+  background: var(--novello-bronze-line-gradient-vertical);
+  box-shadow:
+    inset 1px 0 0 rgba(255, 253, 247, 0.28),
+    1px 0 1px rgba(0, 0, 0, 0.56);
+}
+
+.note-box::before {
+  width: 3px;
 }
 
 [data-bronze-shimmer] {
-  --novello-specular-reflection: linear-gradient(
-    var(--novello-specular-angle),
-    transparent calc(var(--shimmer-x) - var(--novello-glow-outer)),
-    rgba(var(--novello-glow-rgb), calc(var(--shimmer-strength) * var(--novello-glow-alpha))) calc(var(--shimmer-x) - var(--novello-glow-near)),
-    rgba(var(--novello-shadow-rgb), calc(var(--shimmer-strength) * var(--novello-shadow-alpha))) calc(var(--shimmer-x) - var(--novello-beam-outer)),
-    rgba(var(--novello-shoulder-rgb), calc(var(--shimmer-strength) * var(--novello-shoulder-alpha))) calc(var(--shimmer-x) - var(--novello-shoulder-near)),
-    rgba(var(--novello-core-rgb), calc(var(--shimmer-strength) * var(--novello-core-alpha))) calc(var(--shimmer-x) - var(--novello-core-half)),
-    rgba(var(--novello-hot-core-rgb), calc(var(--shimmer-strength) * var(--novello-hot-core-alpha))) calc(var(--shimmer-x) - var(--novello-hot-core-half)),
-    rgba(var(--novello-hot-core-rgb), calc(var(--shimmer-strength) * var(--novello-hot-core-alpha))) calc(var(--shimmer-x) + var(--novello-hot-core-half)),
-    rgba(var(--novello-core-rgb), calc(var(--shimmer-strength) * var(--novello-core-alpha))) calc(var(--shimmer-x) + var(--novello-core-half)),
-    rgba(var(--novello-shoulder-rgb), calc(var(--shimmer-strength) * var(--novello-shoulder-alpha))) calc(var(--shimmer-x) + var(--novello-shoulder-near)),
-    rgba(var(--novello-shadow-rgb), calc(var(--shimmer-strength) * var(--novello-shadow-alpha))) calc(var(--shimmer-x) + var(--novello-beam-outer)),
-    rgba(var(--novello-glow-rgb), calc(var(--shimmer-strength) * var(--novello-glow-alpha))) calc(var(--shimmer-x) + var(--novello-glow-near)),
-    transparent calc(var(--shimmer-x) + var(--novello-glow-outer))
-  );
-  --novello-text-sparkles:
-    radial-gradient(circle at calc(var(--shimmer-x) + 6px) 16%,
-      rgba(var(--novello-sparkle-core-rgb), calc(var(--shimmer-strength) * var(--novello-sparkle-core-alpha))) 0 0.8px,
-      rgba(var(--novello-sparkle-edge-rgb), calc(var(--shimmer-strength) * var(--novello-sparkle-edge-alpha))) 1.1px,
-      transparent 3.2px),
-    radial-gradient(circle at var(--shimmer-x) 50%,
-      rgba(var(--novello-sparkle-core-rgb), calc(var(--shimmer-strength) * var(--novello-sparkle-core-alpha))) 0 0.72px,
-      rgba(var(--novello-sparkle-edge-rgb), calc(var(--shimmer-strength) * var(--novello-sparkle-edge-alpha))) 1.02px,
-      transparent 3px),
-    radial-gradient(circle at calc(var(--shimmer-x) - 6px) 84%,
-      rgba(var(--novello-sparkle-core-rgb), calc(var(--shimmer-strength) * var(--novello-sparkle-core-alpha))) 0 0.68px,
-      rgba(var(--novello-sparkle-edge-rgb), calc(var(--shimmer-strength) * var(--novello-sparkle-edge-alpha))) 0.98px,
-      transparent 2.9px);
+  /* Smooth environmental reflection. Every layer is elliptical, so there is
+     no straight highlight seam: the light expands over the face, compresses
+     at the bevel and fades through the darker side return. */
+  --novello-edge-star: radial-gradient(circle at calc(var(--shimmer-x) + 1px) 7%,
+    rgba(255, 255, 252, calc(var(--shimmer-strength) * 1)) 0 0.64px,
+    rgba(255, 250, 238, calc(var(--shimmer-strength) * 0.82)) 0.9px,
+    rgba(241, 217, 183, calc(var(--shimmer-strength) * 0.34)) 2.1px,
+    transparent 4.8px);
+  --novello-upper-edge-roll: radial-gradient(ellipse 18px 150% at var(--shimmer-x) -8%,
+    rgba(255, 255, 252, calc(var(--shimmer-strength) * 0.92)) 0%,
+    rgba(241, 217, 183, calc(var(--shimmer-strength) * 0.54)) 24%,
+    rgba(210, 179, 140, calc(var(--shimmer-strength) * 0.22)) 48%,
+    transparent 76%);
+  --novello-surface-sweep: radial-gradient(ellipse 34px 142% at var(--shimmer-x) 42%,
+    rgba(255, 253, 247, calc(var(--shimmer-strength) * 0.94)) 0%,
+    rgba(241, 217, 183, calc(var(--shimmer-strength) * 0.62)) 20%,
+    rgba(210, 179, 140, calc(var(--shimmer-strength) * 0.34)) 44%,
+    rgba(185, 151, 95, calc(var(--shimmer-strength) * 0.14)) 64%,
+    transparent 84%);
+  --novello-convex-face-roll: radial-gradient(ellipse 48px 118% at calc(var(--shimmer-x) + 5px) 48%,
+    rgba(255, 250, 238, calc(var(--shimmer-strength) * 0.30)) 0%,
+    rgba(210, 179, 140, calc(var(--shimmer-strength) * 0.18)) 42%,
+    transparent 80%);
+  --novello-concave-return: radial-gradient(ellipse 30px 78% at calc(var(--shimmer-x) - 8px) 92%,
+    rgba(63, 46, 27, calc(var(--shimmer-strength) * 0.26)) 0%,
+    rgba(140, 100, 55, calc(var(--shimmer-strength) * 0.12)) 44%,
+    transparent 78%);
 }
 
-/* Brighter, text-only chrome core from the approved final proof. */
-.brand[data-bronze-shimmer],
-.hero h1 em[data-bronze-shimmer],
-.launch-card-eyebrow[data-bronze-shimmer],
-.launch-card p strong[data-bronze-shimmer],
-.launch-card a.launch-card-cta[data-bronze-shimmer],
-.chrome-button-label[data-bronze-shimmer] {
-  --novello-hot-core-half: 0.58px;
-  --novello-hot-core-rgb: 255, 253, 248;
-  --novello-hot-core-alpha: 0.99;
-  --novello-core-rgb: 248, 228, 198;
-  --novello-core-alpha: 0.74;
-  --novello-sparkle-core-rgb: 255, 252, 246;
-  --novello-sparkle-core-alpha: 0.99;
+/* All small bronze lettering and numbering uses the same smooth channel-
+   letter face as the identity. The reflection is clipped into each glyph;
+   its resting material and shadow remain unchanged before and after a pass. */
+:is(
+  .eyebrow,
+  .hero-stats .stat-value,
+  .pillar-link,
+  .process-step .step-mono,
+  .story-process-step .step-mono,
+  .material-es-card .mono,
+  .material-care-item .step-mono,
+  .material-link-card .mono,
+  .material-qa-item h4,
+  .contact-detail .mono-label,
+  .contact-person .mono-label,
+  .vcard-link,
+  .story-pricing-item h4,
+  .placeholder-label .tag,
+  .mobile-menu a.mobile-menu-cta,
+  .value-card .mono,
+  .about-stat .stat-num,
+  .how-we-work-step .step-mono,
+  .scenario-card .mono,
+  .visit-callout strong
+)[data-bronze-shimmer] {
+  background-image:
+    var(--novello-edge-star),
+    var(--novello-upper-edge-roll),
+    var(--novello-surface-sweep),
+    var(--novello-convex-face-roll),
+    var(--novello-concave-return),
+    var(--novello-bronze-resting-specular),
+    var(--novello-bronze-metallic-gradient);
+  background-repeat: no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  text-shadow: none;
+  filter: var(--novello-bronze-text-depth);
 }
 
-/* Text needs a slightly broader read than solid button surfaces. This
-   widens only the glyph-clipped reflection; button fills, borders and
-   engraved labels retain the approved narrower values above. */
-.brand[data-bronze-shimmer],
-.hero h1 em[data-bronze-shimmer],
-.launch-card-eyebrow[data-bronze-shimmer],
-.launch-card p strong[data-bronze-shimmer],
-.launch-card a.launch-card-cta[data-bronze-shimmer] {
-  --novello-hot-core-half: 1.1px;
-  --novello-core-half: 2.6px;
-  --novello-shoulder-near: 8px;
-  --novello-beam-outer: 13px;
-  --novello-glow-near: 18px;
-  --novello-glow-outer: 24px;
+.service-list li[data-bronze-shimmer]::before,
+.faq-item summary[data-bronze-shimmer]::after {
+  background-image:
+    var(--novello-edge-star),
+    var(--novello-upper-edge-roll),
+    var(--novello-surface-sweep),
+    var(--novello-convex-face-roll),
+    var(--novello-concave-return),
+    var(--novello-bronze-resting-specular),
+    var(--novello-bronze-metallic-gradient);
+  background-repeat: no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  filter: var(--novello-bronze-text-depth);
 }
 
-/* The navigation identity is small and viewed at a distance, so it gets a
-   dedicated car-badge strip: visibly white at the centre, but still clipped
-   completely inside the wordmark glyphs and monogram alpha. */
-.brand[data-bronze-shimmer],
-.brand-mark-wrap[data-bronze-shimmer] {
-  --novello-hot-core-half: 2.1px;
-  --novello-core-half: 4.8px;
-  --novello-shoulder-near: 10.5px;
-  --novello-beam-outer: 15.5px;
-  --novello-glow-near: 19px;
-  --novello-glow-outer: 23px;
-  --novello-hot-core-rgb: 255, 255, 252;
-  --novello-hot-core-alpha: 1;
-  --novello-core-rgb: 255, 239, 215;
-  --novello-core-alpha: 0.92;
-  --novello-shoulder-rgb: 235, 203, 161;
-  --novello-shoulder-alpha: 0.38;
-  --novello-shadow-alpha: 0.08;
+/* Raised rules and card accents use the identical face and receive the same
+   document-space reflection. Their two-pixel depth stays crisp and solid. */
+.eyebrow[data-bronze-shimmer]::before,
+.brand-divider[data-bronze-shimmer]::before,
+.brand-divider[data-bronze-shimmer]::after,
+.hr[data-bronze-shimmer],
+.gold-divider[data-bronze-shimmer],
+.scroll-progress[data-bronze-shimmer] {
+  background-image:
+    var(--novello-edge-star),
+    var(--novello-upper-edge-roll),
+    var(--novello-surface-sweep),
+    var(--novello-bronze-resting-specular),
+    var(--novello-bronze-line-gradient);
+}
+
+.brand-divider[data-bronze-shimmer] .diamond {
+  background-image:
+    var(--novello-edge-star),
+    var(--novello-surface-sweep),
+    var(--novello-bronze-resting-specular),
+    var(--novello-bronze-line-gradient);
+}
+
+:is(
+  .process-step,
+  .story-process-step,
+  .story-value,
+  .how-we-work-step,
+  .material-care-item,
+  .contact-person,
+  .story-fleet-quote,
+  .fleet-story,
+  .note-box
+)[data-bronze-shimmer]::before {
+  background-image:
+    var(--novello-edge-star),
+    var(--novello-surface-sweep),
+    var(--novello-bronze-resting-specular),
+    var(--novello-bronze-line-gradient-vertical);
 }
 
 /* The enlarged N has a narrow visible alpha silhouette inside its image box.
    Give it a broader, direct metallic strip so the same brand coordinate is
    unmistakable across N -> NOVELLO -> STONE without creating a second beam. */
 .brand-mark-wrap[data-bronze-shimmer] {
-  --novello-hot-core-half: 4.2px;
-  --novello-core-half: 9.5px;
-  --novello-shoulder-near: 16px;
-  --novello-beam-outer: 21px;
-  --novello-glow-near: 24px;
-  --novello-glow-outer: 28px;
-  --novello-core-alpha: 0.98;
-  --novello-shoulder-alpha: 0.52;
+  --mark-shimmer-x: -999px;
+  --mark-shimmer-strength: 0;
 }
 
 /* Raised metallic lettering that is bronze at rest. */
-.brand[data-bronze-shimmer],
-.brand[data-bronze-shimmer] > span:not(.brand-mark-wrap),
 .hero h1 em[data-bronze-shimmer],
 .hero h1 em[data-bronze-shimmer] .cascade-word {
   background-image:
-    var(--novello-text-sparkles),
-    var(--novello-specular-reflection),
+    var(--novello-edge-star),
+    var(--novello-upper-edge-roll),
+    var(--novello-surface-sweep),
+    var(--novello-convex-face-roll),
+    var(--novello-concave-return),
+    var(--novello-bronze-resting-specular),
     var(--novello-bronze-badge-face);
   -webkit-background-clip: text;
   background-clip: text;
@@ -207,23 +333,42 @@
   filter: none;
 }
 
-.brand[data-bronze-shimmer],
-.brand[data-bronze-shimmer] > span:not(.brand-mark-wrap) {
-  -webkit-text-stroke: 0.22px rgba(63, 46, 27, 0.90);
+.brand-wordmark[data-bronze-shimmer] {
+  display: inline-block;
+  white-space: nowrap;
+  /* One solid, forward-facing badge face. The wordmark uses the same clean
+     metallic fill as the CTA surface. Broad radial reflections roll over the
+     face, while one small hot glint follows the upper glyph edges. */
+  background-image:
+    var(--novello-edge-star),
+    var(--novello-upper-edge-roll),
+    var(--novello-surface-sweep),
+    var(--novello-convex-face-roll),
+    var(--novello-concave-return),
+    var(--novello-bronze-resting-specular),
+    var(--novello-bronze-badge-face);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  -webkit-text-stroke: 0.36px rgba(63, 46, 27, 0.94);
   paint-order: stroke fill;
   text-shadow: none;
-  filter: drop-shadow(0 0 0.75px rgba(20, 12, 8, 0.66));
+  filter:
+    drop-shadow(0 1.4px 0.7px rgba(63, 46, 27, 0.82))
+    drop-shadow(0 3px 2px rgba(0, 0, 0, 0.68));
 }
 
 .brand[data-bronze-shimmer] {
   font-size: 1.32rem;
   gap: 0.72em;
-}
-
-/* The parent brand supplies one unified contact shadow. Prevent the nested
-   STONE span from receiving a second copy of that same shadow. */
-.brand[data-bronze-shimmer] > span:not(.brand-mark-wrap) {
+  /* This parent remains in shimmer.js solely as the global coordinate source
+     for the N. It must never brighten or cast a glow over the complete brand. */
+  background: none;
+  -webkit-text-fill-color: initial;
+  color: inherit;
   filter: none;
+  text-shadow: none;
 }
 
 .hero h1 em[data-bronze-shimmer] {
@@ -247,8 +392,12 @@
 .launch-card p strong[data-bronze-shimmer],
 .launch-card a.launch-card-cta[data-bronze-shimmer] {
   background-image:
-    var(--novello-text-sparkles),
-    var(--novello-specular-reflection),
+    var(--novello-edge-star),
+    var(--novello-upper-edge-roll),
+    var(--novello-surface-sweep),
+    var(--novello-convex-face-roll),
+    var(--novello-concave-return),
+    var(--novello-bronze-resting-specular),
     var(--novello-bronze-badge-face);
   -webkit-background-clip: text;
   background-clip: text;
@@ -258,16 +407,20 @@
   -webkit-text-stroke: 0.14px rgba(63, 46, 27, 0.84);
   paint-order: stroke fill;
   text-shadow: none;
-  filter: drop-shadow(0 0 0.55px rgba(20, 12, 8, 0.58));
+  filter: var(--novello-bronze-text-depth);
 }
 
-/* N alpha mask: reflection and sparkles can paint only the monogram. */
+/* The N keeps the approved master artwork on its face. A separately masked,
+   slightly offset bronze wall gives the same forward-facing channel-letter
+   depth as the wordmark without rebuilding the responsive identity. */
 .brand .brand-mark-wrap {
   position: relative;
   display: inline-block;
   width: 60px;
   height: 60px;
   flex-shrink: 0;
+  isolation: isolate;
+  overflow: hidden;
   background: none;
   -webkit-text-fill-color: initial;
   color: inherit;
@@ -275,7 +428,29 @@
   text-shadow: none;
 }
 
+.brand .brand-mark-wrap::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  transform: translate(1.4px, 2px);
+  background: #3F2E1B;
+  -webkit-mask-image: url('../img/novello-n-monogram.png');
+  mask-image: url('../img/novello-n-monogram.png');
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  opacity: 0.92;
+  filter: drop-shadow(0 1.8px 1.2px rgba(0, 0, 0, 0.62));
+}
+
 .brand-mark-wrap .brand-mark {
+  position: relative;
+  z-index: 1;
   width: 100%;
   height: 100%;
   display: block;
@@ -286,41 +461,33 @@
 .brand .brand-mark-reflection {
   position: absolute;
   inset: 0;
+  display: block;
   pointer-events: none;
   z-index: 2;
-  background-image: linear-gradient(
-    var(--novello-specular-angle),
-    transparent calc(var(--shimmer-x) - 28px),
-    rgba(210, 174, 130, calc(var(--shimmer-strength) * 0.16)) calc(var(--shimmer-x) - 22px),
-    rgba(235, 203, 161, calc(var(--shimmer-strength) * 0.38)) calc(var(--shimmer-x) - 16px),
-    rgba(255, 239, 215, calc(var(--shimmer-strength) * 0.78)) calc(var(--shimmer-x) - 8px),
-    rgba(255, 255, 252, calc(var(--shimmer-strength) * 1)) calc(var(--shimmer-x) - 3.2px),
-    rgba(255, 255, 252, calc(var(--shimmer-strength) * 1)) calc(var(--shimmer-x) + 3.2px),
-    rgba(255, 239, 215, calc(var(--shimmer-strength) * 0.78)) calc(var(--shimmer-x) + 8px),
-    rgba(235, 203, 161, calc(var(--shimmer-strength) * 0.38)) calc(var(--shimmer-x) + 16px),
-    rgba(210, 174, 130, calc(var(--shimmer-strength) * 0.16)) calc(var(--shimmer-x) + 22px),
-    transparent calc(var(--shimmer-x) + 28px)
-  );
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 100% 100%;
-  -webkit-text-fill-color: initial;
-  color: transparent;
-  text-shadow: none;
+  background:
+    radial-gradient(circle at calc(var(--mark-shimmer-x, -999px) + 1px) 7%,
+      rgba(255, 255, 252, calc(var(--mark-shimmer-strength, 0) * 1)) 0 0.72px,
+      rgba(255, 250, 238, calc(var(--mark-shimmer-strength, 0) * 0.82)) 1px,
+      rgba(241, 217, 183, calc(var(--mark-shimmer-strength, 0) * 0.34)) 2.3px,
+      transparent 5.2px),
+    radial-gradient(ellipse 28px 148% at var(--mark-shimmer-x, -999px) 42%,
+      rgba(255, 253, 247, calc(var(--mark-shimmer-strength, 0) * 0.98)) 0%,
+      rgba(241, 217, 183, calc(var(--mark-shimmer-strength, 0) * 0.66)) 22%,
+      rgba(210, 179, 140, calc(var(--mark-shimmer-strength, 0) * 0.34)) 48%,
+      rgba(185, 151, 95, calc(var(--mark-shimmer-strength, 0) * 0.13)) 66%,
+      transparent 86%),
+    radial-gradient(ellipse 24px 76% at calc(var(--mark-shimmer-x, -999px) - 7px) 92%,
+      rgba(63, 46, 27, calc(var(--mark-shimmer-strength, 0) * 0.26)) 0%,
+      transparent 76%);
   -webkit-mask-image: url('../img/novello-n-monogram.png');
-  -webkit-mask-mode: alpha;
-  -webkit-mask-repeat: no-repeat;
-  -webkit-mask-position: center;
-  -webkit-mask-size: contain;
   mask-image: url('../img/novello-n-monogram.png');
-  mask-mode: alpha;
+  -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
+  -webkit-mask-position: center;
   mask-position: center;
+  -webkit-mask-size: contain;
   mask-size: contain;
   opacity: 1;
-  mix-blend-mode: normal;
-  /* Direct warm-white metallic reflection: fully transparent between passes,
-     but unmistakable when the shared strip crosses the N's alpha silhouette. */
   filter: none;
 }
 
@@ -331,12 +498,17 @@
   isolation: isolate;
   overflow: hidden;
   background-image:
-    var(--novello-specular-reflection),
+    var(--novello-edge-star),
+    var(--novello-upper-edge-roll),
+    var(--novello-surface-sweep),
+    var(--novello-convex-face-roll),
+    var(--novello-concave-return),
+    var(--novello-bronze-resting-specular),
     linear-gradient(180deg,
       #F1D9B7 0%,
       #D2B38C 18%,
       #B9975F 42%,
-      #A5833F 60%,
+      #A58B3F 60%,
       #8C6437 82%,
       #3F2E1B 100%);
   border-color: #3F2E1B;
@@ -345,27 +517,30 @@
 
 .btn-primary[data-bronze-shimmer] {
   box-shadow:
-    inset 0 0 0 1px rgba(241, 217, 183, 0.42),
-    inset 0 0 4px rgba(63, 46, 27, 0.24),
+    inset 0 1px 0 rgba(255, 253, 247, 0.50),
+    inset 0 -2px 1.4px rgba(63, 46, 27, 0.54),
+    inset 0 0 0 1px rgba(241, 217, 183, 0.34),
     0 0 0 1px #3F2E1B,
-    0 0 4px rgba(14, 8, 5, 0.38);
+    0 5px 5px rgba(14, 8, 5, 0.42);
 }
 
 .btn-primary[data-bronze-shimmer]:hover {
   filter: brightness(1.08);
   box-shadow:
-    inset 0 0 0 1px rgba(241, 217, 183, 0.50),
-    inset 0 0 4px rgba(63, 46, 27, 0.22),
+    inset 0 1px 0 rgba(255, 253, 247, 0.58),
+    inset 0 -2px 1.4px rgba(63, 46, 27, 0.48),
+    inset 0 0 0 1px rgba(241, 217, 183, 0.40),
     0 0 0 1px #3F2E1B,
-    0 0 5px rgba(14, 8, 5, 0.42);
+    0 6px 6px rgba(14, 8, 5, 0.46);
 }
 
 .nav-cta[data-bronze-shimmer] {
   box-shadow:
-    inset 0 0 0 1px rgba(241, 217, 183, 0.38),
-    inset 0 0 3px rgba(63, 46, 27, 0.22),
+    inset 0 1px 0 rgba(255, 253, 247, 0.46),
+    inset 0 -2px 1.2px rgba(63, 46, 27, 0.50),
+    inset 0 0 0 1px rgba(241, 217, 183, 0.30),
     0 0 0 1px #3F2E1B,
-    0 0 3px rgba(14, 8, 5, 0.34);
+    0 4px 4px rgba(14, 8, 5, 0.40);
 }
 
 .btn-primary[data-bronze-shimmer]::after,
@@ -377,15 +552,10 @@
   border: 1px solid transparent;
   border-radius: inherit;
   pointer-events: none;
-  background: linear-gradient(
-    var(--novello-specular-angle),
-    transparent calc(var(--shimmer-x) - 11px),
-    rgba(232, 202, 160, calc(var(--shimmer-strength) * 0.20)) calc(var(--shimmer-x) - 5px),
-    rgba(255, 250, 238, calc(var(--shimmer-strength) * 0.90)) calc(var(--shimmer-x) - 0.45px),
-    rgba(255, 250, 238, calc(var(--shimmer-strength) * 0.90)) calc(var(--shimmer-x) + 0.45px),
-    rgba(232, 202, 160, calc(var(--shimmer-strength) * 0.20)) calc(var(--shimmer-x) + 5px),
-    transparent calc(var(--shimmer-x) + 11px)
-  ) border-box;
+  background:
+    var(--novello-edge-star) border-box,
+    var(--novello-upper-edge-roll) border-box,
+    var(--novello-surface-sweep) border-box;
   -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
@@ -400,8 +570,11 @@
   color: transparent;
   -webkit-text-fill-color: transparent;
   background-image:
-    var(--novello-text-sparkles),
-    var(--novello-specular-reflection),
+    var(--novello-edge-star),
+    var(--novello-upper-edge-roll),
+    var(--novello-surface-sweep),
+    var(--novello-convex-face-roll),
+    var(--novello-concave-return),
     linear-gradient(180deg,
       rgba(63, 46, 27, 0.98) 0%,
       rgba(63, 46, 27, 0.96) 44%,
@@ -411,22 +584,31 @@
   background-clip: text;
   background-repeat: no-repeat;
   text-shadow:
-    0 0 0.7px rgba(20, 12, 8, 0.84);
+    0 -0.45px 0.35px rgba(241, 217, 183, 0.26),
+    0 0.75px 0.55px rgba(20, 12, 8, 0.94);
 }
 
-/* Only the approved active navigation underline and launch accent bar
-   read the beam; all other small bronze strokes remain static. */
+/* The active navigation underline and launch accent use the same raised-rule
+   material as the rest of the bronze line system. */
 .nav-links > li > a.active[data-bronze-shimmer]::after,
 .launch-card[data-bronze-shimmer]::before {
-  background-image: var(--novello-specular-reflection), linear-gradient(var(--gold), var(--gold));
+  background-image:
+    var(--novello-edge-star),
+    var(--novello-surface-sweep),
+    var(--novello-bronze-resting-specular),
+    var(--novello-bronze-line-gradient);
   filter: none;
-  box-shadow: none;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 253, 247, 0.26),
+    0 1px 0.8px rgba(0, 0, 0, 0.48);
 }
 
 .launch-card a.launch-card-cta[data-bronze-shimmer]::after {
   background-image:
-    var(--novello-text-sparkles),
-    var(--novello-specular-reflection),
+    var(--novello-edge-star),
+    var(--novello-upper-edge-roll),
+    var(--novello-surface-sweep),
+    var(--novello-convex-face-roll),
     var(--novello-bronze-badge-face);
   -webkit-background-clip: text;
   background-clip: text;
@@ -434,6 +616,61 @@
   color: transparent;
   filter: none;
   text-shadow: none;
+}
+
+/* Elements that become bronze only on interaction borrow the same material
+   while that state is visible; their neutral resting colours are unchanged. */
+:is(
+  .nav-links a,
+  .nav-dropdown-menu a,
+  .footer-grid a,
+  .contact-detail a,
+  .contact-person a,
+  .inline-link,
+  .btn-ghost-dark
+)[data-bronze-shimmer]:hover,
+.nav-dropdown-menu a.active[data-bronze-shimmer] {
+  background-image:
+    var(--novello-edge-star),
+    var(--novello-upper-edge-roll),
+    var(--novello-surface-sweep),
+    var(--novello-convex-face-roll),
+    var(--novello-concave-return),
+    var(--novello-bronze-resting-specular),
+    var(--novello-bronze-metallic-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  text-shadow: none;
+  filter: var(--novello-bronze-text-depth);
+}
+
+.btn-ghost[data-bronze-shimmer]:hover {
+  background-image:
+    var(--novello-edge-star),
+    var(--novello-upper-edge-roll),
+    var(--novello-surface-sweep),
+    var(--novello-convex-face-roll),
+    var(--novello-concave-return),
+    var(--novello-bronze-resting-specular),
+    var(--novello-bronze-badge-face);
+  border-color: #3F2E1B;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 253, 247, 0.50),
+    inset 0 -2px 1.4px rgba(63, 46, 27, 0.54),
+    0 0 0 1px #3F2E1B,
+    0 5px 5px rgba(14, 8, 5, 0.42);
+  filter: none;
+}
+
+.footer-social a[data-bronze-shimmer]:hover {
+  color: var(--novello-bronze-highlight);
+  border-color: var(--novello-bronze-mid);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 253, 247, 0.30),
+    0 2px 2px rgba(0, 0, 0, 0.46);
+  filter: none;
 }
 
 /* Keep the enlarged desktop identity comfortably clear of the hamburger on
