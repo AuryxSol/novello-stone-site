@@ -55,6 +55,19 @@ Check these widths after any layout, typography, navigation, or image change:
 
 At every size: no horizontal page overflow, no clipped headings, no overlapping controls, no missing navigation mode, no broken images, and a fixed transparent navigation bar. The complete N and `Novello Stone` wordmark must remain legible at the smallest width.
 
+## Approved responsive typography scale
+
+The canonical display-size layer is `css/typography-scale.css`. It is loaded after `css/approved-material.css` on every public page so it changes only scale and rhythm without replacing the approved typefaces, metallic material, beam, or button styling.
+
+- Wide-screen home hero title: maximum `7.1rem`.
+- Wide-screen page title: maximum `6.2rem`.
+- Long About, Our Story, and Contact titles: maximum `5.6rem`.
+- Section titles: maximum `4.25rem`; closing statements: maximum `4.6rem`.
+- Tablet and phone ranges are explicitly stepped down at `1180px`, `960px`, and `720px`.
+- Short landscape screens receive a reduced vertical scale at `760px` height and below.
+
+Do not restore the former uncapped `8vw` page-title or `9.3vw` hero-title rules. Any future adjustment should change the shared variables in `css/typography-scale.css`, not add one-off inline sizes to individual pages.
+
 ## Adding real-work images
 
 1. Keep original photographs outside the website as the archive copy.
