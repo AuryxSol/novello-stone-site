@@ -1,8 +1,4 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "redirects": [
-    { "source": "/services.html", "destination": "/our-story.html", "permanent": true },
-    { "source": "/about.html", "destination": "/our-story.html", "permanent": true },
-    { "source": "/maintenance.html", "destination": "/history-of-stone.html", "permanent": true }
-  ]
+  "redirects": []
 }
