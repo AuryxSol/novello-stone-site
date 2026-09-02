@@ -1,0 +1,551 @@
+/* ===========================================================
+   NOVELLO STONE — approved bronze-gold material system
+   The values and timing mirror material-proof.html exactly.
+   =========================================================== */
+
+:root {
+  --approved-highlight: #F1D9B7;
+  --approved-light-gold: #D2B38C;
+  --approved-mid-gold: #B9975F;
+  --approved-brand-gold: #A5833F;
+  --approved-bronze: #8C6437;
+  --approved-shadow: #3F2E1B;
+
+  --approved-metal-face: linear-gradient(180deg,
+    var(--approved-highlight) 0%,
+    var(--approved-light-gold) 20%,
+    var(--approved-mid-gold) 78%,
+    var(--approved-brand-gold) 91%,
+    var(--approved-bronze) 96%,
+    var(--approved-shadow) 100%);
+
+  --approved-polished-face: linear-gradient(180deg,
+    var(--approved-highlight) 0%,
+    var(--approved-light-gold) 16%,
+    var(--approved-mid-gold) 54%,
+    var(--approved-brand-gold) 82%,
+    var(--approved-bronze) 100%);
+
+  --approved-metal-line: linear-gradient(90deg,
+    var(--approved-shadow) 0%,
+    var(--approved-bronze) 12%,
+    var(--approved-brand-gold) 34%,
+    var(--approved-mid-gold) 45%,
+    var(--approved-light-gold) 50%,
+    var(--approved-mid-gold) 55%,
+    var(--approved-brand-gold) 66%,
+    var(--approved-bronze) 88%,
+    var(--approved-shadow) 100%);
+  --approved-metal-line-vertical: linear-gradient(180deg,
+    var(--approved-shadow) 0%,
+    var(--approved-bronze) 12%,
+    var(--approved-brand-gold) 34%,
+    var(--approved-mid-gold) 45%,
+    var(--approved-light-gold) 50%,
+    var(--approved-mid-gold) 55%,
+    var(--approved-brand-gold) 66%,
+    var(--approved-bronze) 88%,
+    var(--approved-shadow) 100%);
+
+  --approved-brush: repeating-linear-gradient(90deg,
+    rgba(255,255,255,.07) 0 .55px,
+    rgba(63,46,27,.06) .8px 1.3px,
+    transparent 1.6px 2.35px);
+
+  --approved-beam-x: -120px;
+  --approved-beam-left: 0px;
+  --approved-beam-strength: 0;
+  --approved-beam-strip: linear-gradient(104deg,
+    transparent 0%,
+    transparent 32%,
+    rgba(241,217,183,.08) 38%,
+    rgba(255,238,207,.38) 44%,
+    rgba(255,249,235,.90) 48.2%,
+    #fff 49.4%,
+    #fff 50.6%,
+    rgba(255,249,235,.90) 51.8%,
+    rgba(255,238,207,.38) 56%,
+    rgba(241,217,183,.08) 62%,
+    transparent 68%,
+    transparent 100%);
+  --approved-beam-sparkle: radial-gradient(circle,
+    #fff 0 1px,
+    rgba(255,250,238,.98) 1.5px,
+    rgba(241,217,183,.76) 3px,
+    rgba(241,217,183,.22) 5px,
+    transparent 8px);
+
+  /* Keep all legacy bronze consumers on the supplied six-colour scale. */
+  --novello-bronze-shadow: var(--approved-shadow);
+  --novello-bronze-deep: var(--approved-bronze);
+  --novello-bronze-base: var(--approved-brand-gold);
+  --novello-bronze-mid: var(--approved-mid-gold);
+  --novello-bronze-light: var(--approved-light-gold);
+  --novello-bronze-highlight: var(--approved-highlight);
+  --gold-shadow: var(--approved-shadow);
+  --gold-deep: var(--approved-bronze);
+  --gold-base: var(--approved-brand-gold);
+  --gold-mid: var(--approved-mid-gold);
+  --gold-light: var(--approved-light-gold);
+  --gold-highlight: var(--approved-highlight);
+  --gold: var(--approved-brand-gold);
+  --gold-dark: var(--approved-shadow);
+  --gold-soft: var(--approved-mid-gold);
+  --hairline: rgba(185,151,95,.36);
+  --gold-border: rgba(185,151,95,.42);
+  --bronze-line: rgba(185,151,95,.34);
+}
+
+/* Retire the pre-approval brightness pulse while keeping its consumers safe. */
+[data-bronze-shimmer] { --shimmer-strength: 0 !important; }
+
+/* All small and medium bronze copy: light-majority brushed face, a polished
+   white strip and a narrow lower shadow lip repeated independently per line. */
+[data-approved-metal-text]:not(.chrome-button-label) {
+  color: transparent !important;
+  -webkit-text-fill-color: transparent !important;
+  background-image:
+    var(--approved-beam-sparkle),
+    var(--approved-beam-strip),
+    var(--approved-brush),
+    var(--approved-metal-face) !important;
+  background-repeat: no-repeat, no-repeat, repeat, repeat-y !important;
+  background-position:
+    calc(var(--approved-beam-x) - var(--approved-beam-left) - 9px) 18%,
+    calc(var(--approved-beam-x) - var(--approved-beam-left) - 38px) center,
+    0 0,
+    0 0 !important;
+  background-size: 18px 18px, 76px 100%, auto, 100% 1.25em !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  paint-order: stroke fill;
+  -webkit-text-stroke: .18px rgba(63,46,27,.72);
+  filter:
+    drop-shadow(0 1px 0 rgba(63,46,27,.76))
+    drop-shadow(0 2px 2px rgba(0,0,0,.48)) !important;
+}
+
+/* The signature wordmark and hero word share the button's lighter approved
+   face while retaining their brushed lettering and restrained badge bevel. */
+.brand-wordmark,
+.hero h1 em,
+.hero h1 em .hero-metal-word {
+  color: transparent !important;
+  -webkit-text-fill-color: transparent !important;
+  background-image:
+    var(--approved-beam-sparkle),
+    var(--approved-beam-strip),
+    var(--approved-brush),
+    var(--approved-polished-face) !important;
+  background-repeat: no-repeat, no-repeat, repeat, repeat-y !important;
+  background-position:
+    calc(var(--approved-beam-x) - var(--approved-beam-left) - 9px) 18%,
+    calc(var(--approved-beam-x) - var(--approved-beam-left) - 38px) center,
+    0 0,
+    0 0 !important;
+  background-size: 18px 18px, 76px 100%, auto, 100% 1.2em !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  paint-order: stroke fill;
+  -webkit-text-stroke: .32px rgba(63,46,27,.88);
+  filter:
+    drop-shadow(0 1px 0 rgba(63,46,27,.78))
+    drop-shadow(0 3px 2px rgba(0,0,0,.58)) !important;
+  text-shadow:
+    0 -1px 0 rgba(241,217,183,.28),
+    0 2px 0 rgba(63,46,27,.76) !important;
+}
+
+/* Reset the old gradient on the brand container so only the actual wordmark
+   and the masked N face receive the material. */
+.brand {
+  background: none !important;
+  -webkit-text-fill-color: currentColor !important;
+  color: inherit;
+  filter: none !important;
+  text-shadow: none !important;
+}
+
+.brand-wordmark {
+  display: inline-block;
+  font-family: var(--font-wordmark);
+  font-weight: 500;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+}
+
+.brand-mark-wrap {
+  position: relative;
+  display: block;
+  width: 50px;
+  height: 50px;
+  flex: 0 0 auto;
+  background: none !important;
+  -webkit-text-fill-color: initial !important;
+  filter: none !important;
+}
+
+.brand-mark-wrap .brand-mark {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter:
+    drop-shadow(0 1px 0 rgba(63,46,27,.78))
+    drop-shadow(0 5px 7px rgba(0,0,0,.42)) !important;
+}
+
+.brand-mark-wrap::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: var(--approved-beam-sparkle), var(--approved-beam-strip);
+  background-repeat: no-repeat;
+  background-position:
+    calc(var(--approved-beam-x) - var(--approved-beam-left) - 9px) 24%,
+    calc(var(--approved-beam-x) - var(--approved-beam-left) - 38px) center;
+  background-size: 18px 18px, 76px 100%;
+  -webkit-mask: url('../img/novello-n-monogram-official-brand-gold-web-v4.png') center / contain no-repeat;
+  mask: url('../img/novello-n-monogram-official-brand-gold-web-v4.png') center / contain no-repeat;
+  filter: drop-shadow(0 0 4px rgba(255,239,211,.72));
+  pointer-events: none;
+}
+
+/* Smooth satin-gold controls from the approved button reference. */
+.btn,
+.nav-cta {
+  position: relative;
+  border-radius: 4px !important;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition:
+    transform 120ms cubic-bezier(.2,.7,.3,1),
+    box-shadow 120ms ease,
+    filter 120ms ease !important;
+}
+
+.btn-primary,
+.nav-cta {
+  overflow: hidden;
+  color: #160e08 !important;
+  border: 1px solid var(--approved-shadow) !important;
+  background-image:
+    var(--approved-beam-sparkle),
+    var(--approved-beam-strip),
+    var(--approved-polished-face) !important;
+  background-repeat: no-repeat, no-repeat, no-repeat !important;
+  background-position:
+    calc(var(--approved-beam-x) - var(--approved-beam-left) - 9px) 4px,
+    calc(var(--approved-beam-x) - var(--approved-beam-left) - 38px) center,
+    center !important;
+  background-size: 18px 18px, 76px 100%, 100% 100% !important;
+  background-clip: padding-box !important;
+  box-shadow:
+    inset 0 0 0 1px rgba(241,217,183,.40),
+    inset 0 2px 0 rgba(241,217,183,.52),
+    inset 1px 0 0 rgba(210,179,140,.24),
+    inset -1px 0 0 rgba(140,100,55,.30),
+    inset 0 -2px 0 rgba(63,46,27,.52),
+    0 7px 15px rgba(0,0,0,.30) !important;
+  filter: none !important;
+  text-shadow: 0 1px 0 rgba(241,217,183,.42);
+}
+
+.btn-primary::after,
+.nav-cta::after {
+  content: '';
+  position: absolute;
+  right: 2px;
+  bottom: 1px;
+  left: 2px;
+  height: 1px;
+  border-radius: 999px;
+  background-image: var(--approved-beam-strip), linear-gradient(90deg,
+    transparent 0%,
+    rgba(63,46,27,.58) 10%,
+    rgba(140,100,55,.86) 50%,
+    rgba(63,46,27,.58) 90%,
+    transparent 100%);
+  background-repeat: no-repeat, no-repeat;
+  background-position:
+    calc(var(--approved-beam-x) - var(--approved-beam-left) - 38px) center,
+    center;
+  background-size: 76px 100%, 100% 100%;
+  pointer-events: none;
+}
+
+.chrome-button-label,
+.chrome-button-label[data-approved-metal-text] {
+  position: relative;
+  z-index: 1;
+  color: #160e08 !important;
+  -webkit-text-fill-color: #160e08 !important;
+  background: none !important;
+  -webkit-text-stroke: 0 !important;
+  filter: none !important;
+  text-shadow: 0 1px 0 rgba(241,217,183,.42) !important;
+}
+
+.btn-primary:hover,
+.nav-cta:hover {
+  background-image:
+    var(--approved-beam-sparkle),
+    var(--approved-beam-strip),
+    var(--approved-polished-face) !important;
+  background-repeat: no-repeat, no-repeat, no-repeat !important;
+  background-position:
+    calc(var(--approved-beam-x) - var(--approved-beam-left) - 9px) 4px,
+    calc(var(--approved-beam-x) - var(--approved-beam-left) - 38px) center,
+    center !important;
+  background-size: 18px 18px, 76px 100%, 100% 100% !important;
+  transform: none;
+  filter: none !important;
+  box-shadow:
+    inset 0 0 0 1px rgba(241,217,183,.40),
+    inset 0 2px 0 rgba(241,217,183,.52),
+    inset 1px 0 0 rgba(210,179,140,.24),
+    inset -1px 0 0 rgba(140,100,55,.30),
+    inset 0 -2px 0 rgba(63,46,27,.52),
+    0 7px 15px rgba(0,0,0,.30) !important;
+}
+
+.btn:active,
+.nav-cta:active,
+.btn-primary:active,
+.nav-cta:active {
+  transform: translateY(2px) scale(.995) !important;
+}
+
+.btn-primary:active,
+.nav-cta:active {
+  box-shadow:
+    inset 0 2px 3px rgba(63,46,27,.30),
+    inset 1px 0 0 rgba(210,179,140,.24),
+    inset -1px 0 0 rgba(140,100,55,.28),
+    inset 0 -1px 0 rgba(241,217,183,.24),
+    0 3px 9px rgba(0,0,0,.24) !important;
+}
+
+/* Direct bronze rules use the approved dark-end/light-centre treatment. */
+[data-approved-metal-line] {
+  background-image: var(--approved-beam-strip), var(--approved-metal-line) !important;
+  background-repeat: no-repeat, no-repeat !important;
+  background-position:
+    calc(var(--approved-beam-x) - var(--approved-beam-left) - 38px) center,
+    center !important;
+  background-size: 76px 100%, 100% 100% !important;
+  box-shadow: 0 1px 0 rgba(63,46,27,.72);
+}
+
+.eyebrow::before,
+.brand-divider::before,
+.brand-divider::after,
+.nav-links a.active::after,
+.launch-card::before,
+.corridor-route::before,
+.page-rail button.is-active::after,
+.page-rail button:hover::after {
+  background-image: var(--approved-beam-strip), var(--approved-metal-line) !important;
+  background-repeat: no-repeat, no-repeat !important;
+  background-position:
+    calc(var(--approved-beam-x) - var(--approved-beam-left) - 38px) center,
+    center !important;
+  background-size: 76px 100%, 100% 100% !important;
+  box-shadow: 0 1px 0 rgba(63,46,27,.72) !important;
+}
+
+/* Structural rules receive their own non-interactive overlay so an existing
+   border can keep its layout while adopting the approved tapered finish. */
+[data-approved-edge-host] { position: relative; }
+
+.approved-edge-line {
+  position: absolute;
+  z-index: 2;
+  display: block;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.approved-edge-line[data-approved-edge="top"],
+.approved-edge-line[data-approved-edge="bottom"] {
+  right: 0;
+  left: 0;
+  height: 1px;
+}
+
+.approved-edge-line[data-approved-edge="top"] { top: -1px; }
+.approved-edge-line[data-approved-edge="bottom"] { bottom: -1px; }
+
+.approved-edge-line[data-approved-edge="left"],
+.approved-edge-line[data-approved-edge="right"] {
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background-image: var(--approved-beam-strip), var(--approved-metal-line-vertical) !important;
+}
+
+.approved-edge-line[data-approved-edge="left"] { left: -1px; }
+.approved-edge-line[data-approved-edge="right"] { right: -1px; }
+
+.brand-divider .diamond,
+.corridor-route span::before {
+  background-image:
+    var(--approved-beam-sparkle),
+    var(--approved-beam-strip),
+    var(--approved-metal-face) !important;
+  background-repeat: no-repeat, no-repeat, no-repeat !important;
+  background-position:
+    calc(var(--approved-beam-x) - var(--approved-beam-left) - 9px) center,
+    calc(var(--approved-beam-x) - var(--approved-beam-left) - 38px) center,
+    center !important;
+  background-size: 18px 18px, 76px 100%, 100% 100% !important;
+}
+
+.faq-item summary::after,
+.pillar-link::after,
+.launch-card-cta::after {
+  color: transparent !important;
+  -webkit-text-fill-color: transparent !important;
+  background-image:
+    var(--approved-beam-sparkle),
+    var(--approved-beam-strip),
+    var(--approved-brush),
+    var(--approved-metal-face) !important;
+  background-repeat: no-repeat, no-repeat, repeat, no-repeat !important;
+  background-position:
+    calc(var(--approved-beam-x) - var(--approved-beam-left) - 9px) 18%,
+    calc(var(--approved-beam-x) - var(--approved-beam-left) - 38px) center,
+    0 0,
+    center !important;
+  background-size: 18px 18px, 76px 100%, auto, 100% 100% !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  filter: drop-shadow(0 1px 0 rgba(63,46,27,.72)) !important;
+}
+
+/* Existing bronze frames retain their layout and shadow; the source adds only
+   a restrained synchronized edge pickup as it reaches each frame. */
+[data-approved-metal-frame] {
+  border-color: rgba(185,151,95,.40) !important;
+  outline: 1px solid rgba(241,217,183, calc(var(--approved-beam-strength) * .28));
+  outline-offset: -1px;
+}
+
+@media (max-width: 720px) {
+  .brand-mark-wrap { width: 42px; height: 42px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn,
+  .nav-cta { transition-duration: 1ms !important; }
+}
+
+/* ===========================================================
+   Continuous fixed site background
+   One calm stone plane sits behind every route. All sections, editorial
+   layers, images, cards and controls remain normal scrolling content.
+   =========================================================== */
+
+html { background: #080807 !important; }
+
+body {
+  position: relative;
+  isolation: isolate;
+  min-height: 100%;
+  background: transparent !important;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  opacity: 1 !important;
+  background-image:
+    linear-gradient(108deg,
+      rgba(8,8,7,.84) 0%,
+      rgba(8,8,7,.61) 52%,
+      rgba(8,8,7,.78) 100%),
+    url('../img/novello-surfaces/novello-surface-05.webp') !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  background-size: cover !important;
+  mix-blend-mode: normal !important;
+  transform: none !important;
+}
+
+/* Remove every per-section background restart and vignette. This is the key
+   seam-free mapping: the fixed body plane is now the only page backdrop. */
+section,
+.page-header,
+.material-hero,
+.contact-section,
+footer {
+  background-color: transparent !important;
+  background-image: none !important;
+  border-top: 0 !important;
+  border-bottom: 0 !important;
+}
+
+.stone-section::before,
+.stone-section::after,
+.luxe-surface:not(.hero)::before,
+.luxe-surface:not(.hero)::after {
+  content: none !important;
+  display: none !important;
+  background: none !important;
+}
+
+/* The hero's video, overlay and fine architectural texture are deliberately
+   untouched; only its old flat fallback and dividing line are cleared. */
+.hero {
+  background: transparent !important;
+  border-top: 0 !important;
+  border-bottom: 0 !important;
+}
+
+/* Transparent navigation shell: N, wordmark and controls remain crisp while
+   the hero clip (and later the common stone plane) shows straight through. */
+.site-nav,
+.site-nav.nav-scrolled {
+  position: fixed !important;
+  background: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.site-nav::before {
+  content: none !important;
+  display: none !important;
+  background: none !important;
+}
+
+@media (max-width: 960px) {
+  .mobile-menu {
+    position: fixed !important;
+    top: var(--nav-height) !important;
+    min-height: calc(100svh - var(--nav-height));
+  }
+}
+
+/* Keep the complete wordmark on one line beside the menu control even on
+   compact phones; the approved face, bevel and synchronized beam are unchanged. */
+@media (max-width: 380px) {
+  .brand,
+  .brand[data-bronze-shimmer] {
+    gap: .5rem !important;
+    font-size: .9rem !important;
+    letter-spacing: .14em !important;
+    white-space: nowrap;
+  }
+
+  .brand-mark-wrap,
+  .brand .brand-mark-wrap,
+  .brand-mark {
+    width: 38px !important;
+    height: 38px !important;
+  }
+}
+

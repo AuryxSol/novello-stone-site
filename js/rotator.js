@@ -19,3 +19,5 @@
           rotators.forEach(startRotator);
         });
   })();
+
+

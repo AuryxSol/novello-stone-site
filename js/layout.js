@@ -1,19 +1,16 @@
 // Shared nav + footer, injected on every page so they stay identical
 // without needing a build step. `data-page` on <body> sets active nav link.
 
-// Load the approved chrome-beam rendering layer and controller once on
-// every page. Keeping both in shared layout avoids page-by-page drift.
-if (!document.querySelector('link[href="css/chrome-beam.css"]')) {
-  const chromeBeamStyles = document.createElement('link');
-  chromeBeamStyles.rel = 'stylesheet';
-  chromeBeamStyles.href = 'css/chrome-beam.css';
-  document.head.appendChild(chromeBeamStyles);
-}
+// The approved bronze-gold material system is loaded once here so every public
+// page shares the exact same swatch, bevel, button finish and light source.
+const APPROVED_MATERIAL_VERSION = '20260902-approved-material-v4';
 
-if (!document.querySelector('script[src="js/shimmer.js"]')) {
-  const shimmerScript = document.createElement('script');
-  shimmerScript.src = 'js/shimmer.js';
-  document.head.appendChild(shimmerScript);
+if (!document.querySelector('link[data-approved-material]')) {
+  const materialStyles = document.createElement('link');
+  materialStyles.rel = 'stylesheet';
+  materialStyles.href = `css/approved-material.css?v=${APPROVED_MATERIAL_VERSION}`;
+  materialStyles.setAttribute('data-approved-material', '');
+  document.head.appendChild(materialStyles);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -22,9 +19,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const materialsActive = materialPages.includes(activePage);
 
   const navHTML = `
-    <nav class="site-nav">
+    <nav class="site-nav" aria-label="Primary navigation">
       <div class="container">
-        <a href="index.html" class="brand"><span class="brand-mark-wrap"><img src="img/novello-n-monogram.png" alt="" class="brand-mark"><span class="brand-mark-reflection" aria-hidden="true"></span></span>NOVELLO <span>STONE</span></a>
+        <a href="index.html" class="brand" aria-label="Novello Stone"><span class="brand-mark-wrap" aria-hidden="true"><img src="img/novello-n-monogram-official-brand-gold-web-v4.png" alt="" class="brand-mark" fetchpriority="high"></span><span class="brand-wordmark" aria-hidden="true">Novello Stone</span></a>
         <ul class="nav-links">
           <li><a href="index.html" class="${activePage === 'home' ? 'active' : ''}">Home</a></li>
           <li class="nav-dropdown">
@@ -37,22 +34,25 @@ document.addEventListener('DOMContentLoaded', () => {
               <a href="quartzite.html" class="${activePage === 'quartzite' ? 'active' : ''}">Quartzite</a>
             </div>
           </li>
+          <li><a href="services.html" class="${activePage === 'services' || activePage === 'maintenance' ? 'active' : ''}">Services</a></li>
           <li><a href="our-story.html" class="${activePage === 'our-story' ? 'active' : ''}">Our Story</a></li>
           <li><a href="contact.html" class="${activePage === 'contact' ? 'active' : ''}">Contact</a></li>
         </ul>
         <a href="contact.html" class="nav-cta"><span class="chrome-button-label">Request a Quote</span></a>
-        <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">
+        <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
           <span></span><span></span><span></span>
         </button>
       </div>
     </nav>
-    <div class="mobile-menu">
+    <div class="mobile-menu" id="mobile-menu">
       <a href="index.html">Home</a>
       <a href="history-of-stone.html">History of Stone</a>
       <a href="marble.html">Marble</a>
       <a href="engineered-stone.html">Engineered Stone</a>
       <a href="porcelain.html">Large-Format Porcelain</a>
       <a href="quartzite.html">Quartzite</a>
+      <a href="services.html">Services</a>
+      <a href="maintenance.html">Maintenance</a>
       <a href="our-story.html">Our Story</a>
       <a href="contact.html">Contact</a>
       <a href="contact.html" class="mobile-menu-cta">Request a Quote &rarr;</a>
@@ -91,6 +91,8 @@ document.addEventListener('DOMContentLoaded', () => {
             <a href="engineered-stone.html">Engineered Stone</a>
             <a href="porcelain.html">Large-Format Porcelain</a>
             <a href="quartzite.html">Quartzite</a>
+            <a href="services.html">Services</a>
+            <a href="maintenance.html">Maintenance</a>
             <a href="our-story.html">Our Story</a>
             <a href="contact.html">Contact</a>
           </div>
@@ -111,13 +113,42 @@ document.addEventListener('DOMContentLoaded', () => {
   const toggle = document.querySelector('.nav-toggle');
   const mobileMenu = document.querySelector('.mobile-menu');
   if (toggle && mobileMenu) {
-    toggle.addEventListener('click', () => {
-      const isOpen = mobileMenu.classList.toggle('open');
+    const setMenuState = (isOpen) => {
+      mobileMenu.classList.toggle('open', isOpen);
       toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      toggle.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
+    };
+
+    toggle.addEventListener('click', () => {
+      setMenuState(!mobileMenu.classList.contains('open'));
     });
     mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-      mobileMenu.classList.remove('open');
-      toggle.setAttribute('aria-expanded', 'false');
+      setMenuState(false);
     }));
+
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape' && mobileMenu.classList.contains('open')) {
+        setMenuState(false);
+        toggle.focus();
+      }
+    });
+
+    const desktopNavigation = window.matchMedia('(min-width: 961px)');
+    const closeMenuAtDesktop = event => {
+      if (event.matches) setMenuState(false);
+    };
+    if (desktopNavigation.addEventListener) {
+      desktopNavigation.addEventListener('change', closeMenuAtDesktop);
+    } else {
+      desktopNavigation.addListener(closeMenuAtDesktop);
+    }
+  }
+
+  if (!document.querySelector('script[data-approved-material-beam]')) {
+    const materialBeam = document.createElement('script');
+    materialBeam.src = `js/approved-material-beam.js?v=${APPROVED_MATERIAL_VERSION}`;
+    materialBeam.setAttribute('data-approved-material-beam', '');
+    document.body.appendChild(materialBeam);
   }
 });
+

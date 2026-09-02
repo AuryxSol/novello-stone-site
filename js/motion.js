@@ -28,7 +28,8 @@
     initHeroParallax();
     initHeroVideo();
     initCounters();
-    initTilt('.pillar-card, .value-card, .scenario-card');
+    // The editorial redesign keeps card movement restrained. Hover lift is
+    // handled in CSS; pointer-driven 3D tilt made the material feel less calm.
     initFaqAnimations();
   });
 
@@ -89,7 +90,15 @@
             var span = document.createElement('span');
             span.className = 'cascade-word';
             span.style.setProperty('--i', counter.n++);
-            span.textContent = part;
+            if (node.matches && node.matches('.hero h1 em')) {
+              span.classList.add('hero-metal-word');
+              /* Keep punctuation attached to the word. The earlier
+                 character-level chrome experiment could strand the comma
+                 when the hero reflowed on wide screens. */
+              span.textContent = part;
+            } else {
+              span.textContent = part;
+            }
             frag.appendChild(span);
           }
         });
@@ -274,3 +283,4 @@
     };
   }
 })();
+

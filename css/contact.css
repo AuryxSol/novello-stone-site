@@ -28,6 +28,29 @@
   font-size: 1.05rem;
   display: block;
 }
+.contact-detail .contact-location-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.contact-location-links a {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  padding: 0.38rem 0.62rem;
+  border: 1px solid var(--hairline);
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  color: var(--travertine);
+  background: rgba(255, 255, 255, 0.025);
+}
+.contact-location-links a:hover,
+.contact-location-links a:focus-visible {
+  border-color: rgba(185, 151, 95, 0.64);
+  color: var(--gold-light);
+}
 /* Bronze-gold only while hovered — resting link color is inherited
    (non-gold) and must stay untouched; scoped to :hover only. */
 .contact-detail a:hover {
@@ -46,7 +69,7 @@
   border-bottom: 1px solid var(--hairline);
 }
 .contact-person {
-  border-left: 1px solid rgba(185, 151, 95, 0.25);
+  border-left: 1px solid rgba(165, 131, 63, 0.25);
   padding-left: var(--space-2);
 }
 .contact-person .mono-label {
@@ -160,3 +183,4 @@
 @media (max-width: 860px) {
   .contact-section .container { grid-template-columns: 1fr; }
 }
+

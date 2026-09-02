@@ -1,0 +1,407 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500&family=Cormorant+Garamond:ital,wght@0,500;1,500&family=IBM+Plex+Mono:wght@400;500&family=Source+Sans+3:wght@400;500;600&display=swap');
+
+:root {
+  --canvas: #090807;
+  --panel: #12100e;
+  --stone: #f3f0ea;
+  --muted: #a69d92;
+  --highlight: #f1d9b7;
+  --light-gold: #d2b38c;
+  --mid-gold: #b9975f;
+  --brand-gold: #a5833f;
+  --bronze: #8c6437;
+  --shadow: #3f2e1b;
+  /* Face lighting now reads top-to-bottom: polished crown above, recessed
+     bronze and shadow at the foot of every glyph and solid control. */
+  --metal-face: linear-gradient(180deg,
+    var(--highlight) 0%,
+    var(--light-gold) 20%,
+    var(--mid-gold) 78%,
+    var(--brand-gold) 91%,
+    var(--bronze) 96%,
+    var(--shadow) 100%);
+  --polished-button-face: linear-gradient(180deg,
+    var(--highlight) 0%,
+    var(--light-gold) 16%,
+    var(--mid-gold) 54%,
+    var(--brand-gold) 82%,
+    var(--bronze) 100%);
+  /* Fine architectural rule from the supplied reference: dark tapered ends,
+     a restrained gold centre pickup, and the shadow directly underneath. */
+  --metal-line: linear-gradient(90deg,
+    var(--shadow) 0%,
+    var(--bronze) 12%,
+    var(--brand-gold) 34%,
+    var(--mid-gold) 45%,
+    var(--light-gold) 50%,
+    var(--mid-gold) 55%,
+    var(--brand-gold) 66%,
+    var(--bronze) 88%,
+    var(--shadow) 100%);
+  --brush: repeating-linear-gradient(90deg,
+    rgba(255,255,255,.07) 0 .55px,
+    rgba(63,46,27,.06) .8px 1.3px,
+    transparent 1.6px 2.35px);
+  /* Every reflection reads the same viewport-level x coordinate. The broad
+     warm shoulders reveal the brushed face; the narrow white core supplies
+     the polished strip-light hit. */
+  --beam-x: -120px;
+  --beam-left: 0px;
+  --beam-strip: linear-gradient(104deg,
+    transparent 0%,
+    transparent 32%,
+    rgba(241,217,183,.08) 38%,
+    rgba(255,238,207,.38) 44%,
+    rgba(255,249,235,.90) 48.2%,
+    #fff 49.4%,
+    #fff 50.6%,
+    rgba(255,249,235,.90) 51.8%,
+    rgba(255,238,207,.38) 56%,
+    rgba(241,217,183,.08) 62%,
+    transparent 68%,
+    transparent 100%);
+  --beam-sparkle: radial-gradient(circle,
+    #fff 0 1px,
+    rgba(255,250,238,.98) 1.5px,
+    rgba(241,217,183,.76) 3px,
+    rgba(241,217,183,.22) 5px,
+    transparent 8px);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  color: var(--stone);
+  background:
+    radial-gradient(circle at 76% 8%, rgba(165,131,63,.12), transparent 28rem),
+    linear-gradient(145deg, #070706, var(--canvas));
+  font-family: 'Source Sans 3', sans-serif;
+}
+
+.proof-shell {
+  width: min(1180px, calc(100% - 2rem));
+  margin: 0 auto;
+  padding: clamp(2rem, 6vw, 5rem) 0;
+}
+
+.proof-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(18rem, .62fr);
+  align-items: end;
+  gap: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid rgba(185,151,95,.3);
+}
+
+.proof-identity { display: flex; align-items: center; gap: 1.25rem; }
+.proof-logo {
+  position: relative;
+  display: block;
+  width: 78px;
+  height: 78px;
+  flex: 0 0 auto;
+}
+.proof-logo img { width: 100%; height: 100%; object-fit: contain; }
+.proof-logo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: var(--beam-sparkle), var(--beam-strip);
+  background-repeat: no-repeat;
+  background-position:
+    calc(var(--beam-x) - var(--beam-left) - 9px) 24%,
+    calc(var(--beam-x) - var(--beam-left) - 38px) center;
+  background-size: 18px 18px, 76px 100%;
+  -webkit-mask: url('../img/novello-n-monogram-official-brand-gold-web-v4.png') center / contain no-repeat;
+  mask: url('../img/novello-n-monogram-official-brand-gold-web-v4.png') center / contain no-repeat;
+  filter: drop-shadow(0 0 4px rgba(255,239,211,.72));
+  pointer-events: none;
+}
+
+.proof-kicker,
+.proof-label {
+  margin: 0 0 .65rem;
+  color: var(--light-gold);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: .7rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+
+.proof-header h1,
+.swatch-card h2 {
+  margin: 0;
+  font-family: 'Cinzel', serif;
+  font-weight: 500;
+  letter-spacing: .08em;
+}
+
+.proof-intro,
+.proof-note { color: var(--muted); }
+.proof-intro { max-width: 34rem; margin: 0; line-height: 1.65; }
+.proof-note { margin: 1rem 0 0; font-size: .84rem; }
+
+.proof-card {
+  margin-top: 1.25rem;
+  padding: clamp(1.4rem, 4vw, 2.6rem);
+  border: 1px solid rgba(185,151,95,.27);
+  border-radius: 12px;
+  background: linear-gradient(145deg, rgba(23,20,17,.91), rgba(8,8,7,.94));
+  box-shadow: inset 0 1px 0 rgba(241,217,183,.06), 0 24px 60px rgba(0,0,0,.2);
+}
+
+.proof-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+
+.proof-hero-sample h2 {
+  margin: 0;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(3.6rem, 8vw, 7.5rem);
+  font-weight: 500;
+  line-height: .88;
+  letter-spacing: -.035em;
+}
+
+.metal-display,
+.metal-text,
+.metal-heading,
+.metal-meta {
+  position: relative;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  background-image: var(--beam-sparkle), var(--beam-strip), var(--brush), var(--metal-face);
+  /* Repeat the vertical face on every typographic line. Without this, one
+     multi-line paragraph treats its final line as the bottom of one large
+     gradient and incorrectly turns the end of the sentence dark. */
+  background-repeat: no-repeat, no-repeat, repeat, repeat-y;
+  background-position:
+    calc(var(--beam-x) - var(--beam-left) - 9px) 18%,
+    calc(var(--beam-x) - var(--beam-left) - 38px) center,
+    0 0,
+    0 0;
+  background-size: 18px 18px, 76px 100%, auto, 100% 1.2em;
+  -webkit-background-clip: text;
+  background-clip: text;
+  paint-order: stroke fill;
+  filter:
+    drop-shadow(0 1px 0 rgba(63,46,27,.78))
+    drop-shadow(0 3px 2px rgba(0,0,0,.58));
+}
+
+.metal-display {
+  font-style: italic;
+  background-image: var(--beam-sparkle), var(--beam-strip), var(--brush), var(--polished-button-face);
+  -webkit-text-stroke: .35px rgba(63,46,27,.9);
+  text-shadow: 0 -1px 0 rgba(241,217,183,.3), 0 2px 0 rgba(63,46,27,.78);
+}
+
+.eyebrow-proof { display: flex; align-items: center; gap: .8rem; margin-top: 1.4rem; }
+.metal-line {
+  width: 44px;
+  height: 1px;
+  flex: 0 0 auto;
+  background-image: var(--beam-strip), var(--metal-line);
+  background-repeat: no-repeat, no-repeat;
+  background-position:
+    calc(var(--beam-x) - var(--beam-left) - 38px) center,
+    center;
+  background-size: 76px 100%, 100% 100%;
+  box-shadow: 0 1px 0 rgba(63,46,27,.78);
+}
+
+.metal-text,
+.metal-meta {
+  font-family: 'IBM Plex Mono', monospace;
+  text-transform: uppercase;
+  letter-spacing: .16em;
+}
+
+.metal-text {
+  font-size: .72rem;
+  background-size: 18px 18px, 76px 100%, auto, 100% 1.2em;
+}
+.metal-heading {
+  margin: 1.35rem 0 .8rem;
+  font-family: 'Cinzel', serif;
+  font-size: 1.35rem;
+  line-height: 1.3;
+  letter-spacing: .06em;
+  background-size: 18px 18px, 76px 100%, auto, 100% 1.3em;
+}
+.metal-meta {
+  margin: 0;
+  font-size: .68rem;
+  line-height: 1.8;
+  background-size: 18px 18px, 76px 100%, auto, 100% 1.8em;
+}
+
+.divider-proof { display: grid; grid-template-columns: 1fr 7px 1fr; align-items: center; gap: .8rem; margin-top: 2.1rem; }
+.divider-proof span {
+  height: 1px;
+  background-image: var(--beam-strip), var(--metal-line);
+  background-repeat: no-repeat, no-repeat;
+  background-position:
+    calc(var(--beam-x) - var(--beam-left) - 38px) center,
+    center;
+  background-size: 76px 100%, 100% 100%;
+  box-shadow: 0 1px 0 rgba(63,46,27,.78);
+}
+.divider-proof i {
+  width: 7px;
+  height: 7px;
+  background-image: var(--beam-sparkle), var(--beam-strip), var(--metal-face);
+  background-repeat: no-repeat, no-repeat, no-repeat;
+  background-position:
+    calc(var(--beam-x) - var(--beam-left) - 9px) center,
+    calc(var(--beam-x) - var(--beam-left) - 38px) center,
+    center;
+  background-size: 18px 18px, 76px 100%, 100% 100%;
+  transform: rotate(45deg);
+  box-shadow: 1px 1px 0 var(--shadow), 2px 2px 2px rgba(0,0,0,.5);
+}
+
+.button-row { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1.35rem; }
+.proof-button {
+  min-height: 48px;
+  padding: .9rem 1.65rem;
+  border-radius: 4px;
+  appearance: none;
+  position: relative;
+  overflow: hidden;
+  transform: none;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition:
+    transform 120ms cubic-bezier(.2,.7,.3,1),
+    box-shadow 120ms ease,
+    filter 120ms ease;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: .72rem;
+  font-weight: 500;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+}
+
+.proof-button::after {
+  content: '';
+  position: absolute;
+  right: 2px;
+  bottom: 1px;
+  left: 2px;
+  height: 1px;
+  border-radius: 999px;
+  background-image: var(--beam-strip), linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(63,46,27,.58) 10%,
+    rgba(140,100,55,.86) 50%,
+    rgba(63,46,27,.58) 90%,
+    transparent 100%
+  );
+  background-repeat: no-repeat, no-repeat;
+  background-position:
+    calc(var(--beam-x) - var(--beam-left) - 38px) center,
+    center;
+  background-size: 76px 100%, 100% 100%;
+  pointer-events: none;
+}
+
+.proof-button:active {
+  transform: translateY(2px) scale(.995);
+}
+
+.proof-button-primary {
+  color: #160e08;
+  border: 1px solid var(--shadow);
+  background-image: var(--beam-sparkle), var(--beam-strip), var(--polished-button-face);
+  background-repeat: no-repeat, no-repeat, no-repeat;
+  background-position:
+    calc(var(--beam-x) - var(--beam-left) - 9px) 4px,
+    calc(var(--beam-x) - var(--beam-left) - 38px) center,
+    center;
+  background-size: 18px 18px, 76px 100%, 100% 100%;
+  background-clip: padding-box;
+  box-shadow:
+    inset 0 0 0 1px rgba(241,217,183,.40),
+    inset 0 2px 0 rgba(241,217,183,.52),
+    inset 1px 0 0 rgba(210,179,140,.24),
+    inset -1px 0 0 rgba(140,100,55,.30),
+    inset 0 -2px 0 rgba(63,46,27,.52),
+    0 7px 15px rgba(0,0,0,.30);
+  text-shadow: 0 1px 0 rgba(241,217,183,.42);
+}
+
+.proof-button-primary:active {
+  box-shadow:
+    inset 0 2px 3px rgba(63,46,27,.30),
+    inset 1px 0 0 rgba(210,179,140,.24),
+    inset -1px 0 0 rgba(140,100,55,.28),
+    inset 0 -1px 0 rgba(241,217,183,.24),
+    0 3px 9px rgba(0,0,0,.24);
+}
+
+.proof-button-outline {
+  color: var(--light-gold);
+  border: 1px solid var(--mid-gold);
+  background: rgba(255,255,255,.015);
+  box-shadow:
+    inset 0 1px 0 rgba(241,217,183,.18),
+    inset 1px 0 0 rgba(210,179,140,.10),
+    inset -1px 0 0 rgba(140,100,55,.14),
+    inset 0 -1px 0 rgba(63,46,27,.42),
+    0 8px 18px rgba(0,0,0,.22);
+}
+
+.proof-button-outline::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  border-radius: inherit;
+  background-image: var(--beam-sparkle), var(--beam-strip);
+  background-repeat: no-repeat;
+  background-position:
+    calc(var(--beam-x) - var(--beam-left) - 9px) 4px,
+    calc(var(--beam-x) - var(--beam-left) - 38px) center;
+  background-size: 18px 18px, 76px 100%;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  filter: drop-shadow(0 0 3px rgba(255,239,211,.58));
+  pointer-events: none;
+}
+
+.proof-button-outline:active {
+  box-shadow:
+    inset 0 2px 3px rgba(63,46,27,.24),
+    inset 1px 0 0 rgba(210,179,140,.08),
+    inset -1px 0 0 rgba(140,100,55,.12),
+    inset 0 -1px 0 rgba(241,217,183,.12),
+    0 3px 9px rgba(0,0,0,.18);
+}
+
+.swatch-card h2 { font-size: 1.35rem; }
+.swatches { display: grid; grid-template-columns: repeat(6, 1fr); gap: .75rem; margin-top: 1.4rem; }
+.swatches span { display: grid; gap: .35rem; }
+.swatches b { display: block; aspect-ratio: 1.35; border-radius: 8px; background: var(--swatch); border: 1px solid rgba(255,255,255,.14); }
+.swatches code { color: var(--stone); font-family: 'IBM Plex Mono', monospace; font-size: .73rem; }
+.swatches small { color: var(--muted); }
+
+@media (max-width: 760px) {
+  .proof-header,
+  .proof-grid { grid-template-columns: 1fr; }
+  .proof-hero-sample h2 { font-size: clamp(3.1rem, 16vw, 5.2rem); }
+  .swatches { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 430px) {
+  .proof-identity { align-items: flex-start; }
+  .proof-logo { width: 58px; height: 58px; }
+  .button-row { display: grid; }
+  .swatches { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .proof-button { transition-duration: 1ms; }
+}
+

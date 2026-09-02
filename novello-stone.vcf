@@ -1,12 +1,11 @@
 BEGIN:VCARD
 VERSION:3.0
-N:;Novello Stone;;;
 FN:Novello Stone
-ORG:Novello Stone (Pty) Ltd
-TITLE:Stone Fabrication, Tiling & Restoration
+ORG:Novello Stone
 TEL;TYPE=CELL,VOICE:+27834792643
 EMAIL;TYPE=INTERNET:studio@novello.co.za
-URL:https://www.novello.co.za
-ADR;TYPE=WORK:;;Mossel Bay;Western Cape;;South Africa
-NOTE:Garden Route corridor — Mossel Bay to Plettenberg Bay
+URL:https://www.novello.co.za/
+ADR;TYPE=WORK:;;Mossel Bay;Western Cape;;;South Africa
+NOTE:Stone fabrication, tiling and restoration across the Garden Route.
 END:VCARD
+

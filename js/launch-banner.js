@@ -22,7 +22,9 @@
       'If you&rsquo;re planning ahead &mdash; pre-construction, build timelines, or tenders &mdash; we&rsquo;d welcome a conversation any time. Bookings open from late January/February 2027.</p>' +
       '<a href="contact.html" class="launch-card-cta">Get in touch</a>';
 
-    document.body.appendChild(card);
+    var openingPanel = document.querySelector('.hero, .page-header, .material-hero, .contact-section, .about-intro');
+    if (openingPanel) openingPanel.insertAdjacentElement('afterend', card);
+    else document.body.appendChild(card);
 
     requestAnimationFrame(function () {
       requestAnimationFrame(function () { card.classList.add('is-visible'); });
@@ -35,3 +37,4 @@
     });
   });
 })();
+

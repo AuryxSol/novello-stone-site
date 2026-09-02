@@ -1,0 +1,83 @@
+# Novello Stone approved site baseline
+
+Last locked: 2 September 2026
+
+This document is the source-of-truth checklist for future site edits. Preserve the approved visual system unless a later brief explicitly replaces it.
+
+## Approved bronze-gold material
+
+The canonical implementation is `css/approved-material.css`. All bronze-gold text, numbers, eyebrows, rules, diamonds, frames, accents, and buttons must stay on this six-colour scale:
+
+- Highlight: `#F1D9B7`
+- Light gold: `#D2B38C`
+- Mid gold: `#B9975F`
+- Brand gold: `#A5833F`
+- Bronze: `#8C6437`
+- Shadow: `#3F2E1B`
+
+Small text uses the light-majority brushed-metal face with a narrow lower shadow. The N monogram, the `Novello Stone` wordmark, and the hero word `stone,` use the matching polished, bevelled front-facing treatment. Do not substitute flat brown, yellow gold, or a separate gradient.
+
+Buttons use the approved smooth satin face with polished inset edges, a 4px corner radius, and the existing 2px pressed movement. Do not reintroduce the earlier grainy button surface or squared corners.
+
+## Approved synchronized light
+
+The canonical implementation is `js/approved-material-beam.js` plus the beam layers in `css/approved-material.css`.
+
+- One viewport-wide top-axis light source controls every bronze-gold surface.
+- Travel time: 6200ms.
+- Rest time: 1500ms.
+- White-core strip width: 76px.
+- Edge sparkle size: 18px.
+- The beam affects bronze-gold material only; it must not wash over photos, video, limestone copy, or the page background.
+- Respect `prefers-reduced-motion`.
+
+Do not load the retired `css/chrome-beam.css` or `js/shimmer.js` files. They remain only as historical source and are not part of the approved site.
+
+## Background, hero, and navigation
+
+- The site uses one fixed, seam-free background plane from `img/novello-surfaces/novello-surface-05.webp`.
+- Section backgrounds and dividing seams stay transparent.
+- The home hero video remains a scrolling hero layer with its existing overlay.
+- The navigation remains fixed, transparent, and unblurred so the hero video and shared background show through it.
+- Desktop navigation is used above 960px. At 960px and below, the accessible menu button and full-height mobile menu are used.
+- The launch notice is fixed on wider desktops and moves into the page flow on phone/tablet so it cannot cover primary actions.
+
+## Responsive acceptance sizes
+
+Check these widths after any layout, typography, navigation, or image change:
+
+- Compact phone: 320 × 700
+- Standard phone: 390 × 844
+- Tablet portrait: 768 × 1024
+- Compressed/tablet landscape: 900 × 900
+- Laptop: 1366 × 768
+- 21-inch desktop reference: 1920 × 1080
+
+At every size: no horizontal page overflow, no clipped headings, no overlapping controls, no missing navigation mode, no broken images, and a fixed transparent navigation bar. The complete N and `Novello Stone` wordmark must remain legible at the smallest width.
+
+## Adding real-work images
+
+1. Keep original photographs outside the website as the archive copy.
+2. Add web-ready images to the relevant folder under `img/` (for example `img/services/` or `img/materials/`). Use a descriptive lowercase filename such as `mossel-bay-marble-island-installation.webp`.
+3. Prefer WebP for photographs. Use JPEG only when a supplied workflow requires it, and PNG only for genuine transparency. Do not enlarge a small source image.
+4. Export gallery/detail images at roughly 1600–2200px on the long edge; use about 2400px for a full-width hero. Aim for a practical web file size without visible banding or texture loss.
+5. Preserve the existing image container and its aspect ratio. Use `object-fit: cover` for framed editorial photos and `object-fit: contain` only when the complete object must remain visible.
+6. Add accurate, concise alt text describing the actual work, material, and location when known. Decorative duplicates should use an empty alt attribute.
+7. Keep explicit `width` and `height` attributes when possible to prevent page movement. Use `loading="lazy"` for below-the-fold images; do not lazy-load the first visible hero image.
+8. Do not bake text, the N logo, the beam, or bronze-gold effects into project photos. Those remain live site layers.
+9. Re-run the responsive acceptance sizes and verify image crops at phone, tablet, laptop, and 21-inch desktop before approval.
+
+## Service-area content and links
+
+- The approved home-page `On the road` section is the copy block headed `Built for the whole corridor.` beside the four-stop route. The retired fleet montage, fleet image, and `A fleet built for the corridor.` heading must not return.
+- Mossel Bay is the operating base and uses a Google Maps place-search link.
+- Hartenbos, Dana Bay, Groot Brak, Klein Brak, George, Wilderness, Sedgefield, Knysna, and Plettenberg Bay use Google Maps driving-direction links to Mossel Bay.
+- Keep the same location names and destinations wherever the service area is repeated on Home, Our Story, About, or Contact. Do not leave a duplicate as plain text when the approved version is interactive.
+- If a service-area image is changed, update its alt text and all genuinely duplicated instances in the same release.
+
+## Safe update procedure
+
+When changing `css/approved-material.css` or `js/approved-material-beam.js`, update `APPROVED_MATERIAL_VERSION` in `js/layout.js` and the matching query string on every public HTML page. This prevents an older cached finish from appearing during review.
+
+Before handoff, verify all public routes return successfully, JavaScript parses, CSS braces balance, every page references the same approved-material version, and browser checks show no error overlay or broken imagery.
+

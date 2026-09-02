@@ -136,7 +136,7 @@
   overflow: hidden;
   background: transparent;
   border-radius: 18px;
-  box-shadow: 0 18px 48px rgba(0,0,0,0.22), 0 0 30px rgba(185, 151, 95,0.035);
+  box-shadow: 0 18px 48px rgba(0,0,0,0.22), 0 0 30px rgba(165, 131, 63,0.035);
 }
 .photo-rotator img {
   position: absolute;
@@ -159,3 +159,4 @@
 @media (max-width: 768px) {
   .photo-rotator { border-radius: 12px; }
 }
+

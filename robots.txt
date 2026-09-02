@@ -2,3 +2,5 @@ User-agent: *
 Allow: /
 
 Sitemap: https://www.novello.co.za/sitemap.xml
+
+
