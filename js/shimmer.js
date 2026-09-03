@@ -2,9 +2,9 @@
    NOVELLO STONE — Single bronze-gold chrome beam
    ===========================================================
    One invisible 15-degree light axis moves left-to-right through the
-   whole document. Its top edge leads and its lower edge arrives later,
-   so bronze details do not all illuminate at once. CSS clips the beam
-   to bronze glyphs, masks, fills and strokes only.
+   viewport. Its top edge enters first and its lower edge follows down,
+   so the bottom of the same diagonal beam enters last. CSS clips this
+   single shared beam to bronze glyphs, masks, fills and strokes only.
    =========================================================== */
 
 (function () {
@@ -121,11 +121,8 @@
     return document.documentElement.clientWidth || window.innerWidth;
   }
 
-  function documentHeight() {
-    return Math.max(
-      document.documentElement.scrollHeight,
-      document.body ? document.body.scrollHeight : 0
-    );
+  function viewportHeight() {
+    return document.documentElement.clientHeight || window.innerHeight;
   }
 
   function viewportCrossDuration(width) {
@@ -143,7 +140,7 @@
 
   function refreshGeometry() {
     var width = viewportWidth();
-    var height = documentHeight();
+    var height = viewportHeight();
     travelPaddingPx = width <= MOBILE_BREAKPOINT
       ? MOBILE_TRAVEL_PADDING_PX
       : DESKTOP_TRAVEL_PADDING_PX;
@@ -257,8 +254,6 @@
       beamTopX = -travelPaddingPx + progress * travelDistancePx;
     }
 
-    var scrollY = window.scrollY || window.pageYOffset || 0;
-
     /* Read every layout value first, then perform all style writes. */
     for (var i = 0; i < elements.length; i++) {
       var rect = elements[i].getBoundingClientRect();
@@ -267,8 +262,11 @@
         continue;
       }
 
-      var targetPageY = rect.top + scrollY + rect.height / 2;
-      var beamAtTargetY = beamTopX - targetPageY * VERTICAL_LAG_PER_PX;
+      /* Every target samples the same viewport-space line. Using viewport Y
+         (rather than document Y) keeps one visible source axis regardless of
+         scroll position: top enters first, bottom follows last at exactly 15°. */
+      var targetViewportY = rect.top + rect.height / 2;
+      var beamAtTargetY = beamTopX - targetViewportY * VERTICAL_LAG_PER_PX;
       var localX = beamAtTargetY - rect.left;
       var outsideDistance = 0;
 
