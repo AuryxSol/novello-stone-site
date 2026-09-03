@@ -3,7 +3,7 @@
 
 // The approved bronze-gold material system is loaded once here so every public
 // page shares the exact same swatch, bevel, button finish and light source.
-const APPROVED_MATERIAL_VERSION = '20260902-approved-material-v4';
+const APPROVED_MATERIAL_VERSION = '20260902-approved-material-v6';
 
 if (!document.querySelector('link[data-approved-material]')) {
   const materialStyles = document.createElement('link');
@@ -15,7 +15,7 @@ if (!document.querySelector('link[data-approved-material]')) {
 
 document.addEventListener('DOMContentLoaded', () => {
   const activePage = document.body.getAttribute('data-page') || '';
-  const materialPages = ['history-of-stone', 'marble', 'engineered-stone', 'porcelain', 'quartzite'];
+  const materialPages = ['history-of-stone', 'explore-materials', 'marble', 'engineered-stone', 'porcelain', 'quartzite'];
   const materialsActive = materialPages.includes(activePage);
 
   const navHTML = `
@@ -27,7 +27,8 @@ document.addEventListener('DOMContentLoaded', () => {
           <li class="nav-dropdown">
             <a href="history-of-stone.html" class="${materialsActive ? 'active' : ''}">Materials</a>
             <div class="nav-dropdown-menu">
-              <a href="history-of-stone.html" class="${activePage === 'history-of-stone' ? 'active' : ''}">History of Stone</a>
+              <a href="history-of-stone.html" class="${activePage === 'history-of-stone' ? 'active' : ''}">Origin of Materials</a>
+              <a href="explore-materials.html" class="${activePage === 'explore-materials' ? 'active' : ''}">Explore Materials</a>
               <a href="marble.html" class="${activePage === 'marble' ? 'active' : ''}">Marble</a>
               <a href="engineered-stone.html" class="${activePage === 'engineered-stone' ? 'active' : ''}">Engineered Stone</a>
               <a href="porcelain.html" class="${activePage === 'porcelain' ? 'active' : ''}">Large-Format Porcelain</a>
@@ -38,7 +39,6 @@ document.addEventListener('DOMContentLoaded', () => {
           <li><a href="our-story.html" class="${activePage === 'our-story' ? 'active' : ''}">Our Story</a></li>
           <li><a href="contact.html" class="${activePage === 'contact' ? 'active' : ''}">Contact</a></li>
         </ul>
-        <a href="contact.html" class="nav-cta"><span class="chrome-button-label">Request a Quote</span></a>
         <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
           <span></span><span></span><span></span>
         </button>
@@ -46,7 +46,8 @@ document.addEventListener('DOMContentLoaded', () => {
     </nav>
     <div class="mobile-menu" id="mobile-menu">
       <a href="index.html">Home</a>
-      <a href="history-of-stone.html">History of Stone</a>
+      <a href="history-of-stone.html">Origin of Materials</a>
+      <a href="explore-materials.html">Explore Materials</a>
       <a href="marble.html">Marble</a>
       <a href="engineered-stone.html">Engineered Stone</a>
       <a href="porcelain.html">Large-Format Porcelain</a>
@@ -86,7 +87,8 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
           <div>
             <h4>Site</h4>
-            <a href="history-of-stone.html">History of Stone</a>
+            <a href="history-of-stone.html">Origin of Materials</a>
+            <a href="explore-materials.html">Explore Materials</a>
             <a href="marble.html">Marble</a>
             <a href="engineered-stone.html">Engineered Stone</a>
             <a href="porcelain.html">Large-Format Porcelain</a>
@@ -151,4 +153,3 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.appendChild(materialBeam);
   }
 });
-

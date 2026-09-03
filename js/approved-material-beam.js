@@ -194,7 +194,9 @@
     if (geometryDirty) syncGeometry();
 
     const travelTime = 6200;
-    const restTime = 1500;
+    // Keep the approved 6.2-second sweep untouched, then let the page rest
+    // before the same synchronized strip light re-enters from the left.
+    const restTime = 6500;
     const cycleTime = travelTime + restTime;
     const elapsed = (now - start) % cycleTime;
     const travel = Math.min(elapsed / travelTime, 1);
@@ -261,4 +263,3 @@
     reducedMotion.addListener(updateMotion);
   }
 })();
-

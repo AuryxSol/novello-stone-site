@@ -38,6 +38,7 @@
       'our-story': 4,
       contact: 5,
       'history-of-stone': 0,
+      'explore-materials': 5,
       marble: 1,
       'engineered-stone': 3,
       porcelain: 4,
@@ -131,4 +132,3 @@
       .replace(/'/g, '&#039;');
   }
 })();
-

@@ -127,4 +127,3 @@
 @media (prefers-reduced-motion: reduce) {
   .launch-card { transition: opacity 0.2s ease; transform: none; }
 }
-

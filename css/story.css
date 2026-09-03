@@ -317,4 +317,3 @@
 /* ===== CLOSING LINE (no hard-sell band) ===== */
 .story-closing { padding: var(--space-5) 0 var(--space-6); text-align: center; }
 .story-closing p { max-width: 560px; margin: 0 auto; color: var(--travertine); font-size: 1.05rem; }
-

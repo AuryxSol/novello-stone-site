@@ -68,6 +68,10 @@
 }
 
 .maintenance-cta {
-  text-align: left;
+  text-align: center;
 }
 
+.maintenance-cta p {
+  max-width: 720px;
+  margin: var(--space-2) auto var(--space-3);
+}

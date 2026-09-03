@@ -128,8 +128,10 @@
 /* The signature wordmark and hero word share the button's lighter approved
    face while retaining their brushed lettering and restrained badge bevel. */
 .brand-wordmark,
+.brand-wordmark[data-approved-metal-text],
 .hero h1 em,
-.hero h1 em .hero-metal-word {
+.hero h1 em .hero-metal-word,
+.material-qa-item h4[data-approved-metal-text] {
   color: transparent !important;
   -webkit-text-fill-color: transparent !important;
   background-image:
@@ -548,4 +550,3 @@ footer {
     height: 38px !important;
   }
 }
-

@@ -4,7 +4,7 @@
    One invisible 15-degree light axis moves left-to-right through the
    whole document. Its top edge leads and its lower edge arrives later,
    so bronze details do not all illuminate at once. CSS clips the beam
-   to approved bronze-gold glyphs, masks, fills and strokes only.
+   to bronze glyphs, masks, fills and strokes only.
    =========================================================== */
 
 (function () {
@@ -13,13 +13,11 @@
   if (window.__novelloChromeBeamInitialized) return;
   window.__novelloChromeBeamInitialized = true;
 
-  /* Strict visual allow-list approved from the August review frames.
-     Small labels, numbers, contact details, arrows, dividers and footer
-     accents deliberately stay static even when they use a bronze colour. */
+  /* Structural bronze surfaces and the signature identity treatments. */
   var SELECTORS = [
-    '.brand',
-    '.brand > span:not(.brand-mark-wrap)',
-    '.hero h1 em',
+    '.brand-mark-wrap',
+    '.brand .metal-letter',
+    '.hero h1 em .metal-letter',
     '.nav-links > li > a.active',
     '.btn-primary',
     '.btn-primary .chrome-button-label',
@@ -29,22 +27,83 @@
     '.launch-card-eyebrow',
     '.launch-card p strong',
     '.launch-card a.launch-card-cta'
+    ,'.brand-divider'
+    ,'.gold-divider'
+    ,'.hr'
+    ,'.corridor-route'
   ];
 
+  /* Full bronze frames receive a border-clipped version of the same beam.
+     Keep this list to true four-sided frames so left-rule editorial accents
+     retain their intentional geometry. */
+  var FRAME_SELECTORS = [
+    '.pillar-grid',
+    '.pillar-card',
+    '.value-card',
+    '.scenario-card',
+    '.material-es-card',
+    '.material-link-card',
+    '.story-welcome-grid',
+    '.corridor-journey',
+    '.form-card',
+    '.vcard-save',
+    '.note-box',
+    '.coverage-towns li',
+    '.footer-social a'
+  ];
+
+  /* Text already rendered with a metallic gradient has a transparent
+     computed colour, so list those semantic accents explicitly. */
+  var METALLIC_TEXT_SELECTORS = [
+    '.eyebrow',
+    '.hero-stats .stat-value',
+    '.pillar-link',
+    '.process-step .step-mono',
+    '.story-process-step .step-mono',
+    '.material-es-card .mono',
+    '.material-care-item .step-mono',
+    '.material-link-card .mono',
+    '.material-qa-item h4',
+    '.contact-detail .mono-label',
+    '.contact-person .mono-label',
+    '.vcard-link',
+    '.story-pricing-item h4',
+    '.placeholder-label .tag',
+    '.mobile-menu a.mobile-menu-cta',
+    '.value-card .mono',
+    '.about-stat .stat-value',
+    '.how-we-work-step .step-mono',
+    '.scenario-card .mono',
+    '.visit-callout strong'
+  ];
+
+  /* Resolved CSS colours from the official supplied six-swatch scale. This
+     catches page-specific bronze copy without recolouring limestone headings
+     or body text. */
+  var BRONZE_COMPUTED_COLORS = new Set([
+    'rgb(241, 217, 183)',
+    'rgb(210, 179, 140)',
+    'rgb(185, 151, 95)',
+    'rgb(165, 131, 63)',
+    'rgb(140, 100, 55)',
+    'rgb(63, 46, 27)'
+  ]);
+
   var MOBILE_BREAKPOINT = 860;
-  /* Keep the approved phone/tablet pace, then lengthen the crossing time
-     progressively as the viewport grows. A 1920px display now takes 4.4s
-     across its visible width instead of accelerating to 600px/s. */
-  var COMPACT_VIEWPORT_CROSS_MS = 3200;
-  var WIDE_VIEWPORT_CROSS_MS = 4400;
+  /* Let the polished strip dwell long enough to describe the bevel of every
+     independent brand letter while remaining one shared document-wide beam. */
+  var COMPACT_VIEWPORT_CROSS_MS = 4800;
+  var WIDE_VIEWPORT_CROSS_MS = 6200;
   var WIDE_VIEWPORT_REFERENCE_PX = 1920;
   var ANGLE_FROM_VERTICAL_DEG = 15;
   var VERTICAL_LAG_PER_PX = Math.tan(ANGLE_FROM_VERTICAL_DEG * Math.PI / 180);
   var DESKTOP_TRAVEL_PADDING_PX = 170;
   var MOBILE_TRAVEL_PADDING_PX = 110;
-  var EDGE_FADE_PX = 15;
-  var INITIAL_DELAY_MS = 750;
-  var PAUSE_MS = 6500;
+  var EDGE_FADE_PX = 22;
+  /* Give the header, fonts and hero media time to settle before the first
+     pass so the N -> wordmark -> hero sequence is visible on initial load. */
+  var INITIAL_DELAY_MS = 1500;
+  var PAUSE_MS = 5200;
 
   var reduceMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
   var elements = [];
@@ -100,24 +159,67 @@
     var found = [];
     var seen = new Set();
 
+    function record(element, isBronzeText) {
+      element.setAttribute('data-bronze-shimmer', '');
+      if (isBronzeText) element.setAttribute('data-bronze-text-shimmer', '');
+      if (seen.has(element)) return;
+      seen.add(element);
+      found.push(element);
+    }
+
     for (var i = 0; i < SELECTORS.length; i++) {
       var matches = document.querySelectorAll(SELECTORS[i]);
       for (var j = 0; j < matches.length; j++) {
-        if (seen.has(matches[j])) continue;
-        seen.add(matches[j]);
-        matches[j].setAttribute('data-bronze-shimmer', '');
-        found.push(matches[j]);
+        record(matches[j], false);
       }
     }
 
-    /* The N is a nested alpha mask, not a second independent light target.
-       It inherits the brand's beam coordinate so one uninterrupted strip
-       enters the monogram and continues through the complete wordmark. */
-    var brandMarks = document.querySelectorAll(
-      '.brand[data-bronze-shimmer] .brand-mark-wrap'
-    );
+    for (var f = 0; f < FRAME_SELECTORS.length; f++) {
+      var frameMatches = document.querySelectorAll(FRAME_SELECTORS[f]);
+      for (var q = 0; q < frameMatches.length; q++) {
+        frameMatches[q].setAttribute('data-bronze-frame-shimmer', '');
+        record(frameMatches[q], false);
+      }
+    }
+
+    for (var m = 0; m < METALLIC_TEXT_SELECTORS.length; m++) {
+      var metallicMatches = document.querySelectorAll(METALLIC_TEXT_SELECTORS[m]);
+      for (var n = 0; n < metallicMatches.length; n++) {
+        record(metallicMatches[n], true);
+      }
+    }
+
+    /* Catch every remaining intentional bronze text node by its resolved
+       colour. Requiring direct text avoids painting parent containers twice. */
+    var textCandidates = document.body.querySelectorAll('*');
+    for (var t = 0; t < textCandidates.length; t++) {
+      var candidate = textCandidates[t];
+      var tag = candidate.tagName;
+      if (tag === 'SCRIPT' || tag === 'STYLE' || tag === 'SVG' ||
+          tag === 'PATH' || tag === 'IMG' || tag === 'VIDEO') continue;
+
+      var hasDirectText = false;
+      for (var c = 0; c < candidate.childNodes.length; c++) {
+        if (candidate.childNodes[c].nodeType === 3 &&
+            candidate.childNodes[c].nodeValue.trim()) {
+          hasDirectText = true;
+          break;
+        }
+      }
+      if (!hasDirectText) continue;
+
+      if (BRONZE_COMPUTED_COLORS.has(getComputedStyle(candidate).color)) {
+        record(candidate, true);
+      }
+    }
+
+    /* The N uses the same global beam, but needs its own local geometry.
+       Recording the wrapper here keeps the strip continuous across the
+       identity while giving the narrow monogram mask a correctly measured
+       --shimmer-x and strength instead of relying on the wider wordmark. */
+    var brandMarks = document.querySelectorAll('.brand .brand-mark-wrap');
     for (var k = 0; k < brandMarks.length; k++) {
-      brandMarks[k].setAttribute('data-bronze-shimmer', '');
+      record(brandMarks[k], false);
     }
 
     elements = found;
