@@ -1,6 +1,7 @@
 /* ===========================================================
    NOVELLO STONE — approved synchronized strip-light beam
-   One viewport-level x axis drives every bronze-gold surface.
+   One 22-degree beam originates on the viewport's top axis and drives
+   every bronze-gold surface. The top enters first; the bottom follows last.
    Timing matches the approved material proof exactly.
    =========================================================== */
 
@@ -10,6 +11,12 @@
 
   const root = document.documentElement;
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const BEAM_ANGLE_FROM_VERTICAL_DEG = 22;
+  const VERTICAL_LAG_PER_PX = Math.tan(BEAM_ANGLE_FROM_VERTICAL_DEG * Math.PI / 180);
+  const TOP_AXIS_TRAVEL_TIME = 6200;
+  const REST_TIME = 6500;
+  const EDGE_ROOM = 120;
+  const EDGE_FADE = 22;
   const bronzeColors = new Set([
     'rgb(241, 217, 183)',
     'rgb(210, 179, 140)',
@@ -180,30 +187,43 @@
     geometry = targets.map((target) => {
       const rect = target.getBoundingClientRect();
       target.style.setProperty('--approved-beam-left', `${rect.left}px`);
-      return { left: rect.left, right: rect.right, width: rect.width };
+      return {
+        left: rect.left,
+        right: rect.right,
+        top: rect.top,
+        bottom: rect.bottom,
+        centreY: rect.top + rect.height / 2,
+        width: rect.width
+      };
     });
     geometryDirty = false;
   };
 
   const clearBeam = () => {
     root.style.setProperty('--approved-beam-x', '-120px');
-    targets.forEach((target) => target.style.setProperty('--approved-beam-strength', '0'));
+    targets.forEach((target) => {
+      target.style.setProperty('--approved-beam-x', '-120px');
+      target.style.setProperty('--approved-beam-strength', '0');
+    });
   };
 
   const draw = (now) => {
     if (geometryDirty) syncGeometry();
 
-    const travelTime = 6200;
-    // Keep the approved 6.2-second sweep untouched, then let the page rest
-    // before the same synchronized strip light re-enters from the left.
-    const restTime = 6500;
-    const cycleTime = travelTime + restTime;
+    /* Preserve the approved top-axis running speed. The source travels a
+       little farther so the lower end of the 22-degree beam can leave last,
+       then the full 6.5-second rest begins before one beam re-enters. */
+    const topAxisDistance = window.innerWidth + EDGE_ROOM * 2;
+    const pixelsPerMillisecond = topAxisDistance / TOP_AXIS_TRAVEL_TIME;
+    const diagonalDistance = window.innerHeight * VERTICAL_LAG_PER_PX;
+    const sweepDistance = topAxisDistance + diagonalDistance;
+    const travelTime = sweepDistance / pixelsPerMillisecond;
+    const cycleTime = travelTime + REST_TIME;
     const elapsed = (now - start) % cycleTime;
     const travel = Math.min(elapsed / travelTime, 1);
-    const edgeRoom = 120;
-    const x = -edgeRoom + travel * (window.innerWidth + edgeRoom * 2);
+    const beamSourceTopX = -EDGE_ROOM + travel * sweepDistance;
 
-    root.style.setProperty('--approved-beam-x', `${x.toFixed(2)}px`);
+    root.style.setProperty('--approved-beam-x', `${beamSourceTopX.toFixed(2)}px`);
 
     targets.forEach((target, index) => {
       const rect = geometry[index];
@@ -211,8 +231,18 @@
         target.style.setProperty('--approved-beam-strength', '0');
         return;
       }
-      const distance = x < rect.left ? rect.left - x : x > rect.right ? x - rect.right : 0;
-      const strength = Math.max(0, Math.min(1, 1 - distance / 22));
+      const beamAtTop = beamSourceTopX - rect.top * VERTICAL_LAG_PER_PX;
+      const beamAtBottom = beamSourceTopX - rect.bottom * VERTICAL_LAG_PER_PX;
+      const beamAtCentre = beamSourceTopX - rect.centreY * VERTICAL_LAG_PER_PX;
+      const beamMinX = Math.min(beamAtTop, beamAtBottom);
+      const beamMaxX = Math.max(beamAtTop, beamAtBottom);
+      const distance = beamMaxX < rect.left
+        ? rect.left - beamMaxX
+        : beamMinX > rect.right
+          ? beamMinX - rect.right
+          : 0;
+      const strength = Math.max(0, Math.min(1, 1 - distance / EDGE_FADE));
+      target.style.setProperty('--approved-beam-x', `${beamAtCentre.toFixed(2)}px`);
       target.style.setProperty('--approved-beam-strength', strength.toFixed(3));
     });
 

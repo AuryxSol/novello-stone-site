@@ -3,7 +3,7 @@
 
 // The approved bronze-gold material system is loaded once here so every public
 // page shares the exact same swatch, bevel, button finish and light source.
-const APPROVED_MATERIAL_VERSION = '20260902-approved-material-v6';
+const APPROVED_MATERIAL_VERSION = '20260903-approved-material-v7-22deg';
 
 if (!document.querySelector('link[data-approved-material]')) {
   const materialStyles = document.createElement('link');
