@@ -158,6 +158,17 @@
     0 2px 0 rgba(63,46,27,.76) !important;
 }
 
+/* Once the cascade script has wrapped the hero word, let the inner word span
+   be the only painted metallic surface. Painting the <em> wrapper as well as
+   its child created a tiny duplicate highlight above the next line on some
+   wide-screen font metrics (the stray mark beneath “Precision”). */
+.hero h1 em:has(.hero-metal-word) {
+  background: none !important;
+  -webkit-text-stroke: 0 !important;
+  filter: none !important;
+  text-shadow: none !important;
+}
+
 /* Reset the old gradient on the brand container so only the actual wordmark
    and the masked N face receive the material. */
 .brand {

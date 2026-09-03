@@ -29,7 +29,10 @@ body[data-page] h2 {
 body[data-page="home"] .hero h1 {
   max-width: 860px;
   font-size: var(--type-hero-title);
-  line-height: 1;
+  /* Keep the italic metallic line in its own clean line box. This preserves
+     the elegant close setting without allowing the top of “stone,” to paint
+     into the underside of “Precision” on large desktop displays. */
+  line-height: 1.075;
 }
 
 body[data-page="about"] .about-intro h1,
@@ -113,6 +116,10 @@ body[data-page="contact"] .contact-info h1 {
   .material-hero h1,
   body[data-page="home"] .hero h1 {
     max-width: 100%;
+  }
+
+  body[data-page="home"] .hero h1 {
+    line-height: 1.08;
   }
 }
 
