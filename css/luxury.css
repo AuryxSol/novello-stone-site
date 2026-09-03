@@ -404,7 +404,7 @@ p:not([class]),
 
 .pillars-head,
 .faq-section > .container > div:first-child,
-.material-section > .container > div:first-child:not(.material-split),
+.material-section > .container > div:first-child:not(.material-split):not(.material-catalogue),
 .scenario-section > .container > div:first-child {
   max-width: 920px;
   margin-bottom: clamp(2.5rem, 5vw, 5rem);

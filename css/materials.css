@@ -33,7 +33,10 @@
   padding-top: clamp(1.5rem, 3vw, 2.75rem);
 }
 
-.material-section--catalogue .material-catalogue { margin-top: 0; }
+.material-section--catalogue .material-catalogue {
+  width: min(100%, 1240px);
+  margin: 0 auto;
+}
 
 .material-origin-explore .btn { margin-top: 1.25rem; }
 

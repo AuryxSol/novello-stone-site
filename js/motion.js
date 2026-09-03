@@ -55,7 +55,7 @@
     var nav = document.querySelector('.site-nav');
     if (!nav) return;
     function update() {
-      nav.classList.toggle('nav-scrolled', window.scrollY > 40);
+      nav.classList.toggle('nav-scrolled', window.scrollY > 6);
     }
     window.addEventListener('scroll', throttleRAF(update), { passive: true });
     update();

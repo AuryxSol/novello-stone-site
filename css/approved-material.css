@@ -517,16 +517,44 @@ footer {
   border-bottom: 0 !important;
 }
 
-/* Transparent navigation shell: N, wordmark and controls remain crisp while
-   the hero clip (and later the common stone plane) shows straight through. */
-.site-nav,
-.site-nav.nav-scrolled {
+/* The navigation is completely clear over the opening frame. Once scrolling
+   begins it settles into a quiet, darkened glass state so it remains available
+   without competing with the page content. */
+.site-nav {
   position: fixed !important;
   background: transparent !important;
   border-color: transparent !important;
   box-shadow: none !important;
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
+  transition:
+    background-color .45s ease,
+    border-color .45s ease,
+    box-shadow .45s ease,
+    backdrop-filter .45s ease !important;
+}
+
+.site-nav > .container {
+  opacity: 1;
+  transition: height .45s cubic-bezier(.16,.84,.44,1), opacity .45s ease !important;
+}
+
+.site-nav.nav-scrolled {
+  background: rgba(8, 8, 7, .78) !important;
+  border-color: rgba(185, 151, 95, .12) !important;
+  box-shadow: 0 12px 34px rgba(0, 0, 0, .24) !important;
+  backdrop-filter: blur(14px) saturate(112%) !important;
+  -webkit-backdrop-filter: blur(14px) saturate(112%) !important;
+}
+
+.site-nav.nav-scrolled > .container { opacity: .76; }
+
+.site-nav.nav-scrolled:hover > .container,
+.site-nav.nav-scrolled:focus-within > .container { opacity: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .site-nav,
+  .site-nav > .container { transition-duration: 1ms !important; }
 }
 
 .site-nav::before {
