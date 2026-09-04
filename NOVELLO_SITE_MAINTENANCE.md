@@ -92,7 +92,7 @@ Do not restore the former uncapped `8vw` page-title or `9.3vw` hero-title rules.
 
 ## Material navigation and browser
 
-The Materials navigation contains two distinct client journeys: `Origin of Materials` at `history-of-stone.html` for the editorial history, and `Explore Materials` at `explore-materials.html` for the interactive catalogue. Do not merge the catalogue back into the history page.
+The fixed navigation contains two distinct material journeys: `Origin of Materials` at `history-of-stone.html` and the separate top-level `Explore Materials` link at `explore-materials.html`. The Origin dropdown contains only the nine material families and links to their matching image-and-story origin features; it must not contain either page title. Preserve all nine visual origin stories, including the engineered-stone manufacturing and sintered-porcelain features. The full searchable catalogue remains exclusive to Explore Materials.
 
 The `Explore Materials` page is an original Novello surface-palette catalogue. It currently contains 38 visual directions across Marble, Granite, Quartzite, Onyx, Limestone, Travertine, Engineered Stone, Large-Format Porcelain, and Terrazzo.
 

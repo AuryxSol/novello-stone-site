@@ -380,7 +380,7 @@ section { padding: var(--space-6) 0; }
   backdrop-filter: blur(18px) saturate(140%);
   -webkit-backdrop-filter: blur(18px) saturate(140%);
   border: 1px solid rgba(165, 131, 63, 0.22);
-  min-width: 220px;
+  min-width: 260px;
   padding: 0.5em 0;
   margin-top: 14px;
   opacity: 0;
@@ -475,6 +475,8 @@ section { padding: var(--space-6) 0; }
     flex-direction: column;
     padding: var(--space-4) var(--space-3);
     gap: var(--space-3);
+    overflow-y: auto;
+    overscroll-behavior: contain;
   }
   .mobile-menu.open { display: flex; }
   .mobile-menu a {
@@ -495,6 +497,12 @@ section { padding: var(--space-6) 0; }
     border-bottom-color: rgba(165, 131, 63, 0.35);
     filter: brightness(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-brightness-lift, 0.18))) saturate(calc(1 + var(--shimmer-strength, 0) * var(--shimmer-saturation-lift, 0.11)));
     text-shadow: 0 0 calc(var(--shimmer-strength, 0) * 9px) rgba(var(--shimmer-highlight-rgb), calc(var(--shimmer-strength, 0) * 0.60));
+  }
+  .mobile-menu a.mobile-material-link {
+    padding-left: 1.25rem;
+    color: var(--travertine);
+    font-size: .88rem;
+    opacity: .82;
   }
 }
 
@@ -556,6 +564,37 @@ footer {
   margin-bottom: 0.5em;
   text-shadow: 0 1px 4px rgba(0,0,0,0.6);
 }
+.footer-site-links,
+.footer-material-links {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 1.1rem;
+  align-items: start;
+}
+.footer-site-links {
+  row-gap: .18rem;
+}
+.footer-links-label {
+  display: block;
+  margin: 1.05rem 0 .55rem;
+  color: var(--gold-mid);
+  font-family: var(--font-mono);
+  font-size: .68rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+.footer-material-links {
+  row-gap: .08rem;
+}
+.footer-grid .footer-site-links a,
+.footer-grid .footer-material-links a {
+  margin-bottom: .3em;
+}
+.footer-grid .footer-material-links a {
+  color: var(--travertine);
+  font-size: .8rem;
+  line-height: 1.45;
+}
 /* Bronze-gold only while hovered — resting footer links are limestone
    (non-gold) and must stay untouched; scoped to :hover only. */
 .footer-grid a:hover {
@@ -604,6 +643,8 @@ footer {
 @media (max-width: 720px) {
   .footer-grid { grid-template-columns: 1fr; gap: var(--space-3); }
   .footer-bottom { flex-direction: column; }
+  .footer-site-links,
+  .footer-material-links { max-width: 34rem; }
 }
 
 /* --- Placeholder image blocks (no real photography yet) --- */

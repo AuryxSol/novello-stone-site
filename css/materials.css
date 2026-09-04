@@ -289,6 +289,131 @@
   .material-link-card__media img { transition: none; }
 }
 
+/* ===== Material family origins (Origin of Materials page) ===== */
+.material-family-origins__intro {
+  max-width: 790px;
+  margin-bottom: clamp(2.5rem, 5vw, 4.5rem);
+}
+.material-family-origins__intro p {
+  max-width: 68ch;
+  color: var(--travertine);
+}
+.material-origin-grid {
+  display: grid;
+  gap: clamp(1.5rem, 3vw, 2.75rem);
+}
+.material-origin-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, .92fr);
+  min-height: clamp(390px, 38vw, 520px);
+  overflow: hidden;
+  border: 1px solid var(--hairline);
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(27, 23, 18, .8), rgba(8, 8, 7, .94));
+  box-shadow: 0 22px 60px rgba(0, 0, 0, .28);
+  scroll-margin-top: calc(var(--nav-height) + 2rem);
+  transition: border-color .25s ease, box-shadow .25s ease;
+}
+.material-origin-card:target,
+.material-origin-card:hover {
+  border-color: rgba(185, 151, 94, 0.38);
+  box-shadow: 0 22px 60px rgba(0, 0, 0, .32), 0 0 28px rgba(165, 131, 63, .08);
+}
+.material-origin-card__media {
+  min-height: 100%;
+  overflow: hidden;
+  background: var(--panel);
+}
+.material-origin-card__media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 390px;
+  object-fit: cover;
+  filter: saturate(.78) contrast(1.06) brightness(.78);
+  transition: transform .7s cubic-bezier(.16,.84,.44,1), filter .4s ease;
+}
+.material-origin-card:hover .material-origin-card__media img {
+  transform: scale(1.018);
+  filter: saturate(.9) contrast(1.04) brightness(.86);
+}
+.material-origin-card__body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(1.75rem, 4vw, 4rem);
+}
+.material-origin-card:nth-child(even) .material-origin-card__media {
+  grid-column: 2;
+  grid-row: 1;
+}
+.material-origin-card:nth-child(even) .material-origin-card__body {
+  grid-column: 1;
+  grid-row: 1;
+}
+.material-origin-card .mono {
+  color: var(--gold-mid);
+  font-size: .7rem;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+}
+.material-origin-card h3 {
+  margin: .75rem 0 .8rem;
+  color: var(--limestone);
+  font-family: var(--font-headline);
+  font-size: clamp(1.85rem, 2.35vw, 2.65rem);
+  font-style: italic;
+  font-weight: 500;
+  letter-spacing: -.01em;
+  line-height: 1;
+}
+.material-origin-card__body > p:not(.material-origin-card__meta) {
+  color: var(--travertine);
+  font-size: 1rem;
+  line-height: 1.65;
+}
+.material-origin-card__meta {
+  margin: .65rem 0 1.1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(165, 131, 63, .18);
+  color: var(--gold-light);
+  font-family: var(--font-mono);
+  font-size: .72rem;
+  letter-spacing: .08em;
+  line-height: 1.55;
+  text-transform: uppercase;
+}
+.material-origin-card .pillar-link {
+  align-self: flex-start;
+}
+
+@media (max-width: 900px) {
+  .material-origin-card { grid-template-columns: 1fr; min-height: 0; }
+  .material-origin-card__media,
+  .material-origin-card:nth-child(even) .material-origin-card__media {
+    grid-column: 1;
+    grid-row: 1;
+    min-height: 0;
+    aspect-ratio: 16 / 10;
+  }
+  .material-origin-card__body,
+  .material-origin-card:nth-child(even) .material-origin-card__body {
+    grid-column: 1;
+    grid-row: 2;
+  }
+  .material-origin-card__media img { min-height: 0; }
+}
+
+@media (max-width: 640px) {
+  .material-origin-card { border-radius: 10px; }
+  .material-origin-card__media { aspect-ratio: 4 / 3; }
+  .material-origin-card__meta { margin-top: 1rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .material-origin-card__media img { transition: none; }
+}
+
 /* ===== Surface palette catalogue ===== */
 .material-catalogue {
   margin-top: clamp(2rem, 4vw, 4rem);

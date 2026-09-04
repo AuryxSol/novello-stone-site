@@ -15,8 +15,8 @@ if (!document.querySelector('link[data-approved-material]')) {
 
 document.addEventListener('DOMContentLoaded', () => {
   const activePage = document.body.getAttribute('data-page') || '';
-  const materialPages = ['history-of-stone', 'explore-materials', 'marble', 'engineered-stone', 'porcelain', 'quartzite'];
-  const materialsActive = materialPages.includes(activePage);
+  const originPages = ['history-of-stone', 'marble', 'engineered-stone', 'porcelain', 'quartzite'];
+  const originActive = originPages.includes(activePage);
 
   const navHTML = `
     <nav class="site-nav" aria-label="Primary navigation">
@@ -25,16 +25,20 @@ document.addEventListener('DOMContentLoaded', () => {
         <ul class="nav-links">
           <li><a href="index.html" class="${activePage === 'home' ? 'active' : ''}">Home</a></li>
           <li class="nav-dropdown">
-            <a href="history-of-stone.html" class="${materialsActive ? 'active' : ''}">Materials</a>
+            <a href="history-of-stone.html" class="${originActive ? 'active' : ''}">Origin of Materials</a>
             <div class="nav-dropdown-menu">
-              <a href="history-of-stone.html" class="${activePage === 'history-of-stone' ? 'active' : ''}">Origin of Materials</a>
-              <a href="explore-materials.html" class="${activePage === 'explore-materials' ? 'active' : ''}">Explore Materials</a>
-              <a href="marble.html" class="${activePage === 'marble' ? 'active' : ''}">Marble</a>
-              <a href="engineered-stone.html" class="${activePage === 'engineered-stone' ? 'active' : ''}">Engineered Stone</a>
-              <a href="porcelain.html" class="${activePage === 'porcelain' ? 'active' : ''}">Large-Format Porcelain</a>
-              <a href="quartzite.html" class="${activePage === 'quartzite' ? 'active' : ''}">Quartzite</a>
+              <a href="history-of-stone.html#marble" class="${activePage === 'marble' ? 'active' : ''}">Marble</a>
+              <a href="history-of-stone.html#granite">Granite</a>
+              <a href="history-of-stone.html#quartzite" class="${activePage === 'quartzite' ? 'active' : ''}">Quartzite</a>
+              <a href="history-of-stone.html#onyx">Onyx</a>
+              <a href="history-of-stone.html#limestone">Limestone</a>
+              <a href="history-of-stone.html#travertine">Travertine</a>
+              <a href="history-of-stone.html#engineered" class="${activePage === 'engineered-stone' ? 'active' : ''}">Engineered Stone</a>
+              <a href="history-of-stone.html#porcelain" class="${activePage === 'porcelain' ? 'active' : ''}">Large-Format Porcelain</a>
+              <a href="history-of-stone.html#terrazzo">Terrazzo</a>
             </div>
           </li>
+          <li><a href="explore-materials.html" class="${activePage === 'explore-materials' ? 'active' : ''}">Explore Materials</a></li>
           <li><a href="services.html" class="${activePage === 'services' || activePage === 'maintenance' ? 'active' : ''}">Services</a></li>
           <li><a href="our-story.html" class="${activePage === 'our-story' ? 'active' : ''}">Our Story</a></li>
           <li><a href="contact.html" class="${activePage === 'contact' ? 'active' : ''}">Contact</a></li>
@@ -48,10 +52,15 @@ document.addEventListener('DOMContentLoaded', () => {
       <a href="index.html">Home</a>
       <a href="history-of-stone.html">Origin of Materials</a>
       <a href="explore-materials.html">Explore Materials</a>
-      <a href="marble.html">Marble</a>
-      <a href="engineered-stone.html">Engineered Stone</a>
-      <a href="porcelain.html">Large-Format Porcelain</a>
-      <a href="quartzite.html">Quartzite</a>
+      <a href="history-of-stone.html#marble" class="mobile-material-link">Marble</a>
+      <a href="history-of-stone.html#granite" class="mobile-material-link">Granite</a>
+      <a href="history-of-stone.html#quartzite" class="mobile-material-link">Quartzite</a>
+      <a href="history-of-stone.html#onyx" class="mobile-material-link">Onyx</a>
+      <a href="history-of-stone.html#limestone" class="mobile-material-link">Limestone</a>
+      <a href="history-of-stone.html#travertine" class="mobile-material-link">Travertine</a>
+      <a href="history-of-stone.html#engineered" class="mobile-material-link">Engineered Stone</a>
+      <a href="history-of-stone.html#porcelain" class="mobile-material-link">Large-Format Porcelain</a>
+      <a href="history-of-stone.html#terrazzo" class="mobile-material-link">Terrazzo</a>
       <a href="services.html">Services</a>
       <a href="maintenance.html">Maintenance</a>
       <a href="our-story.html">Our Story</a>
@@ -87,16 +96,26 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
           <div>
             <h4>Site</h4>
-            <a href="history-of-stone.html">Origin of Materials</a>
-            <a href="explore-materials.html">Explore Materials</a>
-            <a href="marble.html">Marble</a>
-            <a href="engineered-stone.html">Engineered Stone</a>
-            <a href="porcelain.html">Large-Format Porcelain</a>
-            <a href="quartzite.html">Quartzite</a>
-            <a href="services.html">Services</a>
-            <a href="maintenance.html">Maintenance</a>
-            <a href="our-story.html">Our Story</a>
-            <a href="contact.html">Contact</a>
+            <div class="footer-site-links">
+              <a href="history-of-stone.html">Origin of Materials</a>
+              <a href="explore-materials.html">Explore Materials</a>
+              <a href="services.html">Services</a>
+              <a href="maintenance.html">Maintenance</a>
+              <a href="our-story.html">Our Story</a>
+              <a href="contact.html">Contact</a>
+            </div>
+            <span class="footer-links-label">Materials</span>
+            <div class="footer-material-links">
+              <a href="history-of-stone.html#marble">Marble</a>
+              <a href="history-of-stone.html#granite">Granite</a>
+              <a href="history-of-stone.html#quartzite">Quartzite</a>
+              <a href="history-of-stone.html#onyx">Onyx</a>
+              <a href="history-of-stone.html#limestone">Limestone</a>
+              <a href="history-of-stone.html#travertine">Travertine</a>
+              <a href="history-of-stone.html#engineered">Engineered</a>
+              <a href="history-of-stone.html#porcelain">Porcelain</a>
+              <a href="history-of-stone.html#terrazzo">Terrazzo</a>
+            </div>
           </div>
         </div>
         <div class="footer-bottom">
