@@ -87,7 +87,7 @@ Do not restore the former uncapped `8vw` page-title or `9.3vw` hero-title rules.
 5. Preserve the existing image container and its aspect ratio. Use `object-fit: cover` for framed editorial photos and `object-fit: contain` only when the complete object must remain visible.
 6. Add accurate, concise alt text describing the actual work, material, and location when known. Decorative duplicates should use an empty alt attribute.
 7. Keep explicit `width` and `height` attributes when possible to prevent page movement. Use `loading="lazy"` for below-the-fold images; do not lazy-load the first visible hero image.
-8. Do not bake text, the N logo, the beam, or bronze-gold effects into project photos. Those remain live site layers.
+8. Do not bake labels, the beam, or bronze-gold effects into project photos. Keep the N and wordmark as live site layers except for approved Services process composites that depict branded uniforms or equipment; the live `.photo-rotator__brand` plaque remains the authoritative mark in those frames.
 9. Re-run the responsive acceptance sizes and verify image crops at phone, tablet, laptop, and 21-inch desktop before approval.
 
 ## Material navigation and browser
@@ -115,6 +115,14 @@ The `Explore Materials` page is an original Novello surface-palette catalogue. I
 ## First-view scroll cue
 
 The shared `Scroll to explore` invitation is generated once by `js/layout.js` and styled in `css/base.css`; do not duplicate it in individual page markup. It appears bottom-centred only when the current page can scroll and the visitor has opened it at the top, then disappears permanently for that page view as soon as scrolling begins. Hash-link arrivals suppress it because the visitor has already been taken into the page. Keep it non-interactive, `aria-hidden`, and compatible with `prefers-reduced-motion`. Its bronze-gold label, stem, and diamond use the approved material attributes so they participate in the site's single synchronized light beam.
+
+## Origin closing portfolio and service imagery
+
+The Origin of Materials page ends with the compact `.material-application-closing` portfolio, not the generic full-height `.story-closing` band. It combines three installed-space studies with direct routes to Explore Materials and Contact. Preserve its asymmetric two-column desktop composition and its single-column phone stack; replacement imagery belongs in `img/applications/` and must retain the existing filenames or be versioned with matching HTML updates.
+
+The Services page uses a curated process-and-outcome pair for each trade instead of a long near-duplicate rotator. Branded process composites are versioned in `img/service-branded/`; keep the original source photographs untouched. Every `.photo-rotator` also carries the live `.photo-rotator__brand` plaque. That plaque is the authoritative, exact site-master monogram and wordmark and must remain above the photographs even when a replacement photograph contains correctly branded clothing or equipment. Update the alt text whenever a service photograph changes.
+
+At `960px` and below, each service section becomes a single column and `.service-visual` must be `position: static`. Keep those two changes on the same breakpoint; otherwise a sticky photograph can remain behind the copy and create an unintended tablet-only overlay.
 
 ## Safe update procedure
 

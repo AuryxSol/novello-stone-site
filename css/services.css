@@ -120,7 +120,10 @@
 }
 .note-box strong { color: var(--limestone); }
 
-@media (max-width: 860px) {
+/* Match the shared navigation/tablet breakpoint. The grid already becomes a
+   single column at 960px, so the image must stop being sticky at the same
+   moment or the following copy can scroll over it. */
+@media (max-width: 960px) {
   .service-block .container,
   .service-block:nth-of-type(even) .container {
     grid-template-columns: 1fr;
@@ -138,7 +141,7 @@
   border-radius: 18px;
   box-shadow: 0 18px 48px rgba(0,0,0,0.22), 0 0 30px rgba(165, 131, 63,0.035);
 }
-.photo-rotator img {
+.photo-rotator > img {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -148,14 +151,54 @@
   opacity: 0;
   transition: opacity 1.2s ease;
 }
-.photo-rotator img.is-active {
+.photo-rotator > img.is-active {
   opacity: 1;
 }
+
+.photo-rotator__brand {
+  position: absolute;
+  right: clamp(0.75rem, 1.5vw, 1.15rem);
+  bottom: clamp(0.75rem, 1.5vw, 1.15rem);
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  min-height: 45px;
+  padding: 0.5rem 0.85rem 0.5rem 0.55rem;
+  border: 1px solid rgba(205, 165, 92, 0.42);
+  background: rgba(7, 6, 5, 0.78);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(7px);
+  pointer-events: none;
+}
+
+.photo-rotator__brand::before {
+  content: '';
+  width: 31px;
+  height: 31px;
+  flex: 0 0 31px;
+  background: url('../img/novello-n-monogram.png') center / contain no-repeat;
+}
+
+.photo-rotator__brand > span {
+  color: var(--gold);
+  font-family: var(--font-display);
+  font-size: 0.73rem;
+  line-height: 1;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
 @media (prefers-reduced-motion: reduce) {
-  .photo-rotator img {
+  .photo-rotator > img {
     transition: none;
   }
 }
 @media (max-width: 768px) {
   .photo-rotator { border-radius: 12px; }
+  .photo-rotator__brand {
+    min-height: 39px;
+    padding: 0.4rem 0.65rem 0.4rem 0.45rem;
+  }
+  .photo-rotator__brand::before { width: 26px; height: 26px; flex-basis: 26px; }
+  .photo-rotator__brand > span { font-size: 0.64rem; }
 }
