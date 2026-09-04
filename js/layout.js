@@ -67,6 +67,12 @@ document.addEventListener('DOMContentLoaded', () => {
       <a href="contact.html">Contact</a>
       <a href="contact.html" class="mobile-menu-cta">Request a Quote &rarr;</a>
     </div>
+    <div class="site-scroll-cue" aria-hidden="true">
+      <span class="site-scroll-cue__label" data-approved-metal-text>Scroll to explore</span>
+      <span class="site-scroll-cue__stem" data-approved-metal-line>
+        <span class="site-scroll-cue__diamond" data-approved-metal-line></span>
+      </span>
+    </div>
   `;
 
   const footerHTML = `
@@ -130,6 +136,28 @@ document.addEventListener('DOMContentLoaded', () => {
   const footerMount = document.getElementById('footer-mount');
   if (navMount) navMount.outerHTML = navHTML;
   if (footerMount) footerMount.outerHTML = footerHTML;
+
+  const scrollCue = document.querySelector('.site-scroll-cue');
+  if (scrollCue) {
+    let cueDismissed = window.scrollY > 8 || Boolean(window.location.hash);
+
+    const syncScrollCue = () => {
+      const pageCanScroll = document.documentElement.scrollHeight > window.innerHeight + 80;
+      scrollCue.classList.toggle('is-visible', pageCanScroll && !cueDismissed);
+    };
+
+    const dismissScrollCue = () => {
+      if (cueDismissed) return;
+      cueDismissed = true;
+      scrollCue.classList.remove('is-visible');
+      window.removeEventListener('scroll', dismissScrollCue);
+    };
+
+    window.addEventListener('scroll', dismissScrollCue, { passive: true });
+    window.addEventListener('resize', syncScrollCue, { passive: true });
+    window.addEventListener('load', syncScrollCue, { once: true });
+    requestAnimationFrame(syncScrollCue);
+  }
 
   const toggle = document.querySelector('.nav-toggle');
   const mobileMenu = document.querySelector('.mobile-menu');

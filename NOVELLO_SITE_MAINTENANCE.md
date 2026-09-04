@@ -112,6 +112,10 @@ The `Explore Materials` page is an original Novello surface-palette catalogue. I
 - Keep the same location names and destinations wherever the service area is repeated on Home, Our Story, About, or Contact. Do not leave a duplicate as plain text when the approved version is interactive.
 - If a service-area image is changed, update its alt text and all genuinely duplicated instances in the same release.
 
+## First-view scroll cue
+
+The shared `Scroll to explore` invitation is generated once by `js/layout.js` and styled in `css/base.css`; do not duplicate it in individual page markup. It appears bottom-centred only when the current page can scroll and the visitor has opened it at the top, then disappears permanently for that page view as soon as scrolling begins. Hash-link arrivals suppress it because the visitor has already been taken into the page. Keep it non-interactive, `aria-hidden`, and compatible with `prefers-reduced-motion`. Its bronze-gold label, stem, and diamond use the approved material attributes so they participate in the site's single synchronized light beam.
+
 ## Safe update procedure
 
 When changing `css/approved-material.css` or `js/approved-material-beam.js`, update `APPROVED_MATERIAL_VERSION` in `js/layout.js` and the matching query string on every public HTML page. This prevents an older cached finish from appearing during review.

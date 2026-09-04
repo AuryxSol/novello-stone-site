@@ -460,6 +460,89 @@ section { padding: var(--space-6) 0; }
    only by the old, near-opaque nav sitting on top of it. */
 .mobile-menu { display: none; }
 
+/* --- First-view scroll invitation ---
+   A quiet, bottom-centred cue shown only while the visitor is still at
+   the top of a scrollable page. Its metal attributes join the site's
+   single synchronized 22-degree highlight beam. */
+.site-scroll-cue {
+  --scroll-cue-distance: 30px;
+  position: fixed;
+  left: 50%;
+  bottom: clamp(16px, 3.2vh, 30px);
+  z-index: 92;
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(-50%, 8px);
+  transition: opacity 0.45s ease, transform 0.45s ease, visibility 0.45s;
+}
+.site-scroll-cue.is-visible {
+  opacity: 0.78;
+  visibility: visible;
+  transform: translate(-50%, 0);
+}
+.site-scroll-cue__label {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.16em;
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.site-scroll-cue__stem {
+  position: relative;
+  display: block;
+  width: 1px;
+  height: 36px;
+}
+.site-scroll-cue__diamond {
+  position: absolute;
+  top: 0;
+  left: -2px;
+  display: block;
+  width: 5px;
+  height: 5px;
+  transform: rotate(45deg);
+  animation: novello-scroll-cue 3.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+@keyframes novello-scroll-cue {
+  0%, 14% {
+    transform: translateY(0) rotate(45deg);
+    opacity: 0.2;
+  }
+  42% { opacity: 1; }
+  64% {
+    transform: translateY(var(--scroll-cue-distance)) rotate(45deg);
+    opacity: 0;
+  }
+  65%, 100% {
+    transform: translateY(var(--scroll-cue-distance)) rotate(45deg);
+    opacity: 0;
+  }
+}
+
+@media (max-width: 720px) {
+  .site-scroll-cue {
+    --scroll-cue-distance: 24px;
+    bottom: 13px;
+    gap: 6px;
+  }
+  .site-scroll-cue__label { font-size: 0.57rem; }
+  .site-scroll-cue__stem { height: 30px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-scroll-cue { transition: none; }
+  .site-scroll-cue__diamond {
+    top: auto;
+    bottom: 0;
+    animation: none;
+  }
+}
+
 /* Keep the navigation mode aligned with luxury.css. The previous 860px
    breakpoint left 861–960px with neither desktop links nor a menu button. */
 @media (max-width: 960px) {
