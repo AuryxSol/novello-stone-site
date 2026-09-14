@@ -1,10 +1,12 @@
 BEGIN:VCARD
 VERSION:3.0
+N:;Novello Stone;;;
 FN:Novello Stone
 ORG:Novello Stone
 TEL;TYPE=CELL,VOICE:+27834792643
 EMAIL;TYPE=INTERNET:studio@novello.co.za
 URL:https://www.novello.co.za/
-ADR;TYPE=WORK:;;Mossel Bay;Western Cape;;;South Africa
+ADR;TYPE=WORK:;;14 Cape Gannet\, Monte Christo;Hartenbos;Western Cape;6520;
+ South Africa
 NOTE:Stone fabrication, tiling and restoration across the Garden Route.
 END:VCARD

@@ -90,7 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <a href="tel:+27834792643">+27 83 479 2643</a>
             <a href="mailto:clynton@novello.co.za" style="font-size:0.85rem; opacity:0.75;">Clynton: clynton@novello.co.za</a>
             <a href="mailto:yolande@novello.co.za" style="font-size:0.85rem; opacity:0.75;">Yolande: yolande@novello.co.za</a>
-            <p style="opacity:0.7;">Mossel Bay, Western Cape</p>
+            <p style="opacity:0.7;">14 Cape Gannet, Monte Christo<br>Hartenbos, Western Cape, 6520</p>
             <div class="footer-social">
               <a href="https://www.facebook.com/profile.php?id=61593128592987" target="_blank" rel="noopener noreferrer" aria-label="Novello Stone on Facebook">
                 <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22.675 0h-21.35C.6 0 0 .6 0 1.326v21.348C0 23.4.6 24 1.325 24H12.82v-9.294H9.692v-3.622h3.128V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12V24h6.116C23.4 24 24 23.4 24 22.674V1.326C24 .6 23.4 0 22.675 0z"/></svg>
