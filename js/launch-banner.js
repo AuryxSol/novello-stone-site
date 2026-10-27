@@ -16,10 +16,10 @@
     card.setAttribute('role', 'note');
     card.setAttribute('aria-label', 'Launch announcement');
     card.innerHTML =
-      '<button type="button" class="launch-card-close" aria-label="Dismiss">&times;</button>' +
-      '<span class="launch-card-eyebrow">Coming soon</span>' +
-      '<p>Novello Stone opens for trading <strong>January 2027</strong>. ' +
-      'If you&rsquo;re planning ahead &mdash; pre-construction, build timelines, or tenders &mdash; we&rsquo;d welcome a conversation any time. Bookings open from late January/February 2027.</p>' +
+      '<button type="button" class="launch-card-close" aria-label="Dismiss" style="z-index: 2">&times;</button>' +
+      '<span class="launch-card-eyebrow">Enquiries open now</span>' +
+      '<p>Soft launch from <strong>2 November 2026</strong>, with our full launch planned for ' +
+      '<strong>January&ndash;February 2027</strong>. Contact us to discuss your project and confirm availability.</p>' +
       '<a href="contact.html" class="launch-card-cta">Get in touch</a>';
 
     var openingPanel = document.querySelector('.hero, .page-header, .material-hero, .contact-section, .about-intro');
@@ -37,3 +37,4 @@
     });
   });
 })();
+

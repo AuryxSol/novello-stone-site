@@ -47,6 +47,20 @@
 <link rel="stylesheet" href="css/luxury.css?v=20260904-origin-navigation-v1">
 <link rel="stylesheet" href="css/approved-material.css?v=20260903-approved-material-v7-22deg" data-approved-material>
 <link rel="stylesheet" href="css/typography-scale.css?v=20260902-refined-scale-v1">
+<style>
+/* Contact-only review fix: keep the notice clear of enquiry controls. */
+body[data-page="contact"] .launch-card {
+  position: relative;
+  inset: auto;
+  width: calc(100% - 2rem);
+  max-width: 720px;
+  margin: 1.25rem auto;
+  z-index: 10;
+}
+@media (max-width: 960px) {
+  body[data-page="contact"] .site-scroll-cue { display: none; }
+}
+</style>
 </head>
 <body data-page="contact">
 
@@ -64,8 +78,12 @@
         <a href="mailto:studio@novello.co.za">studio@novello.co.za</a>
       </div>
       <div class="contact-detail">
-        <span class="mono-label">Phone / WhatsApp</span>
+        <span class="mono-label">Call</span>
         <a href="tel:+27834792643">+27 83 479 2643</a>
+      </div>
+      <div class="contact-detail">
+        <span class="mono-label">WhatsApp</span>
+        <a href="https://wa.me/27834792643" target="_blank" rel="noopener noreferrer">Chat on WhatsApp &mdash; send photos of your project</a>
       </div>
       <div class="contact-detail">
         <span class="mono-label">Address</span>
@@ -148,8 +166,8 @@
           <textarea id="message" name="message" required placeholder="Surface type, approximate size, what's needed..."></textarea>
         </div>
 
-        <button type="submit" class="btn btn-primary"><span class="chrome-button-label">Send Request</span></button>
-        <p class="form-note">This opens your email app with the details pre-filled, ready to send to studio@novello.co.za.</p>
+        <button type="submit" class="btn btn-primary"><span class="chrome-button-label">Prepare Email Enquiry</span></button>
+        <p class="form-note">This opens a draft in your email app. Review it, attach any photos, and press Send there to email studio@novello.co.za. Prefer WhatsApp? Use the direct chat link above.</p>
       </form>
     </div>
   </div>
@@ -159,7 +177,7 @@
 
 <script src="js/layout.js?v=20260914-hartenbos-address"></script>
 <script src="js/motion.js"></script>
-<script src="js/launch-banner.js?v=20260902-responsive-v1"></script>
+<script src="js/launch-banner.js?v=20261027-launch-v4"></script>
 <script src="js/luxury.js"></script>
 <script>
   document.getElementById('quote-form').addEventListener('submit', function (e) {
@@ -180,3 +198,4 @@
 </script>
 </body>
 </html>
+
