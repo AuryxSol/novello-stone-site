@@ -1,0 +1,274 @@
+/* LOCAL REVIEW ONLY — warm ivory direction, based on release 0b406df. */
+:root {
+  --warm-ivory: #f5f1e9;
+  --warm-limestone: #e9e2d7;
+  --warm-taupe: #d9cfc1;
+  --warm-ink: #302c27;
+  --warm-muted: #625a50;
+  --canvas: var(--warm-ivory);
+  --canvas-lift: #eee8df;
+  --basalt: var(--warm-ivory);
+  --basalt-soft: #eee8df;
+  --basalt-warm: var(--warm-limestone);
+  --panel: #faf7f1;
+  --limestone: var(--warm-ink);
+  --limestone-dim: var(--warm-limestone);
+  --ivory: var(--warm-ink);
+  --text-body: #514a42;
+  --travertine: var(--warm-muted);
+  --ink-muted: var(--warm-muted);
+  --hairline: rgba(109,83,53,.23);
+  --bronze-line: rgba(109,83,53,.27);
+}
+html, body { background: var(--warm-ivory) !important; color: var(--warm-ink); }
+body::before { background: none !important; opacity: 0 !important; }
+.site-nav, .site-nav.nav-scrolled {
+  background: rgba(245,241,233,.96) !important;
+  border-bottom: 1px solid var(--hairline) !important;
+  box-shadow: 0 4px 24px rgba(64,47,29,.04) !important;
+}
+.nav-links a, .mobile-menu a { color: var(--warm-muted); }
+.nav-links a:hover, .nav-links a.active { color: #62492e; }
+.nav-toggle span { background: var(--warm-ink); }
+.mobile-menu, .nav-dropdown-menu { background: #f5f1e9; }
+.hero { background: var(--warm-ivory); }
+.hero-photo-overlay {
+  background: linear-gradient(90deg,#f5f1e9 0%,rgba(245,241,233,.98) 36%,rgba(245,241,233,.88) 49%,rgba(245,241,233,.20) 70%,rgba(245,241,233,.05) 100%) !important;
+}
+.hero-photo-rotator img, .hero-video-wrap .hero-video { filter: saturate(.7) brightness(1.08); }
+.hero-content { max-width: 790px; }
+.hero h1 { color: var(--warm-ink); }
+.hero-sub { color: #514a42; max-width: 480px; }
+.hero-stats .stat-label { color: #514a42; }
+.hero-stats { border-color: var(--hairline); }
+.btn-ghost, .btn-ghost-dark { color: #514438; border-color: #8d7961; background: rgba(245,241,233,.6); }
+.btn-primary { box-shadow: 0 8px 18px rgba(90,64,37,.13) !important; }
+.launch-card { background: #f7f3ec !important; color: #3b342c; border-color: #b7a286; box-shadow: 0 10px 35px rgba(71,54,34,.12); }
+.launch-card p, .launch-card-close { color: #514a42; }
+.launch-card strong { color: #5b4329; }
+.launch-card-eyebrow, .eyebrow, .mono-label, .site-scroll-cue__label {
+  --approved-metal-face: linear-gradient(180deg,#936f43 0%,#715333 55%,#503922 100%);
+  text-shadow: none !important;
+}
+.brand-wordmark { --approved-metal-face: linear-gradient(180deg,#a17f53 0%,#795a37 65%,#513b25 100%); filter: none !important; }
+.hero h1 em, .hero h1 em .cascade-word { --approved-metal-face: linear-gradient(180deg,#ac8754 0%,#876139 60%,#604324 100%); }
+body[data-page="home"] [data-approved-metal-text],
+body[data-page="home"] .hero h1 em .hero-metal-word,
+body[data-page="home"] .brand-wordmark {
+  filter: none !important;
+  text-shadow: none !important;
+  -webkit-text-stroke: 0 !important;
+  --approved-polished-face: linear-gradient(180deg,#a17f53 0%,#795a37 65%,#513b25 100%);
+  --approved-metal-face: linear-gradient(180deg,#87663e 0%,#6b4f30 65%,#503922 100%);
+}
+.stone-section, .luxe-surface, .intro-strip, .site-footer { background: var(--warm-ivory) !important; color: var(--warm-ink); }
+.luxe-surface:nth-of-type(even) { background: var(--warm-limestone) !important; }
+.pillar-card, .faq-item, .step, .contact-person { background: rgba(255,253,248,.55); border-color: var(--hairline); }
+.site-footer { background: #e7ded1 !important; }
+.site-footer a, .site-footer p, .footer-bottom { color: #625a50; }
+.luxe-section-kicker { color: #796b5a; }
+.page-rail-label { background: #eee6da; color: #433a30; }
+@media (max-width: 960px) {
+  .hero-photo-overlay { background: linear-gradient(180deg,rgba(245,241,233,.94) 0%,rgba(245,241,233,.91) 62%,rgba(245,241,233,.66) 100%) !important; }
+  .hero-content { max-width: 100%; }
+  .mobile-menu a { color: #514a42; }
+  .hero h1 em { margin-inline-start: .12em; }
+  .site-scroll-cue { display: none; }
+}
+/* Shared warm surfaces; original imagery and metallic N remain unchanged. */
+:root { --muted: #625a50; }
+body [data-approved-metal-text], body .brand-wordmark, body .hero h1 em .hero-metal-word {
+ filter: none !important; text-shadow: none !important; -webkit-text-stroke: 0 !important;
+ --approved-polished-face: linear-gradient(180deg,#a17f53,#795a37 65%,#513b25);
+ --approved-metal-face: linear-gradient(180deg,#87663e,#6b4f30 65%,#503922);
+}
+body .site-nav a, body .site-nav .brand-wordmark, body .mobile-menu a,
+body .site-nav [data-approved-metal-text], body .mobile-menu [data-approved-metal-text] {
+ color: #25231f !important; -webkit-text-fill-color: #25231f !important;
+ background-image: none !important; filter: none !important; text-shadow: none !important;
+}
+.site-nav a:hover, .mobile-menu a:hover { text-decoration-color: #87663e; }
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+ outline: 2px solid #75532e; outline-offset: 5px;
+}
+.page-header h1, .page-header p, .section-title, .section-desc { text-shadow: none !important; }
+.pillar-card, .pillar-card:hover, .value-card, .value-card:hover, .scenario-card, .scenario-card:hover,
+.material-es-card, .material-link-card, .form-card, .note-box, .story-welcome-card, .surface-card, .proof-card {
+ background: #faf7f1; box-shadow: 0 12px 35px rgba(65,48,29,.06); border-color: var(--hairline);
+}
+.form-row input, .form-row select, .form-row textarea, .palette-toolbar input, .palette-toolbar select,
+.palette-toolbar { background: #faf7f1; color: #302c27; }
+.contact-person a, .contact-person a:hover, .vcard-link, .palette-toolbar label { color: #6b4f30; }
+.fleet-section.stone-section, .visit-callout {
+ background: linear-gradient(90deg,rgba(17,15,13,.88),rgba(17,15,13,.65)),url('../img/novello-surfaces/novello-surface-05.webp') center/cover !important;
+ --limestone: #f5f1e9; --ivory: #f5f1e9; --travertine: #ddd3c5; --text-body:#ddd3c5; --warm-ink:#f5f1e9;
+ color:#f5f1e9;
+}
+.fleet-section p, .fleet-section .section-desc, .visit-callout p { color:#ddd3c5; }
+.fleet-section [data-approved-metal-text], .visit-callout [data-approved-metal-text] {
+ --approved-metal-face: linear-gradient(180deg,#dfc69f,#c1a16f);
+ --approved-polished-face: linear-gradient(180deg,#dfc69f,#c1a16f);
+}
+.visit-callout::before, .visit-callout::after { display:none; }
+.fleet-section .btn-ghost, .visit-callout .btn-ghost { background:transparent; color:#f5f1e9; border-color:#c1a16f; }
+.material-hero, .material-hero-overlay, .service-visual { --limestone:#f5f1e9; --ivory:#f5f1e9; --travertine:#ddd3c5; }
+/* Light metallic labels on the intentionally dark feature panels. */
+body .fleet-section [data-approved-metal-text], body .visit-callout [data-approved-metal-text],
+.fleet-section .mono-label, .fleet-section .eyebrow, .fleet-section a:not(.btn-primary), .visit-callout .eyebrow {
+ color:#dcc39e !important; -webkit-text-fill-color:#dcc39e !important; background-image:none !important;
+}
+.page-header p, .about-intro .lead, .story-welcome-intro p, .story-closing p, .surface-card__uses li { color:#514a42; opacity:1; }
+.launch-card a.launch-card-cta:hover { color:#503922; }
+.material-hero { --limestone:#302c27; --ivory:#302c27; --travertine:#625a50; }
+.material-hero .lead { color:#514a42; }
+
+/* Readable warm-theme text. Never inherit pale dark-theme copy on ivory. */
+:root { --readable-ink:#302c27; --readable-accent:#624526; }
+body :is(p,li,dt,dd,label,figcaption,small,input,select,textarea,blockquote),
+body :is(.material-local-route,.material-origin,.palette-results-bar,.surface-card__sourcing,.surface-card__uses-label,.footer-bottom,.stat-label,.form-note,.contact-label) {
+ color:var(--readable-ink) !important; -webkit-text-fill-color:var(--readable-ink) !important;
+ text-shadow:none !important; filter:none !important; opacity:1;
+}
+body :is(p,li,label,figcaption,small,blockquote) :is(span,strong,em,a),
+body :is(.palette-results-bar,.surface-card__sourcing,.surface-card__uses-label) * {
+ color:inherit !important; -webkit-text-fill-color:currentColor !important; text-shadow:none !important; filter:none !important;
+}
+body a:not(.btn-primary), body button:not(.btn-primary):not(.nav-toggle),
+body :is(.eyebrow,.mono-label,.mono,.luxe-section-kicker,.stat-value,.vcard-link,.material-qa-item h4) {
+ color:var(--readable-accent) !important; -webkit-text-fill-color:var(--readable-accent) !important;
+ text-shadow:none !important; filter:none !important;
+}
+body [data-approved-metal-text]:not(.hero-metal-word):not(.brand-wordmark) {
+ background-image:none !important; color:var(--readable-accent) !important;
+ -webkit-text-fill-color:var(--readable-accent) !important; text-shadow:none !important; filter:none !important;
+}
+body :is(h1,h2,h3,h4,h5,h6) { text-shadow:none !important; }
+body input::placeholder, body textarea::placeholder { color:#595148 !important; opacity:1 !important; }
+.site-nav.nav-scrolled > .container, .nav-links a, .mobile-menu a, .footer-bottom { opacity:1 !important; }
+body a:hover, body a:focus-visible, body button:hover, body button:focus-visible { opacity:1; }
+body .site-nav a, body .mobile-menu a { color:#25231f !important; -webkit-text-fill-color:#25231f !important; }
+.material-origin-card, .palette-family-filters button, .palette-family-filters button.active,
+.palette-family-filters button[aria-pressed="true"], .palette-family-summary {
+ background:#e9e2d7 !important; color:#302c27; box-shadow:none;
+}
+/* Explicit dark surfaces; readable text follows the actual backing surface. */
+.fleet-section, .visit-callout, .service-visual, .material-hero-overlay,
+.material-photo-caption, .surface-card__number {
+ --readable-ink:#f5f1e9; --readable-accent:#e0c49d;
+}
+body .surface-card__number { color:#fff !important; background:#302c27; padding:.2rem .45rem; }
+body .btn-primary, body .btn-primary * { color:#241b10 !important; -webkit-text-fill-color:#241b10 !important; text-shadow:none !important; }
+body a:focus-visible, body button:focus-visible, body input:focus-visible, body select:focus-visible, body textarea:focus-visible { outline:2px solid var(--readable-accent); outline-offset:4px; }
+body .skip-link { color:#302c27 !important; -webkit-text-fill-color:#302c27 !important; }
+.material-application-card { --readable-ink:#f5f1e9; --readable-accent:#e0c49d; }
+.material-application-card__copy { background:rgba(20,17,14,.94); padding:1rem; }
+body .material-application-card__copy strong { color:#f5f1e9 !important; -webkit-text-fill-color:#f5f1e9 !important; }
+body [data-approved-metal-text]:not(.hero-metal-word):not(.brand-wordmark)::before,
+body [data-approved-metal-text]:not(.hero-metal-word):not(.brand-wordmark)::after { display:none !important; }
+body a.skip-link { color:#302c27 !important; -webkit-text-fill-color:#302c27 !important; }
+body :is(a,button,input,select,textarea):focus-visible { outline:2px solid var(--readable-accent) !important; outline-offset:4px !important; }
+/* Footer inline dark-theme opacity must not wash out warm-surface copy. */
+body footer :is(p,a,li,small,address) { opacity:1 !important; }
+/* Warm stone refinement: selected surfaces only, existing asset photography. */
+.fleet-section.stone-section {
+ background:linear-gradient(110deg,rgba(245,241,233,.97),rgba(233,226,215,.93)),url('../img/catalogue/limestone-fossil-cream.webp') center/cover !important;
+ --readable-ink:#302c27; --readable-accent:#624526;
+ --limestone:#302c27; --ivory:#302c27; --travertine:#625a50; --text-body:#302c27; --warm-ink:#302c27;
+ color:#302c27;
+}
+body .fleet-section [data-approved-metal-text], .fleet-section .mono-label,
+.fleet-section .eyebrow, .fleet-section a:not(.btn-primary) {
+ color:#624526 !important; -webkit-text-fill-color:#624526 !important;
+}
+.fleet-section .btn-ghost { background:#f5f1e9; border-color:#8d7961; }
+/* The name retained its old near-black gradient, underneath new dark text. */
+.story-name-block {
+ background:#f5f1e9 !important;
+ box-shadow:0 12px 35px rgba(65,48,29,.06);
+ --readable-ink:#302c27; --readable-accent:#624526;
+}
+body .story-name-block, body .story-name-block :is([data-reveal],.reveal-item,[data-cascade],.cascade-word,p,blockquote) {
+ opacity:1 !important; filter:none !important; transform:none !important; animation:none !important; transition:none !important;
+}
+.story-name-quote {
+ background:linear-gradient(rgba(233,226,215,.94),rgba(233,226,215,.94)),url('../img/materials/quartzite-macro-texture.webp') center/cover;
+ padding-inline:clamp(1rem,3vw,2rem);
+}
+.intro-strip {
+ background:linear-gradient(rgba(245,241,233,.95),rgba(245,241,233,.95)),url('../img/catalogue/limestone-fossil-cream.webp') center/cover !important;
+}
+/* A tactile stone accent stays away from reading surfaces. */
+.story-name-block::before {
+ content:''; position:absolute; inset:0 0 auto; height:8px;
+ background:linear-gradient(rgba(233,226,215,.35),rgba(233,226,215,.35)),url('../img/materials/quartzite-macro-texture.webp') center/cover;
+ pointer-events:none;
+}
+/* Retained dark marble route panel keeps its own light text scope. */
+.fleet-section .corridor-journey { --readable-ink:#f5f1e9; --readable-accent:#e0c49d; }
+body .fleet-section .corridor-journey :is(a,[data-approved-metal-text],.mono-label,.eyebrow) {
+ color:#e0c49d !important; -webkit-text-fill-color:#e0c49d !important; opacity:1 !important;
+}
+/* Final interaction polish: keep ghost CTAs readable in every state. */
+body :is(.btn-ghost,.btn-ghost-dark):is(:hover,:focus-visible) {
+ background:#e9e2d7 !important; color:#302c27 !important;
+ -webkit-text-fill-color:#302c27 !important; filter:none !important; opacity:1 !important;
+}
+/* Announcement follows the opening section on every page, never covers copy. */
+body .launch-card {
+ position:relative !important; inset:auto !important; width:min(640px,calc(100% - 40px));
+ margin:24px auto; box-sizing:border-box;
+}
+/* Texture v3: visible stone, quiet reading zones, no repeated wallpaper. */
+:root {
+ --stone-grain:url('../img/catalogue/limestone-jura-warm.webp');
+ --stone-vein:url('../img/catalogue/marble014.webp');
+ --stone-tactile:url('../img/materials/porcelain-macro-texture.webp');
+}
+body [class]:is(.page-header,.material-hero) {
+ background:linear-gradient(90deg,rgba(245,241,233,.94) 0%,rgba(245,241,233,.87) 45%,rgba(245,241,233,.18) 78%),var(--stone-vein) right center/cover !important;
+}
+body .material-hero--catalogue {
+ background:linear-gradient(90deg,rgba(245,241,233,.96) 0%,rgba(245,241,233,.85) 42%,rgba(245,241,233,.10) 76%),var(--stone-vein) right center/cover !important;
+}
+body [class]:is(.intro-strip,.about-intro,.contact-section,.material-section,.faq-section) {
+ background:linear-gradient(100deg,rgba(245,241,233,.78),rgba(245,241,233,.68)),var(--stone-grain) center/cover !important;
+}
+body [class]:is(.pillars-section,.story-welcome-section,.material-section--catalogue,.material-section--alt) {
+ background:linear-gradient(115deg,rgba(233,226,215,.76),rgba(245,241,233,.56)),var(--stone-vein) center/cover !important;
+}
+body [class]:is(.process-section,.story-process-section,.story-pricing-section,.material-section--care,.material-section--qa) {
+ background:linear-gradient(100deg,rgba(245,241,233,.90),rgba(233,226,215,.79)),var(--stone-tactile) center/cover !important;
+}
+body .fleet-section.stone-section {
+ background:linear-gradient(90deg,rgba(245,241,233,.88) 0%,rgba(245,241,233,.68) 46%,rgba(233,226,215,.30) 100%),var(--stone-vein) center/cover !important;
+}
+body [class]:is(.story-closing,.cta-band) {
+ background:linear-gradient(90deg,rgba(233,226,215,.88),rgba(245,241,233,.80)),url('../img/catalogue/travertine005.webp') center/cover !important;
+}
+body .story-name-block { background:rgba(250,247,241,.94) !important; }
+body .story-name-quote {
+ background:linear-gradient(90deg,rgba(233,226,215,.82),rgba(245,241,233,.78)),var(--stone-tactile) center/cover;
+}
+body .hero-photo-overlay {
+ background:linear-gradient(90deg,rgba(245,241,233,.74) 0%,rgba(245,241,233,.80) 35%,rgba(245,241,233,.90) 49%,rgba(245,241,233,.20) 70%,rgba(245,241,233,.05) 100%),var(--stone-grain) left center/50% 100% no-repeat !important;
+}
+@media(max-width:960px) {
+ body [class]:is(.page-header,.material-hero,.material-hero--catalogue) {
+  background:linear-gradient(180deg,rgba(245,241,233,.87),rgba(245,241,233,.72)),var(--stone-vein) center/cover !important;
+ }
+ body .hero-photo-overlay { background:linear-gradient(rgba(245,241,233,.80),rgba(245,241,233,.80)),var(--stone-grain) center/cover !important; }
+}
+/* Page-specific rhythm: honed reading areas alternate with tactile feature bands. */
+body [class]:is(.maintenance-intro,.about-story,.service-block) {
+ background:linear-gradient(100deg,rgba(245,241,233,.84),rgba(245,241,233,.70)),var(--stone-grain) center/cover !important;
+}
+body [class]:is(.values-section,.scenario-section,.how-we-work-section) {
+ background:linear-gradient(110deg,rgba(245,241,233,.88),rgba(233,226,215,.77)),var(--stone-tactile) center/cover !important;
+}
+body [class]:is(.coverage-section,.material-application-closing) {
+ background:linear-gradient(110deg,rgba(245,241,233,.88),rgba(233,226,215,.62)),var(--stone-vein) center/cover !important;
+}
+/* Preserve a quiet surface beneath catalogue labels and body copy. */
+body .material-section--catalogue {
+ background:linear-gradient(115deg,rgba(233,226,215,.84),rgba(245,241,233,.67)),var(--stone-grain) center/cover !important;
+}
